@@ -33,9 +33,34 @@ const getMe = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const refreshToken = catchAsync(async (req, res) => {
+    const result = await AuthService.refreshToken(
+        req.body.refreshToken
+    );
+
+    sendResponse(
+        res,
+        200,
+        true,
+        "Access token generated successfully",
+        result
+    );
+});
+
+const logout = catchAsync(async (req, res) => {
+    sendResponse(
+        res,
+        200,
+        true,
+        "Logout successful",
+        null
+    );
+});
 
 export const AuthController = {
     register,
     login,
     getMe,
+    refreshToken,
+    logout,
 };

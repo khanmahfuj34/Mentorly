@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { prisma } from "../../../config/prisma";
-import { generateToken } from "../../utilis/jwt";
+import { generateToken, verifyToken } from "../../utilis/jwt";
 
 const registerUser = async (payload: {
     name: string;
@@ -61,18 +61,72 @@ const loginUser = async (payload: {
             role: user.role,
         },
         process.env.JWT_ACCESS_SECRET as string,
-        "7d"
+        process.env.JWT_ACCESS_EXPIRES_IN || "15m"
+    );
+
+    const refreshToken = generateToken(
+        {
+            userId: user.id,
+            email: user.email,
+            role: user.role,
+        },
+        process.env.JWT_REFRESH_SECRET as string,
+        process.env.JWT_REFRESH_EXPIRES_IN || "30d"
     );
 
     const { password, ...userWithoutPassword } = user;
 
     return {
         accessToken,
+        refreshToken,
         user: userWithoutPassword
+    };
+};
+
+const refreshToken = async (token: string) => {
+    let decodedData;
+    try {
+        decodedData = verifyToken(
+            token,
+            process.env.JWT_REFRESH_SECRET as string
+        ) as any;
+    } catch (err) {
+        throw new Error("Invalid Refresh Token");
+    }
+
+    const { email } = decodedData;
+
+    const user = await prisma.user.findUnique({
+        where: {
+            email,
+        },
+    });
+
+    if (!user) {
+        throw new Error("User does not exist");
+    }
+
+    if (user.isBlocked) {
+        throw new Error("User is blocked");
+    }
+
+    const accessToken = generateToken(
+        {
+            userId: user.id,
+            email: user.email,
+            role: user.role,
+        },
+        process.env.JWT_ACCESS_SECRET as string,
+        process.env.JWT_ACCESS_EXPIRES_IN || "15m"
+    );
+
+    return {
+        accessToken,
     };
 };
 
 export const AuthService = {
     registerUser,
     loginUser,
+    refreshToken,
 };
