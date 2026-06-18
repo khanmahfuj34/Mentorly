@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import { prisma } from "../../../config/prisma";
+import { generateToken } from "../../utilis/jwt";
 
 const registerUser = async (payload: {
     name: string;
@@ -26,7 +27,9 @@ const registerUser = async (payload: {
         },
     });
 
-    return user;
+    const { password, ...userWithoutPassword } = user;
+
+    return userWithoutPassword;
 };
 
 const loginUser = async (payload: {
@@ -51,8 +54,22 @@ const loginUser = async (payload: {
     if (!isPasswordMatched) {
         throw new Error("Invalid credentials");
     }
+    const accessToken = generateToken(
+        {
+            userId: user.id,
+            email: user.email,
+            role: user.role,
+        },
+        process.env.JWT_ACCESS_SECRET as string,
+        "7d"
+    );
 
-    return user;
+    const { password, ...userWithoutPassword } = user;
+
+    return {
+        accessToken,
+        user: userWithoutPassword
+    };
 };
 
 export const AuthService = {
