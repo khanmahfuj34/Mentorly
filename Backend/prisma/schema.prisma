@@ -26,6 +26,7 @@ model User {
   isBlocked  Boolean  @default(false)
 
   tutorProfile TutorProfile?
+  studentProfile StudentProfile?
 
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -37,20 +38,59 @@ model TutorProfile {
   userId               String   @unique
   user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  // Basic Info
   bio                  String?
+  profilePhoto         String?
+  phoneNumber          String?
+
+  // Academic Info
   university           String?
   department           String?
+  currentInstitution   String?
+
+  // Teaching Info
+  teachingSubjects     String[]
+  preferredClasses     String[]
+  medium               String[]
 
   experienceYears      Int?
   hourlyRate           Float?
 
-  teachingSubjects     String[]
+  teachingStyle        String?
+  demoClassOffered     Boolean @default(false)
 
+  // Location
   district             String?
   area                 String?
 
-  isApproved           Boolean  @default(false)
+  // Approval
+  isApproved           Boolean @default(false)
+
+  // Rating System
+  rating               Float   @default(0)
+  totalReviews         Int     @default(0)
 
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
+}
+
+model StudentProfile {
+  id                 String   @id @default(cuid())
+
+  userId             String   @unique
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  classLevel         String?
+  schoolCollege      String?
+
+  preferredSubjects  String[]
+
+  district           String?
+  area               String?
+
+  guardianName       String?
+  guardianPhone      String?
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
