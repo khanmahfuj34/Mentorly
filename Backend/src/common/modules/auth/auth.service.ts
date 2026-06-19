@@ -6,6 +6,7 @@ const registerUser = async (payload: {
     name: string;
     email: string;
     password: string;
+    role?: "STUDENT" | "TUTOR" | "ADMIN";
 }) => {
     const existingUser = await prisma.user.findUnique({
         where: {
@@ -24,6 +25,7 @@ const registerUser = async (payload: {
             name: payload.name,
             email: payload.email,
             password: hashedPassword,
+            role: payload.role || "STUDENT",
         },
     });
 
