@@ -19,19 +19,15 @@ const getMyBookings = async (
     where.studentId = userId;
   } else if (role === "TUTOR") {
     where.tutorId = userId;
-  } else {
-    // If Admin or other roles, allow accessing all or no bookings. Here, we restrict to own bookings if they have a role, or allow all if ADMIN.
-    // For safety, if not student or tutor, they can only view if they are ADMIN.
-    if (role !== "ADMIN") {
-      throw new Error("You are not authorized to view bookings");
-    }
+  } else if (role !== "ADMIN") {
+    throw new Error("You are not authorized to view bookings");
   }
 
   if (status) {
     where.status = status;
   }
 
-  // Fetch bookings and total count in parallel
+  // Fetch bookings and count in parallel
   const [bookings, total] = await Promise.all([
     prisma.booking.findMany({
       where,
@@ -103,45 +99,12 @@ const getSingleBooking = async (userId: string, role: string, bookingId: string)
     throw new Error("Booking not found");
   }
 
-  // Access Control: Owner check (Student owner or Tutor owner or Admin)
+  // Access Control: Owner check (Student or Tutor of the booking, or Admin)
   if (role !== "ADMIN" && booking.studentId !== userId && booking.tutorId !== userId) {
-    throw new Error("You are not authorized to access this booking");
+    throw new Error("You are not authorized to view this booking");
   }
 
   return booking;
-};
-
-const completeBooking = async (userId: string, role: string, bookingId: string) => {
-  const booking = await prisma.booking.findUnique({
-    where: {
-      id: bookingId,
-    },
-  });
-
-  if (!booking) {
-    throw new Error("Booking not found");
-  }
-
-  // Access Control: Only student or tutor involved in the booking can complete it
-  if (booking.studentId !== userId && booking.tutorId !== userId && role !== "ADMIN") {
-    throw new Error("You are not authorized to complete this booking");
-  }
-
-  if (booking.status !== "ACTIVE") {
-    throw new Error(`Booking cannot be completed because it is already ${booking.status}`);
-  }
-
-  const result = await prisma.booking.update({
-    where: {
-      id: bookingId,
-    },
-    data: {
-      status: "COMPLETED",
-      endDate: new Date(),
-    },
-  });
-
-  return result;
 };
 
 const cancelBooking = async (userId: string, role: string, bookingId: string) => {
@@ -155,13 +118,13 @@ const cancelBooking = async (userId: string, role: string, bookingId: string) =>
     throw new Error("Booking not found");
   }
 
-  // Access Control: Only student or tutor involved in the booking can cancel it
-  if (booking.studentId !== userId && booking.tutorId !== userId && role !== "ADMIN") {
-    throw new Error("You are not authorized to cancel this booking");
+  // Access Control: Only the student owner of the booking can cancel it
+  if (role !== "ADMIN" && booking.studentId !== userId) {
+    throw new Error("Only the student who owns the booking can cancel it");
   }
 
   if (booking.status !== "ACTIVE") {
-    throw new Error(`Booking cannot be cancelled because it is already ${booking.status}`);
+    throw new Error(`Booking cannot be cancelled because it is currently ${booking.status}`);
   }
 
   const result = await prisma.booking.update({
@@ -177,9 +140,42 @@ const cancelBooking = async (userId: string, role: string, bookingId: string) =>
   return result;
 };
 
+const completeBooking = async (userId: string, role: string, bookingId: string) => {
+  const booking = await prisma.booking.findUnique({
+    where: {
+      id: bookingId,
+    },
+  });
+
+  if (!booking) {
+    throw new Error("Booking not found");
+  }
+
+  // Access Control: Only the tutor assigned to the booking can complete it
+  if (role !== "ADMIN" && booking.tutorId !== userId) {
+    throw new Error("Only the assigned tutor can mark the booking as completed");
+  }
+
+  if (booking.status !== "ACTIVE") {
+    throw new Error(`Booking cannot be marked completed because it is currently ${booking.status}`);
+  }
+
+  const result = await prisma.booking.update({
+    where: {
+      id: bookingId,
+    },
+    data: {
+      status: "COMPLETED",
+      endDate: new Date(),
+    },
+  });
+
+  return result;
+};
+
 export const BookingService = {
   getMyBookings,
   getSingleBooking,
-  completeBooking,
   cancelBooking,
+  completeBooking,
 };

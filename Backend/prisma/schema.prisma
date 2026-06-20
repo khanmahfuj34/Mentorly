@@ -25,8 +25,8 @@ model User {
   isVerified Boolean @default(false)
   isBlocked  Boolean @default(false)
 
-  tutorProfile    TutorProfile?
-  studentProfile  StudentProfile?
+  tutorProfile     TutorProfile?
+  studentProfile   StudentProfile?
   tuitionRequests  TuitionRequest[]
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
@@ -129,10 +129,10 @@ model TuitionRequest {
 
   status TuitionStatus @default(OPEN)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
   TutorApplication TutorApplication[]
-  Booking Booking[]
+  Booking          Booking[]
 }
 
 enum ApplicationStatus {
@@ -159,6 +159,7 @@ model TutorApplication {
 }
 
 enum BookingStatus {
+  PENDING
   ACTIVE
   COMPLETED
   CANCELLED
@@ -173,10 +174,10 @@ model Booking {
   tutorId String
   tutor   User   @relation("TutorBookings", fields: [tutorId], references: [id])
 
-  tuitionRequestId String
+  tuitionRequestId String         @unique
   tuitionRequest   TuitionRequest @relation(fields: [tuitionRequestId], references: [id])
 
-  status BookingStatus @default(ACTIVE)
+  status BookingStatus @default(PENDING)
 
   startDate DateTime?
   endDate   DateTime?

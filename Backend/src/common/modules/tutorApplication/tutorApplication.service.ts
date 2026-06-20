@@ -151,7 +151,7 @@ const acceptApplication = async (userId: string, applicationId: string) => {
   }
 
   // 3b. Verify no duplicate booking already exists for this tuition request
-  const existingBooking = await prisma.booking.findFirst({
+  const existingBooking = await prisma.booking.findUnique({
     where: {
       tuitionRequestId: application.tuitionRequestId,
     },

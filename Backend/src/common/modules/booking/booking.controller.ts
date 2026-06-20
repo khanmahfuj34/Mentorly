@@ -32,21 +32,6 @@ const getSingleBooking = catchAsync(async (req: Request, res: Response) => {
   );
 });
 
-const completeBooking = catchAsync(async (req: Request, res: Response) => {
-  const userId = req.user.userId;
-  const role = req.user.role;
-  const id = req.params.id as string;
-  const result = await BookingService.completeBooking(userId, role, id);
-
-  sendResponse(
-    res,
-    200,
-    true,
-    "Booking completed successfully",
-    result
-  );
-});
-
 const cancelBooking = catchAsync(async (req: Request, res: Response) => {
   const userId = req.user.userId;
   const role = req.user.role;
@@ -62,9 +47,24 @@ const cancelBooking = catchAsync(async (req: Request, res: Response) => {
   );
 });
 
+const completeBooking = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.user.userId;
+  const role = req.user.role;
+  const id = req.params.id as string;
+  const result = await BookingService.completeBooking(userId, role, id);
+
+  sendResponse(
+    res,
+    200,
+    true,
+    "Booking completed successfully",
+    result
+  );
+});
+
 export const BookingController = {
   getMyBookings,
   getSingleBooking,
-  completeBooking,
   cancelBooking,
+  completeBooking,
 };

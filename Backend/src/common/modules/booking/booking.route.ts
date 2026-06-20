@@ -23,17 +23,17 @@ router.get(
 );
 
 router.patch(
-  "/:id/complete",
+  "/:id/cancel",
   auth,
-  roleGuard("STUDENT", "TUTOR"),
-  BookingController.completeBooking
+  roleGuard("STUDENT"),
+  BookingController.cancelBooking
 );
 
 router.patch(
-  "/:id/cancel",
+  "/:id/complete",
   auth,
-  roleGuard("STUDENT", "TUTOR"),
-  BookingController.cancelBooking
+  roleGuard("TUTOR"),
+  BookingController.completeBooking
 );
 
 export const BookingRoutes = router;
