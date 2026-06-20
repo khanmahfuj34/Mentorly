@@ -3,18 +3,6 @@ import { AdminService } from "./admin.service";
 import { catchAsync } from "../../helpers/catchAsync";
 import { sendResponse } from "../../helpers/sendResponse";
 
-const getAllTutors = catchAsync(async (req: Request, res: Response) => {
-  const result = await AdminService.getAllTutors(req.query);
-
-  sendResponse(
-    res,
-    200,
-    true,
-    "All tutors retrieved successfully",
-    result
-  );
-});
-
 const getPendingTutors = catchAsync(async (req: Request, res: Response) => {
   const result = await AdminService.getPendingTutors(req.query);
 
@@ -23,7 +11,21 @@ const getPendingTutors = catchAsync(async (req: Request, res: Response) => {
     200,
     true,
     "Pending tutors retrieved successfully",
-    result
+    result.data,
+    result.meta
+  );
+});
+
+const getApprovedTutors = catchAsync(async (req: Request, res: Response) => {
+  const result = await AdminService.getApprovedTutors(req.query);
+
+  sendResponse(
+    res,
+    200,
+    true,
+    "Approved tutors retrieved successfully",
+    result.data,
+    result.meta
   );
 });
 
@@ -66,8 +68,8 @@ const getDashboardStats = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const AdminController = {
-  getAllTutors,
   getPendingTutors,
+  getApprovedTutors,
   approveTutor,
   rejectTutor,
   getDashboardStats,

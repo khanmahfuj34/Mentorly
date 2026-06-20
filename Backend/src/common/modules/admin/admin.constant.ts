@@ -1,2 +1,2 @@
-export const tutorFilterableFields = ["isApproved", "district", "area"];
-export const tutorSearchableFields = ["bio", "university", "department", "currentInstitution"];
+export const tutorFilterableFields = ["isApproved"];
+export const tutorSearchableFields = ["name", "email", "university", "department"];

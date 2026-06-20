@@ -1,12 +1,9 @@
 import { prisma } from "../../../config/prisma";
 import { ITutorQueryFilters, IDashboardStats } from "./admin.interface";
 
-const getTutorsHelper = async (filters: ITutorQueryFilters, forcePendingOnly = false) => {
+const getTutorsHelper = async (filters: ITutorQueryFilters, isApprovedStatus: boolean) => {
   const {
     searchTerm,
-    isApproved,
-    district,
-    area,
     page = "1",
     limit = "10",
     sortBy = "createdAt",
@@ -18,30 +15,15 @@ const getTutorsHelper = async (filters: ITutorQueryFilters, forcePendingOnly = f
   const skip = (parsedPage - 1) * parsedLimit;
 
   // Build where clause
-  const where: any = {};
+  const where: any = {
+    isApproved: isApprovedStatus,
+  };
 
-  // Handle approval status filtering
-  if (forcePendingOnly) {
-    where.isApproved = false;
-  } else if (isApproved !== undefined) {
-    where.isApproved = isApproved === "true";
-  }
-
-  // Handle location filters
-  if (district) {
-    where.district = { contains: district, mode: "insensitive" };
-  }
-  if (area) {
-    where.area = { contains: area, mode: "insensitive" };
-  }
-
-  // Handle search term (searching profile bio, university, dept, or linked user name/email)
+  // Handle search term (searching user.name, user.email, university, or department)
   if (searchTerm) {
     where.OR = [
-      { bio: { contains: searchTerm, mode: "insensitive" } },
       { university: { contains: searchTerm, mode: "insensitive" } },
       { department: { contains: searchTerm, mode: "insensitive" } },
-      { currentInstitution: { contains: searchTerm, mode: "insensitive" } },
       {
         user: {
           OR: [
@@ -53,7 +35,7 @@ const getTutorsHelper = async (filters: ITutorQueryFilters, forcePendingOnly = f
     ];
   }
 
-  // Fetch tutor profiles and count
+  // Fetch tutor profiles and count in parallel
   const [tutors, total] = await Promise.all([
     prisma.tutorProfile.findMany({
       where,
@@ -88,11 +70,11 @@ const getTutorsHelper = async (filters: ITutorQueryFilters, forcePendingOnly = f
   };
 };
 
-const getAllTutors = async (filters: ITutorQueryFilters) => {
+const getPendingTutors = async (filters: ITutorQueryFilters) => {
   return getTutorsHelper(filters, false);
 };
 
-const getPendingTutors = async (filters: ITutorQueryFilters) => {
+const getApprovedTutors = async (filters: ITutorQueryFilters) => {
   return getTutorsHelper(filters, true);
 };
 
@@ -148,39 +130,30 @@ const getDashboardStats = async (): Promise<IDashboardStats> => {
     totalTutors,
     approvedTutors,
     pendingTutors,
+    totalTuitionRequests,
     openTuitionRequests,
+    assignedTuitionRequests,
+    totalBookings,
     activeBookings,
+    completedBookings,
+    totalReviews,
   ] = await Promise.all([
-    prisma.user.count({
-      where: {
-        role: "STUDENT",
-      },
-    }),
-    prisma.user.count({
-      where: {
-        role: "TUTOR",
-      },
-    }),
-    prisma.tutorProfile.count({
-      where: {
-        isApproved: true,
-      },
-    }),
-    prisma.tutorProfile.count({
-      where: {
-        isApproved: false,
-      },
-    }),
-    prisma.tuitionRequest.count({
-      where: {
-        status: "OPEN",
-      },
-    }),
-    prisma.booking.count({
-      where: {
-        status: "ACTIVE",
-      },
-    }),
+    // User stats
+    prisma.user.count({ where: { role: "STUDENT" } }),
+    prisma.user.count({ where: { role: "TUTOR" } }),
+    // Tutor profile stats
+    prisma.tutorProfile.count({ where: { isApproved: true } }),
+    prisma.tutorProfile.count({ where: { isApproved: false } }),
+    // Tuition Request stats
+    prisma.tuitionRequest.count(),
+    prisma.tuitionRequest.count({ where: { status: "OPEN" } }),
+    prisma.tuitionRequest.count({ where: { status: "ASSIGNED" } }),
+    // Booking stats
+    prisma.booking.count(),
+    prisma.booking.count({ where: { status: "ACTIVE" } }),
+    prisma.booking.count({ where: { status: "COMPLETED" } }),
+    // Review stats
+    prisma.review.count(),
   ]);
 
   return {
@@ -188,14 +161,19 @@ const getDashboardStats = async (): Promise<IDashboardStats> => {
     totalTutors,
     approvedTutors,
     pendingTutors,
+    totalTuitionRequests,
     openTuitionRequests,
+    assignedTuitionRequests,
+    totalBookings,
     activeBookings,
+    completedBookings,
+    totalReviews,
   };
 };
 
 export const AdminService = {
-  getAllTutors,
   getPendingTutors,
+  getApprovedTutors,
   approveTutor,
   rejectTutor,
   getDashboardStats,

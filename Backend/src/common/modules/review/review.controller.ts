@@ -11,20 +11,37 @@ const createReview = catchAsync(async (req: Request, res: Response) => {
     res,
     201,
     true,
-    "Review submitted successfully",
+    "Review created successfully",
     result
   );
 });
 
-const getTutorReviews = catchAsync(async (req: Request, res: Response) => {
-  const tutorId = req.params.tutorId as string;
-  const result = await ReviewService.getTutorReviews(tutorId, req.query);
+const getSingleReview = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.user.userId;
+  const role = req.user.role;
+  const id = req.params.id as string;
+  const result = await ReviewService.getSingleReview(userId, role, id);
 
   sendResponse(
     res,
     200,
     true,
-    "Tutor reviews retrieved successfully",
+    "Review retrieved successfully",
+    result
+  );
+});
+
+const deleteReview = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.user.userId;
+  const role = req.user.role;
+  const id = req.params.id as string;
+  const result = await ReviewService.deleteReview(userId, role, id);
+
+  sendResponse(
+    res,
+    200,
+    true,
+    "Review deleted successfully",
     result
   );
 });
@@ -39,12 +56,29 @@ const getMyReviews = catchAsync(async (req: Request, res: Response) => {
     200,
     true,
     "My reviews retrieved successfully",
-    result
+    result.data,
+    result.meta
+  );
+});
+
+const getTutorReviews = catchAsync(async (req: Request, res: Response) => {
+  const tutorId = req.params.tutorId as string;
+  const result = await ReviewService.getTutorReviews(tutorId, req.query);
+
+  sendResponse(
+    res,
+    200,
+    true,
+    "Tutor reviews retrieved successfully",
+    result.data,
+    result.meta
   );
 });
 
 export const ReviewController = {
   createReview,
-  getTutorReviews,
+  getSingleReview,
+  deleteReview,
   getMyReviews,
+  getTutorReviews,
 };

@@ -15,16 +15,29 @@ router.post(
   ReviewController.createReview
 );
 
-router.get(
-  "/tutor/:tutorId",
-  ReviewController.getTutorReviews
+router.delete(
+  "/:id",
+  auth,
+  ReviewController.deleteReview
 );
 
 router.get(
   "/my-reviews",
   auth,
-  roleGuard("STUDENT", "TUTOR"),
+  validateRequest(ReviewValidation.getReviewsQueryValidationSchema),
   ReviewController.getMyReviews
+);
+
+router.get(
+  "/tutor/:tutorId",
+  validateRequest(ReviewValidation.getReviewsQueryValidationSchema),
+  ReviewController.getTutorReviews
+);
+
+router.get(
+  "/:id",
+  auth,
+  ReviewController.getSingleReview
 );
 
 export const ReviewRoutes = router;

@@ -15,17 +15,17 @@ const createReview = async (userId: string, payload: IReviewCreateInput) => {
     throw new Error("Booking not found");
   }
 
-  // 2. Access control: Only the student who made the booking can review it
+  // 2. Access control: Only booking owner student can submit review
   if (booking.studentId !== userId) {
-    throw new Error("You are not authorized to review this booking");
+    throw new Error("You are not authorized to submit a review for this booking");
   }
 
   // 3. Verify booking is COMPLETED
   if (booking.status !== "COMPLETED") {
-    throw new Error("Review can only be submitted after the booking is completed");
+    throw new Error("Review can only be submitted for completed bookings");
   }
 
-  // 4. Verify no existing review for this booking
+  // 4. Verify no existing review for this booking (one review per booking)
   const existingReview = await prisma.review.findUnique({
     where: {
       bookingId,
@@ -33,10 +33,10 @@ const createReview = async (userId: string, payload: IReviewCreateInput) => {
   });
 
   if (existingReview) {
-    throw new Error("You have already submitted a review for this booking");
+    throw new Error("A review has already been submitted for this booking");
   }
 
-  // 5. Run database transaction to create review and update tutor profile stats
+  // 5. Execute transaction to create review and update tutor profile stats
   const result = await prisma.$transaction(async (tx) => {
     // a. Create review
     const newReview = await tx.review.create({
@@ -49,7 +49,7 @@ const createReview = async (userId: string, payload: IReviewCreateInput) => {
       },
     });
 
-    // b. Calculate new aggregate ratings for the tutor
+    // b. Recalculate average rating and total reviews for the tutor
     const stats = await tx.review.aggregate({
       _avg: {
         rating: true,
@@ -62,7 +62,7 @@ const createReview = async (userId: string, payload: IReviewCreateInput) => {
       },
     });
 
-    // c. Update the tutor profile with new stats
+    // c. Update TutorProfile
     await tx.tutorProfile.update({
       where: {
         userId: booking.tutorId,
@@ -79,53 +79,107 @@ const createReview = async (userId: string, payload: IReviewCreateInput) => {
   return result;
 };
 
-const getTutorReviews = async (tutorId: string, query: IReviewFilterRequest) => {
-  const { page = "1", limit = "10", sortBy = "createdAt", sortOrder = "desc" } = query;
-
-  const parsedPage = Number(page) || 1;
-  const parsedLimit = Number(limit) || 10;
-  const skip = (parsedPage - 1) * parsedLimit;
-
-  const [reviews, total] = await Promise.all([
-    prisma.review.findMany({
-      where: {
-        tutorId,
-      },
-      include: {
-        student: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            studentProfile: true,
-          },
+const getSingleReview = async (userId: string, role: string, reviewId: string) => {
+  const review = await prisma.review.findUnique({
+    where: {
+      id: reviewId,
+    },
+    include: {
+      student: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          studentProfile: true,
         },
       },
-      orderBy: {
-        [sortBy]: sortOrder,
+      tutor: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          tutorProfile: true,
+        },
       },
-      skip,
-      take: parsedLimit,
-    }),
-    prisma.review.count({
-      where: {
-        tutorId,
-      },
-    }),
-  ]);
-
-  return {
-    meta: {
-      page: parsedPage,
-      limit: parsedLimit,
-      total,
+      booking: true,
     },
-    data: reviews,
-  };
+  });
+
+  if (!review) {
+    throw new Error("Review not found");
+  }
+
+  // Access Control: Student owner, Tutor recipient, or Admin
+  if (role !== "ADMIN" && review.studentId !== userId && review.tutorId !== userId) {
+    throw new Error("You are not authorized to view this review");
+  }
+
+  return review;
+};
+
+const deleteReview = async (userId: string, role: string, reviewId: string) => {
+  // 1. Fetch review
+  const review = await prisma.review.findUnique({
+    where: {
+      id: reviewId,
+    },
+  });
+
+  if (!review) {
+    throw new Error("Review not found");
+  }
+
+  // 2. Access control: Only the student who wrote the review (or Admin) can delete it
+  if (role !== "ADMIN" && review.studentId !== userId) {
+    throw new Error("You are not authorized to delete this review");
+  }
+
+  // 3. Execute transaction to delete review and update tutor profile stats
+  const result = await prisma.$transaction(async (tx) => {
+    // a. Delete review
+    const deletedReview = await tx.review.delete({
+      where: {
+        id: reviewId,
+      },
+    });
+
+    // b. Recalculate average rating and total reviews for the tutor
+    const stats = await tx.review.aggregate({
+      _avg: {
+        rating: true,
+      },
+      _count: {
+        id: true,
+      },
+      where: {
+        tutorId: review.tutorId,
+      },
+    });
+
+    // c. Update TutorProfile
+    await tx.tutorProfile.update({
+      where: {
+        userId: review.tutorId,
+      },
+      data: {
+        rating: stats._avg.rating || 0,
+        totalReviews: stats._count.id || 0,
+      },
+    });
+
+    return deletedReview;
+  });
+
+  return result;
 };
 
 const getMyReviews = async (userId: string, role: string, query: IReviewFilterRequest) => {
   const { page = "1", limit = "10", sortBy = "createdAt", sortOrder = "desc" } = query;
+
+  const allowedSortFields = ["createdAt", "rating"];
+  if (sortBy && !allowedSortFields.includes(sortBy)) {
+    throw new Error(`Sorting by '${sortBy}' is not allowed`);
+  }
 
   const parsedPage = Number(page) || 1;
   const parsedLimit = Number(limit) || 10;
@@ -180,8 +234,60 @@ const getMyReviews = async (userId: string, role: string, query: IReviewFilterRe
   };
 };
 
+const getTutorReviews = async (tutorId: string, query: IReviewFilterRequest) => {
+  const { page = "1", limit = "10", sortBy = "createdAt", sortOrder = "desc" } = query;
+
+  const allowedSortFields = ["createdAt", "rating"];
+  if (sortBy && !allowedSortFields.includes(sortBy)) {
+    throw new Error(`Sorting by '${sortBy}' is not allowed`);
+  }
+
+  const parsedPage = Number(page) || 1;
+  const parsedLimit = Number(limit) || 10;
+  const skip = (parsedPage - 1) * parsedLimit;
+
+  const [reviews, total] = await Promise.all([
+    prisma.review.findMany({
+      where: {
+        tutorId,
+      },
+      include: {
+        student: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            studentProfile: true,
+          },
+        },
+      },
+      orderBy: {
+        [sortBy]: sortOrder,
+      },
+      skip,
+      take: parsedLimit,
+    }),
+    prisma.review.count({
+      where: {
+        tutorId,
+      },
+    }),
+  ]);
+
+  return {
+    meta: {
+      page: parsedPage,
+      limit: parsedLimit,
+      total,
+    },
+    data: reviews,
+  };
+};
+
 export const ReviewService = {
   createReview,
-  getTutorReviews,
+  getSingleReview,
+  deleteReview,
   getMyReviews,
+  getTutorReviews,
 };

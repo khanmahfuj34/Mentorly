@@ -1,2 +1,2 @@
-export const reviewFilterableFields = ["rating", "studentId", "tutorId"];
+export const reviewFilterableFields = ["rating", "studentId", "tutorId", "bookingId"];
 export const reviewSearchableFields = ["comment"];

@@ -20,7 +20,7 @@ router.get(
   auth,
   roleGuard("ADMIN"),
   validateRequest(AdminValidation.getTutorsQueryValidationSchema),
-  AdminController.getAllTutors
+  AdminController.getApprovedTutors
 );
 
 router.patch(

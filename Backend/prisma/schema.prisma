@@ -25,16 +25,16 @@ model User {
   isVerified Boolean @default(false)
   isBlocked  Boolean @default(false)
 
-  tutorProfile     TutorProfile?
-  studentProfile   StudentProfile?
-  tuitionRequests  TuitionRequest[]
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  TutorApplication TutorApplication[]
-  studentBookings  Booking[]          @relation("StudentBookings")
-  tutorBookings    Booking[]          @relation("TutorBookings")
-  reviewsAsStudent Review[]           @relation("StudentReviews")
-  reviewsAsTutor   Review[]           @relation("TutorReviews")
+  tutorProfile        TutorProfile?
+  studentProfile      StudentProfile?
+  tuitionRequests     TuitionRequest[]
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  TutorApplication    TutorApplication[]
+  studentBookings     Booking[]          @relation("StudentBookings")
+  tutorBookings       Booking[]          @relation("TutorBookings")
+  studentReviews      Review[]           @relation("StudentReviews")
+  tutorReviews        Review[]           @relation("TutorReviews")
 }
 
 model TutorProfile {
@@ -191,7 +191,7 @@ model Review {
   id String @id @default(cuid())
 
   bookingId String  @unique
-  booking   Booking @relation(fields: [bookingId], references: [id])
+  booking   Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
 
   studentId String
   student   User   @relation("StudentReviews", fields: [studentId], references: [id])
@@ -204,4 +204,5 @@ model Review {
   comment String?
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -1,8 +1,6 @@
 export interface ITutorQueryFilters {
   searchTerm?: string;
   isApproved?: string;
-  district?: string;
-  area?: string;
   page?: string;
   limit?: string;
   sortBy?: string;
@@ -14,6 +12,11 @@ export interface IDashboardStats {
   totalTutors: number;
   approvedTutors: number;
   pendingTutors: number;
+  totalTuitionRequests: number;
   openTuitionRequests: number;
+  assignedTuitionRequests: number;
+  totalBookings: number;
   activeBookings: number;
+  completedBookings: number;
+  totalReviews: number;
 }
