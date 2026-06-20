@@ -6,6 +6,17 @@ const applyToTuitionRequest = async (
   tuitionRequestId: string,
   payload: ITutorApplicationCreateInput
 ) => {
+  // 0. Verify tutor is approved
+  const tutorProfile = await prisma.tutorProfile.findUnique({
+    where: {
+      userId: tutorId,
+    },
+  });
+
+  if (!tutorProfile || !tutorProfile.isApproved) {
+    throw new Error("Only approved tutors can apply to tuition requests");
+  }
+
   // 1. Verify tuition request exists
   const tuitionRequest = await prisma.tuitionRequest.findUnique({
     where: {
@@ -139,7 +150,29 @@ const acceptApplication = async (userId: string, applicationId: string) => {
     throw new Error("This tuition request has already been assigned or closed");
   }
 
-  // 4. Run database transaction to update statuses
+  // 3b. Verify no duplicate booking already exists for this tuition request
+  const existingBooking = await prisma.booking.findFirst({
+    where: {
+      tuitionRequestId: application.tuitionRequestId,
+    },
+  });
+
+  if (existingBooking) {
+    throw new Error("A booking already exists for this tuition request");
+  }
+
+  // 3c. Verify tutor is still approved before assigning booking
+  const tutorProfile = await prisma.tutorProfile.findUnique({
+    where: {
+      userId: application.tutorId,
+    },
+  });
+
+  if (!tutorProfile || !tutorProfile.isApproved) {
+    throw new Error("Only approved tutors can receive bookings");
+  }
+
+  // 4. Run database transaction to update statuses and create booking
   const updatedApplication = await prisma.$transaction(async (tx) => {
     // a. Update target application to ACCEPTED
     const acceptedApp = await tx.tutorApplication.update({
@@ -171,6 +204,16 @@ const acceptApplication = async (userId: string, applicationId: string) => {
       },
       data: {
         status: "ASSIGNED",
+      },
+    });
+
+    // d. Create Booking
+    await tx.booking.create({
+      data: {
+        studentId: application.tuitionRequest.studentId,
+        tutorId: application.tutorId,
+        tuitionRequestId: application.tuitionRequestId,
+        status: "ACTIVE",
       },
     });
 
