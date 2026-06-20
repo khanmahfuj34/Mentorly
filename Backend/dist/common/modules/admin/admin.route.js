@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AdminRoutes = void 0;
+const express_1 = require("express");
+const admin_controller_1 = require("./admin.controller");
+const auth_1 = require("../../middlewares/auth");
+const roleGuard_1 = require("../../middlewares/roleGuard");
+const validateRequest_1 = require("../../middlewares/validateRequest");
+const admin_validation_1 = require("./admin.validation");
+const router = (0, express_1.Router)();
+router.get("/tutors/pending", auth_1.auth, (0, roleGuard_1.roleGuard)("ADMIN"), (0, validateRequest_1.validateRequest)(admin_validation_1.AdminValidation.getTutorsQueryValidationSchema), admin_controller_1.AdminController.getPendingTutors);
+router.get("/tutors", auth_1.auth, (0, roleGuard_1.roleGuard)("ADMIN"), (0, validateRequest_1.validateRequest)(admin_validation_1.AdminValidation.getTutorsQueryValidationSchema), admin_controller_1.AdminController.getApprovedTutors);
+router.patch("/tutors/:id/approve", auth_1.auth, (0, roleGuard_1.roleGuard)("ADMIN"), admin_controller_1.AdminController.approveTutor);
+router.patch("/tutors/:id/reject", auth_1.auth, (0, roleGuard_1.roleGuard)("ADMIN"), admin_controller_1.AdminController.rejectTutor);
+router.get("/dashboard-stats", auth_1.auth, (0, roleGuard_1.roleGuard)("ADMIN"), admin_controller_1.AdminController.getDashboardStats);
+exports.AdminRoutes = router;

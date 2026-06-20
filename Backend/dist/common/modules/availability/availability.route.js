@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AvailabilityRoutes = void 0;
+const express_1 = require("express");
+const availability_controller_1 = require("./availability.controller");
+const auth_1 = require("../../middlewares/auth");
+const roleGuard_1 = require("../../middlewares/roleGuard");
+const validateRequest_1 = require("../../middlewares/validateRequest");
+const availability_validation_1 = require("./availability.validation");
+const router = (0, express_1.Router)();
+router.post("/", auth_1.auth, (0, roleGuard_1.roleGuard)("TUTOR"), (0, validateRequest_1.validateRequest)(availability_validation_1.AvailabilityValidation.createAvailabilityValidationSchema), availability_controller_1.AvailabilityController.createAvailability);
+router.get("/my-schedule", auth_1.auth, (0, roleGuard_1.roleGuard)("TUTOR"), (0, validateRequest_1.validateRequest)(availability_validation_1.AvailabilityValidation.getAvailabilityQueryValidationSchema), availability_controller_1.AvailabilityController.getMySchedule);
+router.get("/tutor/:tutorId", (0, validateRequest_1.validateRequest)(availability_validation_1.AvailabilityValidation.getAvailabilityQueryValidationSchema), availability_controller_1.AvailabilityController.getTutorSchedule);
+router.get("/:id", availability_controller_1.AvailabilityController.getSingleAvailability);
+router.patch("/:id", auth_1.auth, (0, roleGuard_1.roleGuard)("TUTOR"), (0, validateRequest_1.validateRequest)(availability_validation_1.AvailabilityValidation.updateAvailabilityValidationSchema), availability_controller_1.AvailabilityController.updateAvailability);
+router.delete("/:id", auth_1.auth, (0, roleGuard_1.roleGuard)("TUTOR"), availability_controller_1.AvailabilityController.deleteAvailability);
+exports.AvailabilityRoutes = router;

@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.StudentRoutes = void 0;
+const express_1 = require("express");
+const student_controller_1 = require("./student.controller");
+const auth_1 = require("../../middlewares/auth");
+const roleGuard_1 = require("../../middlewares/roleGuard");
+const validateRequest_1 = require("../../middlewares/validateRequest");
+const student_validation_1 = require("./student.validation");
+const router = (0, express_1.Router)();
+router.post("/create-profile", auth_1.auth, (0, roleGuard_1.roleGuard)("STUDENT"), (0, validateRequest_1.validateRequest)(student_validation_1.createStudentProfileValidationSchema), student_controller_1.StudentController.createProfile);
+router.get("/my-profile", auth_1.auth, (0, roleGuard_1.roleGuard)("STUDENT"), student_controller_1.StudentController.getMyProfile);
+router.patch("/update-profile", auth_1.auth, (0, roleGuard_1.roleGuard)("STUDENT"), (0, validateRequest_1.validateRequest)(student_validation_1.updateStudentProfileValidationSchema), student_controller_1.StudentController.updateProfile);
+exports.StudentRoutes = router;

@@ -25,16 +25,17 @@ model User {
   isVerified Boolean @default(false)
   isBlocked  Boolean @default(false)
 
-  tutorProfile        TutorProfile?
-  studentProfile      StudentProfile?
-  tuitionRequests     TuitionRequest[]
-  createdAt           DateTime           @default(now())
-  updatedAt           DateTime           @updatedAt
-  TutorApplication    TutorApplication[]
-  studentBookings     Booking[]          @relation("StudentBookings")
-  tutorBookings       Booking[]          @relation("TutorBookings")
-  studentReviews      Review[]           @relation("StudentReviews")
-  tutorReviews        Review[]           @relation("TutorReviews")
+  tutorProfile     TutorProfile?
+  studentProfile   StudentProfile?
+  tuitionRequests  TuitionRequest[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  TutorApplication TutorApplication[]
+  studentBookings  Booking[]          @relation("StudentBookings")
+  tutorBookings    Booking[]          @relation("TutorBookings")
+  studentReviews   Review[]           @relation("StudentReviews")
+  tutorReviews     Review[]           @relation("TutorReviews")
+  Availability     Availability[]
 }
 
 model TutorProfile {
@@ -202,6 +203,33 @@ model Review {
   rating Int
 
   comment String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum DayOfWeek {
+  SATURDAY
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+}
+
+model Availability {
+  id String @id @default(cuid())
+
+  tutorId String
+  tutor   User   @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+
+  day DayOfWeek
+
+  startTime String
+  endTime   String
+
+  isAvailable Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

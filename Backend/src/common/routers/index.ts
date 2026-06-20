@@ -7,6 +7,7 @@ import { TutorApplicationRoutes } from "../modules/tutorApplication/tutorApplica
 import { BookingRoutes } from "../modules/booking/booking.route";
 import { ReviewRoutes } from "../modules/review/review.route";
 import { AdminRoutes } from "../modules/admin/admin.route";
+import { AvailabilityRoutes } from "../modules/availability/availability.route";
 
 const router = Router();
 
@@ -18,5 +19,6 @@ router.use("/tutor-applications", TutorApplicationRoutes);
 router.use("/bookings", BookingRoutes);
 router.use("/reviews", ReviewRoutes);
 router.use("/admin", AdminRoutes);
+router.use("/availability", AvailabilityRoutes);
 
 export default router;

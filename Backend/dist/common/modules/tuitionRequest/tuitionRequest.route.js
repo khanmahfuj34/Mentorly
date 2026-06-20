@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.TuitionRequestRoutes = void 0;
+const express_1 = require("express");
+const tuitionRequest_controller_1 = require("./tuitionRequest.controller");
+const auth_1 = require("../../middlewares/auth");
+const roleGuard_1 = require("../../middlewares/roleGuard");
+const validateRequest_1 = require("../../middlewares/validateRequest");
+const tuitionRequest_validation_1 = require("./tuitionRequest.validation");
+const router = (0, express_1.Router)();
+router.post("/", auth_1.auth, (0, roleGuard_1.roleGuard)("STUDENT"), (0, validateRequest_1.validateRequest)(tuitionRequest_validation_1.createTuitionRequestValidationSchema), tuitionRequest_controller_1.TuitionRequestController.createTuitionRequest);
+router.get("/my-requests", auth_1.auth, (0, roleGuard_1.roleGuard)("STUDENT"), tuitionRequest_controller_1.TuitionRequestController.getMyTuitionRequests);
+router.get("/:id", auth_1.auth, tuitionRequest_controller_1.TuitionRequestController.getSingleTuitionRequest);
+router.patch("/:id", auth_1.auth, (0, roleGuard_1.roleGuard)("STUDENT"), (0, validateRequest_1.validateRequest)(tuitionRequest_validation_1.updateTuitionRequestValidationSchema), tuitionRequest_controller_1.TuitionRequestController.updateTuitionRequest);
+router.delete("/:id", auth_1.auth, (0, roleGuard_1.roleGuard)("STUDENT"), tuitionRequest_controller_1.TuitionRequestController.deleteTuitionRequest);
+exports.TuitionRequestRoutes = router;

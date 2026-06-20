@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.TutorApplicationRoutes = void 0;
+const express_1 = require("express");
+const tutorApplication_controller_1 = require("./tutorApplication.controller");
+const auth_1 = require("../../middlewares/auth");
+const roleGuard_1 = require("../../middlewares/roleGuard");
+const validateRequest_1 = require("../../middlewares/validateRequest");
+const tutorApplication_validation_1 = require("./tutorApplication.validation");
+const router = (0, express_1.Router)();
+router.post("/apply/:tuitionRequestId", auth_1.auth, (0, roleGuard_1.roleGuard)("TUTOR"), (0, validateRequest_1.validateRequest)(tutorApplication_validation_1.TutorApplicationValidation.createTutorApplicationValidationSchema), tutorApplication_controller_1.TutorApplicationController.applyToTuitionRequest);
+router.get("/my-applications", auth_1.auth, (0, roleGuard_1.roleGuard)("TUTOR"), tutorApplication_controller_1.TutorApplicationController.getMyApplications);
+router.get("/request/:tuitionRequestId", auth_1.auth, (0, roleGuard_1.roleGuard)("STUDENT"), tutorApplication_controller_1.TutorApplicationController.getApplicationsByTuitionRequest);
+router.patch("/:id/accept", auth_1.auth, (0, roleGuard_1.roleGuard)("STUDENT"), tutorApplication_controller_1.TutorApplicationController.acceptApplication);
+router.patch("/:id/reject", auth_1.auth, (0, roleGuard_1.roleGuard)("STUDENT"), tutorApplication_controller_1.TutorApplicationController.rejectApplication);
+exports.TutorApplicationRoutes = router;
