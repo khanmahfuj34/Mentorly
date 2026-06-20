@@ -30,6 +30,7 @@ model User {
   tuitionRequests TuitionRequest[]
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
+  TutorApplication TutorApplication[]
 }
 
 model TutorProfile {
@@ -123,6 +124,30 @@ model TuitionRequest {
   description String?
 
   status TuitionStatus @default(OPEN)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  TutorApplication TutorApplication[]
+}
+
+enum ApplicationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model TutorApplication {
+  id String @id @default(cuid())
+
+  tutorId String
+  tutor   User   @relation(fields: [tutorId], references: [id])
+
+  tuitionRequestId String
+  tuitionRequest   TuitionRequest @relation(fields: [tuitionRequestId], references: [id])
+
+  coverLetter String?
+
+  status ApplicationStatus @default(PENDING)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
