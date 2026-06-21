@@ -36,6 +36,7 @@ model User {
   studentReviews   Review[]           @relation("StudentReviews")
   tutorReviews     Review[]           @relation("TutorReviews")
   Availability     Availability[]
+  Notification     Notification[]
 }
 
 model TutorProfile {
@@ -233,4 +234,40 @@ model Availability {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum NotificationType {
+  TUTOR_APPLICATION
+  APPLICATION_ACCEPTED
+  APPLICATION_REJECTED
+  BOOKING_CREATED
+  BOOKING_COMPLETED
+  REVIEW_RECEIVED
+  TUTOR_APPROVED
+  TUTOR_REJECTED
+  SYSTEM
+}
+
+model Notification {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title   String
+  message String
+
+  type NotificationType
+
+  referenceId   String?
+  referenceType String?
+
+  isRead Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([isRead])
+  @@index([createdAt])
 }

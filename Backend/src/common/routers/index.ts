@@ -8,6 +8,7 @@ import { BookingRoutes } from "../modules/booking/booking.route";
 import { ReviewRoutes } from "../modules/review/review.route";
 import { AdminRoutes } from "../modules/admin/admin.route";
 import { AvailabilityRoutes } from "../modules/availability/availability.route";
+import { NotificationRoutes } from "../modules/notification/notification.route";
 
 const router = Router();
 
@@ -20,5 +21,6 @@ router.use("/bookings", BookingRoutes);
 router.use("/reviews", ReviewRoutes);
 router.use("/admin", AdminRoutes);
 router.use("/availability", AvailabilityRoutes);
+router.use("/notifications", NotificationRoutes);
 
 export default router;
