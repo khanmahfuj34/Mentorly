@@ -8,8 +8,63 @@ import { NotificationValidation } from "./notification.validation";
 const router = Router();
 
 /**
- * GET /api/v1/notifications
- * Retrieve my notifications (supports filters: isRead, type, searchTerm, pagination, sorting)
+ * @swagger
+ * tags:
+ *   name: Notifications
+ *   description: Real-time and persistent notification management endpoints for users
+ */
+
+/**
+ * @swagger
+ * /notifications:
+ *   get:
+ *     summary: Get all notifications for the logged-in user
+ *     tags: [Notifications]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: isRead
+ *         schema:
+ *           type: string
+ *           enum: ["true", "false"]
+ *         description: Filter by read/unread status
+ *       - in: query
+ *         name: type
+ *         schema:
+ *           type: string
+ *         description: Filter by specific NotificationType enum
+ *       - in: query
+ *         name: searchTerm
+ *         schema:
+ *           type: string
+ *         description: Search by title or message
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: string
+ *           default: "1"
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: string
+ *           default: "10"
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *           default: "createdAt"
+ *       - in: query
+ *         name: sortOrder
+ *         schema:
+ *           type: string
+ *           enum: [asc, desc]
+ *           default: "desc"
+ *     responses:
+ *       200:
+ *         description: Notifications list retrieved successfully
+ *       401:
+ *         description: Unauthorized
  */
 router.get(
   "/",
@@ -20,8 +75,18 @@ router.get(
 );
 
 /**
- * GET /api/v1/notifications/unread-count
- * Get the count of unread notifications
+ * @swagger
+ * /notifications/unread-count:
+ *   get:
+ *     summary: Retrieve total unread notifications count for the logged-in user
+ *     tags: [Notifications]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Count retrieved successfully
+ *       401:
+ *         description: Unauthorized
  */
 router.get(
   "/unread-count",
@@ -31,9 +96,18 @@ router.get(
 );
 
 /**
- * PATCH /api/v1/notifications/read-all
- * Mark all my notifications as read
- * Note: Must be declared before /:id/read to prevent route parameter collision
+ * @swagger
+ * /notifications/read-all:
+ *   patch:
+ *     summary: Mark all notifications of the logged-in user as read
+ *     tags: [Notifications]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: All notifications marked as read
+ *       401:
+ *         description: Unauthorized
  */
 router.patch(
   "/read-all",
@@ -43,8 +117,29 @@ router.patch(
 );
 
 /**
- * PATCH /api/v1/notifications/:id/read
- * Mark a specific notification as read
+ * @swagger
+ * /notifications/{id}/read:
+ *   patch:
+ *     summary: Mark a single notification as read
+ *     tags: [Notifications]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Notification ID
+ *     responses:
+ *       200:
+ *         description: Notification marked as read
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden (not the owner)
+ *       404:
+ *         description: Notification not found
  */
 router.patch(
   "/:id/read",
@@ -54,8 +149,29 @@ router.patch(
 );
 
 /**
- * DELETE /api/v1/notifications/:id
- * Delete a specific notification
+ * @swagger
+ * /notifications/{id}:
+ *   delete:
+ *     summary: Delete a notification
+ *     tags: [Notifications]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Notification ID
+ *     responses:
+ *       200:
+ *         description: Notification deleted successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
+ *       404:
+ *         description: Notification not found
  */
 router.delete(
   "/:id",
