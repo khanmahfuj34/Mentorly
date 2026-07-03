@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mentorly | Find the Right Tutor. Build a Better Future.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        .animate-float-delayed {
+            animation: float 4s ease-in-out 1s infinite;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-container": "#586076",
+                      "outline": "#777587",
+                      "tertiary": "#41485e",
+                      "on-secondary-fixed-variant": "#005236",
+                      "surface-tint": "#4d44e3",
+                      "surface-variant": "#d3e4fe",
+                      "on-primary-fixed": "#0f0069",
+                      "outline-variant": "#c7c4d8",
+                      "on-secondary-fixed": "#002113",
+                      "surface": "#f8f9ff",
+                      "secondary-fixed": "#6ffbbe",
+                      "secondary-fixed-dim": "#4edea3",
+                      "surface-container": "#e5eeff",
+                      "primary-fixed": "#e2dfff",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-container": "#6cf8bb",
+                      "surface-bright": "#f8f9ff",
+                      "secondary": "#006c49",
+                      "on-secondary-container": "#00714d",
+                      "background": "#f8f9ff",
+                      "primary-fixed-dim": "#c3c0ff",
+                      "surface-dim": "#cbdbf5",
+                      "surface-container-highest": "#d3e4fe",
+                      "surface-container-high": "#dce9ff",
+                      "inverse-on-surface": "#eaf1ff",
+                      "on-error-container": "#93000a",
+                      "error-container": "#ffdad6",
+                      "on-tertiary-container": "#d4dbf5",
+                      "tertiary-fixed": "#dae2fd",
+                      "on-tertiary-fixed": "#131b2e",
+                      "on-primary-fixed-variant": "#3323cc",
+                      "primary": "#3525cd",
+                      "on-surface": "#0b1c30",
+                      "error": "#ba1a1a",
+                      "inverse-primary": "#c3c0ff",
+                      "on-primary": "#ffffff",
+                      "primary-container": "#4f46e5",
+                      "surface-container-low": "#eff4ff",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-container": "#dad7ff",
+                      "inverse-surface": "#213145",
+                      "on-surface-variant": "#464555",
+                      "on-background": "#0b1c30",
+                      "on-error": "#ffffff",
+                      "tertiary-fixed-dim": "#bec6e0",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#3f465c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px",
+                      "24": "24px"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "container-max": "1280px",
+                      "margin-desktop": "40px",
+                      "stack-md": "16px",
+                      "stack-lg": "32px",
+                      "gutter": "24px",
+                      "stack-xl": "64px",
+                      "stack-sm": "8px"
+              },
+              "fontFamily": {
+                      "display": ["Inter"],
+                      "label-md": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                      "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.03em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "-0.01em", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-surface font-body-md text-on-surface">
+<!-- 1. Navbar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm">
+<div class="max-w-container-max mx-auto px-margin-desktop flex justify-between items-center h-20">
+<div class="flex items-center gap-gutter">
+<a class="text-headline-md font-display font-bold text-primary" href="#">Mentorly</a>
+<div class="hidden md:flex items-center gap-6">
+<a class="font-label-md text-primary font-bold border-b-2 border-primary pb-1" href="#">Home</a>
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Find Tutors</a>
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Find Tuition</a>
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Become a Tutor</a>
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">About</a>
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2 rounded-full border border-outline text-label-md font-semibold hover:bg-surface-container transition-all">Login</button>
+<button class="px-6 py-2 rounded-full bg-primary text-on-primary text-label-md font-semibold hover:opacity-90 active:scale-95 transition-all shadow-md">Get Started</button>
+</div>
+</div>
+</nav>
+<!-- 2. Hero Section -->
+<section class="relative pt-32 pb-stack-xl overflow-hidden">
+
+<div class="max-w-container-max mx-auto px-margin-desktop grid lg:grid-cols-2 gap-stack-xl items-center">
+<div class="reveal active">
+<h1 class="font-display text-display mb-stack-md text-on-background">Find the Right Tutor.<br/><span class="text-primary">Build a Better Future.</span></h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg max-w-xl">
+                    Connect with verified tutors, discover tuition opportunities, schedule lessons, and learn with confidence through one trusted platform.
+                </p>
+<div class="flex flex-wrap gap-4 mb-stack-xl">
+<button class="px-8 py-4 rounded-full bg-primary text-on-primary font-semibold flex items-center gap-2 hover:shadow-lg transition-all">
+                        Find a Tutor
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="px-8 py-4 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface font-semibold hover:bg-surface-container transition-all">
+                        Become a Tutor
+                    </button>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter border-t border-outline-variant/30 pt-stack-lg">
+<div>
+<div class="font-display text-headline-md text-primary">10K+</div>
+<div class="font-label-sm text-on-surface-variant uppercase">Students</div>
+</div>
+<div>
+<div class="font-display text-headline-md text-primary">3K+</div>
+<div class="font-label-sm text-on-surface-variant uppercase">Tutors</div>
+</div>
+<div>
+<div class="font-display text-headline-md text-primary">15K+</div>
+<div class="font-label-sm text-on-surface-variant uppercase">Sessions</div>
+</div>
+<div>
+<div class="font-display text-headline-md text-primary">95%</div>
+<div class="font-label-sm text-on-surface-variant uppercase">Satisfaction</div>
+</div>
+</div>
+</div>
+<div class="relative h-[600px] hidden lg:block">
+<!-- Dashboard Preview -->
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-[40px] overflow-hidden border border-outline-variant/30 shadow-2xl">
+<img class="w-full h-full object-cover opacity-60" data-alt="A premium SaaS dashboard interface for a tutoring platform, showing a clean white background with subtle indigo accents. The UI includes calendar views, student lists, and analytical charts with soft shadows and rounded corners, conveying professional reliability and modern elegance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhPaO0T6jA7rXHURsAT7pUkZyZ5Y1X4iK6xHdT8l5vI8bgc1F9v-YT-PEGq_o26FrgzBI2PatwzhiiAnk2JxvQLHRcjD-QzGkdf7cQIZb_pe_mPdFVU_D-ti8OvQtwQGtI0vb8YBsOvKWw-4cMDilYd__9HPpI79x6AVH45wRgT0mXVlFggkYa5zE4DgZu6z47ePr6l0dCQPN_ZxElS8_9pA-FMya4jrWscMnIL7DDpy689b-_Qq9rFzYi3hAfkxjBj-xVe-Qupw"/>
+</div>
+<!-- Floating Cards -->
+<div class="absolute top-10 -left-10 glass-card p-6 rounded-[24px] shadow-xl border border-white/50 w-64 animate-float">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">verified</span>
+</div>
+<div>
+<div class="font-bold">Verified Tutor</div>
+<div class="text-xs text-on-surface-variant">Identity Confirmed</div>
+</div>
+</div>
+<div class="flex gap-1 text-yellow-500">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<div class="absolute bottom-20 -right-8 glass-card p-6 rounded-[24px] shadow-xl border border-white/50 w-72 animate-float-delayed">
+<div class="flex justify-between items-center mb-4">
+<div class="font-bold">New Booking</div>
+<div class="px-2 py-1 bg-secondary-container text-on-secondary-container text-[10px] rounded-full font-bold">URGENT</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest"></div>
+<div class="flex-1">
+<div class="h-2 w-3/4 bg-outline-variant rounded-full mb-2"></div>
+<div class="h-2 w-1/2 bg-outline-variant opacity-50 rounded-full"></div>
+</div>
+</div>
+<button class="w-full mt-4 py-2 bg-primary text-on-primary text-sm rounded-xl font-medium">Accept Session</button>
+</div>
+<div class="absolute top-1/2 -translate-y-1/2 left-1/3 glass-card p-4 rounded-full shadow-lg border border-white/50 animate-float" style="animation-delay: 2s">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">notifications_active</span>
+<span class="text-xs font-semibold">Tutor is online</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Trusted Section -->
+<section class="py-stack-lg bg-surface-container-low/50">
+<div class="max-w-container-max mx-auto px-margin-desktop text-center">
+<p class="font-label-sm text-on-surface-variant uppercase mb-stack-md tracking-widest">Tutors from top universities</p>
+<div class="flex flex-wrap justify-center items-center gap-stack-xl opacity-50 grayscale hover:grayscale-0 transition-all duration-700">
+<span class="font-display text-headline-md font-bold text-outline">DHAKA UNIVERSITY</span>
+<span class="font-display text-headline-md font-bold text-outline">BUET</span>
+<span class="font-display text-headline-md font-bold text-outline">NSU</span>
+<span class="font-display text-headline-md font-bold text-outline">IUT</span>
+<span class="font-display text-headline-md font-bold text-outline">MIST</span>
+</div>
+</div>
+</section>
+<!-- 4. Features Section -->
+<section class="py-stack-xl">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="text-center mb-stack-xl">
+<h2 class="font-display text-headline-lg mb-4">Engineered for Academic Excellence</h2>
+<p class="text-on-surface-variant max-w-2xl mx-auto">Everything you need to find, book, and manage your tutoring sessions in one beautiful interface.</p>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Feature Card -->
+<div class="p-8 bg-surface-container-lowest rounded-[24px] border border-outline-variant/30 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group">
+<div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">verified_user</span>
+</div>
+<h3 class="font-headline-md mb-3">Verified Tutors</h3>
+<p class="text-on-surface-variant">Strict background checks and academic verification for every tutor on our platform.</p>
+</div>
+<div class="p-8 bg-surface-container-lowest rounded-[24px] border border-outline-variant/30 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group">
+<div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">payments</span>
+</div>
+<h3 class="font-headline-md mb-3">Secure Booking</h3>
+<p class="text-on-surface-variant">Safe transactions and escrow-based payments ensure both parties are protected.</p>
+</div>
+<div class="p-8 bg-surface-container-lowest rounded-[24px] border border-outline-variant/30 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group">
+<div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">reviews</span>
+</div>
+<h3 class="font-headline-md mb-3">Real Reviews</h3>
+<p class="text-on-surface-variant">Honest feedback from verified students helps you make the right choice.</p>
+</div>
+<div class="p-8 bg-surface-container-lowest rounded-[24px] border border-outline-variant/30 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group">
+<div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">calendar_month</span>
+</div>
+<h3 class="font-headline-md mb-3">Scheduling</h3>
+<p class="text-on-surface-variant">Integrated calendars make it easy to see availability and book instant slots.</p>
+</div>
+<div class="p-8 bg-surface-container-lowest rounded-[24px] border border-outline-variant/30 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group">
+<div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+</div>
+<h3 class="font-headline-md mb-3">Instant Alerts</h3>
+<p class="text-on-surface-variant">Get notified via SMS and email as soon as your tuition post gets an applicant.</p>
+</div>
+<div class="p-8 bg-surface-container-lowest rounded-[24px] border border-outline-variant/30 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group">
+<div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">chat</span>
+</div>
+<h3 class="font-headline-md mb-3">Direct Chat</h3>
+<p class="text-on-surface-variant">Communicate securely within the app without sharing personal contact info.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. How It Works -->
+<section class="py-stack-xl bg-inverse-surface text-on-primary-container">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<h2 class="font-display text-headline-lg text-center mb-stack-xl text-white">How It Works</h2>
+<div class="grid md:grid-cols-3 gap-12 relative">
+<!-- Connector Line -->
+<div class="hidden md:block absolute top-24 left-0 w-full h-[2px] bg-primary/30 z-0"></div>
+<div class="relative z-10 text-center">
+<div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-inverse-surface shadow-lg">
+<span class="material-symbols-outlined text-white">post_add</span>
+</div>
+<h3 class="text-xl font-bold mb-3 text-white">1. Post Tuition</h3>
+<p class="text-surface-variant opacity-80">Describe your requirements, subject, and budget. It only takes 2 minutes.</p>
+</div>
+<div class="relative z-10 text-center">
+<div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-inverse-surface shadow-lg">
+<span class="material-symbols-outlined text-white">group_add</span>
+</div>
+<h3 class="text-xl font-bold mb-3 text-white">2. Tutors Apply</h3>
+<p class="text-surface-variant opacity-80">Verified tutors apply for your post. Review their profiles and ratings.</p>
+</div>
+<div class="relative z-10 text-center">
+<div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-inverse-surface shadow-lg">
+<span class="material-symbols-outlined text-white">school</span>
+</div>
+<h3 class="text-xl font-bold mb-3 text-white">3. Learning Begins</h3>
+<p class="text-surface-variant opacity-80">Choose the best fit, schedule your first session, and start learning.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. Featured Tutors -->
+<section class="py-stack-xl">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="flex flex-col md:flex-row justify-between items-end mb-stack-lg gap-gutter">
+<div>
+<h2 class="font-display text-headline-lg mb-2">Featured Tutors</h2>
+<p class="text-on-surface-variant">Connect with top-rated educators from leading institutions.</p>
+</div>
+<button class="text-primary font-bold flex items-center gap-1 hover:underline">View All Tutors <span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+<div class="grid md:grid-cols-3 gap-gutter">
+<!-- Tutor Card 1 -->
+<div class="bg-surface-container-lowest rounded-[24px] border border-outline-variant/30 overflow-hidden hover:shadow-2xl transition-all">
+<div class="h-48 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a friendly young man in his late 20s, wearing a smart casual outfit, smiling warmly against a blurred academic background. The lighting is bright and natural, conveying expertise and approachable personality for a premium education platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWapbFLaVVpe4k7F-Sw30YXp9RF5b6OFlDq3lv0cQ6IMgD6X3X3MKmkqjhRjTtNnIPI6uz9brBNvi_6wmepT8l1Qqgrxud_elcFwJS_Ad4mAd6X8wI4yV1w2XufkCgOeYxRGlgKifzxsV4tBxegYIUw7t6Yh-9kcH4nX4pXmxuhFgxAp5NRbTNQoPyPRmYB_A8R-v2LWVsEj6kLMf5qXfleuYpAPVeqe1TWU6APQ6I9ksFLIYAYrDCZnboaDt_IEObH_hqRXbj0w"/>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-bold text-lg">Tanvir Ahmed</h3>
+<p class="text-sm text-on-surface-variant">Mathematics &amp; Physics</p>
+</div>
+<div class="flex items-center gap-1 bg-secondary-container px-2 py-1 rounded-lg text-on-secondary-container font-bold text-sm">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span> 4.9
+                            </div>
+</div>
+<div class="flex items-center gap-2 text-xs text-on-surface-variant mb-4">
+<span class="material-symbols-outlined text-sm">school</span> Dhaka University
+                        </div>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/20">
+<div>
+<div class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Rate</div>
+<div class="font-bold text-primary">৳800/hr</div>
+</div>
+<button class="px-4 py-2 bg-primary/10 text-primary rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition-colors">View Profile</button>
+</div>
+</div>
+</div>
+<!-- Tutor Card 2 -->
+<div class="bg-surface-container-lowest rounded-[24px] border border-outline-variant/30 overflow-hidden hover:shadow-2xl transition-all">
+<div class="h-48 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of a confident young woman with glasses, dressed in a professional blazer, standing in a bright modern library setting. The image uses a clean, high-key lighting style to project intelligence, reliability, and academic success for an elite mentoring service." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBpWGaOcoeOUxmJ8YUVcd3PQT6WbwjFpT0HQh954QCHB0e5LcmObl6As5zoo8D-SQBq8PFm5Sx-U95S_IfQ-8oaaKw1SBFynIL0a-uZc4lYRac7rCjvn8hexUGrRn_TF98O_HFsOM6qUzh6hWWMEangxyziusgPIkTNDpXhc3JkR8DNnR5LqxpQ8iYosO08sMqBhtPpxIeR_uQMHq6DeNrhVIfmNxXq_pBc1H2f3NRoZgpBvkYr3rdTWbqg90_aEtV0s7FuGEnIA"/>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-bold text-lg">Sayeeda Afrin</h3>
+<p class="text-sm text-on-surface-variant">English &amp; Literature</p>
+</div>
+<div class="flex items-center gap-1 bg-secondary-container px-2 py-1 rounded-lg text-on-secondary-container font-bold text-sm">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span> 5.0
+                            </div>
+</div>
+<div class="flex items-center gap-2 text-xs text-on-surface-variant mb-4">
+<span class="material-symbols-outlined text-sm">school</span> NSU Graduate
+                        </div>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/20">
+<div>
+<div class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Rate</div>
+<div class="font-bold text-primary">৳1200/hr</div>
+</div>
+<button class="px-4 py-2 bg-primary/10 text-primary rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition-colors">View Profile</button>
+</div>
+</div>
+</div>
+<!-- Tutor Card 3 -->
+<div class="bg-surface-container-lowest rounded-[24px] border border-outline-variant/30 overflow-hidden hover:shadow-2xl transition-all">
+<div class="h-48 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A clean, studio-lit photo of a young man holding a tablet, looking friendly and professional. He is dressed in a crisp white shirt, appearing helpful and tech-savvy. The background is a soft neutral gray to emphasize his professional and approachable demeanor." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkhG-GT-DEqAFTj7RERe9W7bfP_FIxpPBJkbjvE2qn7iVSSk_Z28iKPPCQvlV-6RNZV3mmd6JnH6VRL6IoE0X3naLAc5lCIt3BMnAHA8dIFXYGHDPHci61AV0ZManexUkWlHndUvE51iOoAYEUkJAd9S0IRXlZjDgeEjVsDFr1DZKJXb0LkW1Y5Iy7_ZAAUHQdM8Gz7Ee-Xln4GHZFeoODT0ressikgYonyFMlDzklHT4tFNLGCioOHs-K-f3M60rZTi-km6KvHA"/>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-bold text-lg">Rahat Chowdhury</h3>
+<p class="text-sm text-on-surface-variant">ICT &amp; Programming</p>
+</div>
+<div class="flex items-center gap-1 bg-secondary-container px-2 py-1 rounded-lg text-on-secondary-container font-bold text-sm">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span> 4.8
+                            </div>
+</div>
+<div class="flex items-center gap-2 text-xs text-on-surface-variant mb-4">
+<span class="material-symbols-outlined text-sm">school</span> BUET Student
+                        </div>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/20">
+<div>
+<div class="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">Rate</div>
+<div class="font-bold text-primary">৳1000/hr</div>
+</div>
+<button class="px-4 py-2 bg-primary/10 text-primary rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition-colors">View Profile</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. Why Mentorly (Comparison) -->
+<section class="py-stack-xl bg-surface-container-low/30">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<h2 class="font-display text-headline-lg text-center mb-stack-xl">The Better Way to Learn</h2>
+<div class="overflow-x-auto">
+<table class="w-full min-w-[600px] border-collapse bg-white rounded-[24px] overflow-hidden shadow-lg">
+<thead>
+<tr class="bg-surface-container-highest">
+<th class="p-6 text-left font-bold text-on-surface border-b border-outline-variant/30">Features</th>
+<th class="p-6 text-left font-bold text-on-surface-variant border-b border-outline-variant/30">Traditional Method</th>
+<th class="p-6 text-left font-bold text-primary border-b border-outline-variant/30">Mentorly</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-outline-variant/10">
+<td class="p-6 font-medium">Source</td>
+<td class="p-6 text-on-surface-variant">Facebook Groups / Local ads</td>
+<td class="p-6 text-primary font-bold">Verified Central Platform</td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<td class="p-6 font-medium">Verification</td>
+<td class="p-6 text-on-surface-variant">None (Self-proclaimed)</td>
+<td class="p-6 text-primary font-bold">Academic &amp; ID Verified</td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<td class="p-6 font-medium">Ratings</td>
+<td class="p-6 text-on-surface-variant">None / Anedoctal</td>
+<td class="p-6 text-primary font-bold">Public Student Reviews</td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<td class="p-6 font-medium">Payment</td>
+<td class="p-6 text-on-surface-variant">Cash / Direct Transfer</td>
+<td class="p-6 text-primary font-bold">Secure Escrow System</td>
+</tr>
+<tr>
+<td class="p-6 font-medium">Communication</td>
+<td class="p-6 text-on-surface-variant">Personal phone numbers</td>
+<td class="p-6 text-primary font-bold">Professional In-app Chat</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- 8. Testimonials -->
+<section class="py-stack-xl overflow-hidden relative">
+<div class="max-w-container-max mx-auto px-margin-desktop relative z-10">
+<h2 class="font-display text-headline-lg text-center mb-stack-xl">Trusted by the Community</h2>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<div class="glass-card p-8 rounded-[24px] border border-outline-variant/30 shadow-sm hover:shadow-md transition-all">
+<div class="flex gap-1 text-yellow-500 mb-4">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-on-surface mb-6">"Mentorly made finding a physics tutor so easy. Within hours of posting, I had three applications from BUET students. The platform is truly seamless."</p>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-primary-fixed"></div>
+<div>
+<div class="font-bold">Arifur Rahman</div>
+<div class="text-xs text-on-surface-variant">HSC Student</div>
+</div>
+</div>
+</div>
+<div class="glass-card p-8 rounded-[24px] border border-outline-variant/30 shadow-sm hover:shadow-md transition-all">
+<div class="flex gap-1 text-yellow-500 mb-4">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-on-surface mb-6">"As a tutor, I love how Mentorly handles payments and scheduling. I can focus purely on teaching without worrying about the logistics or collections."</p>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed"></div>
+<div>
+<div class="font-bold">Farzana Yesmin</div>
+<div class="text-xs text-on-surface-variant">Professional Tutor</div>
+</div>
+</div>
+</div>
+<div class="glass-card p-8 rounded-[24px] border border-outline-variant/30 shadow-sm hover:shadow-md transition-all">
+<div class="flex gap-1 text-yellow-500 mb-4">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-on-surface mb-6">"The verification process gives me peace of mind as a parent. Knowing that my child is learning from a genuine university student is priceless."</p>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed"></div>
+<div>
+<div class="font-bold">Dr. Nazmul Islam</div>
+<div class="text-xs text-on-surface-variant">Parent</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</section>
+<!-- 9. Final CTA -->
+<section class="max-w-container-max mx-auto px-margin-desktop py-stack-xl">
+<div class="bg-primary-container rounded-[40px] p-12 md:p-24 text-center relative overflow-hidden shadow-2xl">
+
+<div class="relative z-10">
+<h2 class="font-display text-display text-white mb-stack-md">Ready to Find Your Perfect Tutor?</h2>
+<p class="text-on-primary-container text-body-lg max-w-2xl mx-auto mb-stack-lg">Join thousands of students and parents who have upgraded their learning experience with Mentorly.</p>
+<div class="flex flex-wrap justify-center gap-4">
+<button class="px-8 py-4 rounded-full bg-white text-primary font-bold hover:shadow-xl transition-all scale-100 hover:scale-105 active:scale-95">Get Started Now</button>
+<button class="px-8 py-4 rounded-full border border-white/30 text-white font-bold hover:bg-white/10 transition-all">Talk to Sales</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 10. Footer -->
+<footer class="bg-surface border-t border-outline-variant/30 py-stack-xl">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="flex flex-col md:flex-row justify-between items-start gap-gutter mb-12">
+<div class="max-w-xs">
+<a class="text-headline-md font-display font-bold text-on-surface" href="#">Mentorly</a>
+<p class="text-on-surface-variant text-sm mt-4">The leading platform for verified tutoring and academic growth in Bangladesh. Connecting brilliance with ambition.</p>
+<div class="flex gap-4 mt-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">face_nod</span></a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">alternate_email</span></a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">link</span></a>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-stack-xl">
+<div>
+<h4 class="font-bold mb-4">Platform</h4>
+<ul class="space-y-2 text-sm text-on-surface-variant">
+<li><a class="hover:text-primary" href="#">Find Tutors</a></li>
+<li><a class="hover:text-primary" href="#">Find Tuition</a></li>
+<li><a class="hover:text-primary" href="#">Become a Tutor</a></li>
+<li><a class="hover:text-primary" href="#">Safety</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-4">Company</h4>
+<ul class="space-y-2 text-sm text-on-surface-variant">
+<li><a class="hover:text-primary" href="#">About Us</a></li>
+<li><a class="hover:text-primary" href="#">FAQ</a></li>
+<li><a class="hover:text-primary" href="#">Support</a></li>
+<li><a class="hover:text-primary" href="#">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-4">Legal</h4>
+<ul class="space-y-2 text-sm text-on-surface-variant">
+<li><a class="hover:text-primary" href="#">Privacy Policy</a></li>
+<li><a class="hover:text-primary" href="#">Terms of Service</a></li>
+<li><a class="hover:text-primary" href="#">Cookie Policy</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="pt-stack-lg border-t border-outline-variant/20 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-on-surface-variant">
+<p>© 2024 Mentorly Inc. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="hover:text-primary transition-colors" href="#">English (BD)</a>
+<a class="hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Simple reveal animation on scroll
+        const reveal = () => {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const revealTop = el.getBoundingClientRect().top;
+                const revealPoint = 150;
+                if (revealTop < windowHeight - revealPoint) {
+                    el.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', reveal);
+        window.addEventListener('load', reveal);
+
+        // Feature cards reveal
+        document.querySelectorAll('.p-8').forEach((card, index) => {
+            card.classList.add('reveal');
+            card.style.transitionDelay = `${index * 0.1}s`;
+        });
+    </script>
+</body></html>

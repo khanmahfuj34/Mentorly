@@ -1,0 +1,43 @@
+import { Tutor } from "@/types/common"
+
+export const TUTORS: Tutor[] = [
+  {
+    id: "1",
+    name: "Asifur Rahman",
+    avatar: "/assets/images/student.jpg",
+    verified: true,
+    subjects: "Mathematics & Physics",
+    institution: "DU (CSE)",
+    rating: 4.9,
+    experience: "4+ Years",
+    classesTaken: "1,200+",
+    availability: "Available Now",
+    salary: 800,
+  },
+  {
+    id: "2",
+    name: "Sumaiya Afroze",
+    avatar: "/assets/images/student.jpg",
+    verified: true,
+    subjects: "English & IELTS",
+    institution: "NSU (English)",
+    rating: 5.0,
+    experience: "5+ Years",
+    classesTaken: "850+",
+    availability: "Weekends",
+    salary: 1200,
+  },
+  {
+    id: "3",
+    name: "Tanvir Ahmed",
+    avatar: "/assets/images/student.jpg",
+    verified: true,
+    subjects: "Physics & ICT",
+    institution: "BUET (ME)",
+    rating: 4.8,
+    experience: "3+ Years",
+    classesTaken: "1,500+",
+    availability: "Daily",
+    salary: 1000,
+  },
+]

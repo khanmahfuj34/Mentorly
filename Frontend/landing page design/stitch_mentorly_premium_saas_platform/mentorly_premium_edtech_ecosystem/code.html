@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mentorly | Find the Right Tutor. Build a Better Future.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        .animate-float-delayed {
+            animation: float 4s ease-in-out 1s infinite;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.1);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#4F46E5",
+                      "on-primary": "#ffffff",
+                      "primary-container": "#4F46E5",
+                      "on-primary-container": "#ffffff",
+                      "surface": "#f8f9ff",
+                      "on-surface": "#0b1c30",
+                      "surface-variant": "#d3e4fe",
+                      "on-surface-variant": "#464555",
+                      "outline-variant": "#c7c4d8",
+                      "secondary": "#006c49",
+                      "secondary-container": "#6cf8bb",
+                      "on-secondary-container": "#00714d",
+                      "surface-container": "#e5eeff",
+                      "surface-container-low": "#eff4ff",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-surface": "#213145",
+                      "outline": "#777587"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px",
+                      "24": "24px"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "container-max": "1280px",
+                      "margin-desktop": "40px",
+                      "stack-md": "16px",
+                      "stack-lg": "32px",
+                      "stack-xl": "64px",
+                      "stack-sm": "8px"
+              },
+              "fontFamily": {
+                      "display": ["Inter"],
+                      "body-md": ["Inter"]
+              },
+              "fontSize": {
+                      "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.03em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-surface font-body-md text-on-surface">
+<!-- 1. Navbar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30">
+<div class="max-w-container-max mx-auto px-margin-desktop flex justify-between items-center h-20">
+<div class="flex items-center gap-12">
+<a class="text-headline-md font-display font-bold text-primary" href="#">Mentorly</a>
+<div class="hidden md:flex items-center gap-6">
+<a class="font-label-md text-primary font-bold border-b-2 border-primary pb-1" href="#">Home</a>
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Find Tutors</a>
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Find Tuition</a>
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Become a Tutor</a>
+<a class="font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">About</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2 rounded-full border border-outline text-label-md font-semibold hover:bg-surface-container transition-all">Login</button>
+<button class="px-6 py-2 rounded-full bg-primary text-on-primary text-label-md font-semibold hover:opacity-90 active:scale-95 transition-all shadow-md">Get Started</button>
+</div>
+</div>
+</nav>
+<!-- 2. Hero Section -->
+<section class="relative pt-32 pb-stack-xl overflow-hidden">
+<div class="max-w-container-max mx-auto px-margin-desktop grid lg:grid-cols-2 gap-stack-xl items-center">
+<div class="reveal active">
+<h1 class="font-display text-display mb-stack-md text-on-surface">Find the Right Tutor.<br/><span class="text-primary">Build a Better Future.</span></h1>
+<p class="font-body-lg text-lg text-on-surface-variant mb-stack-lg max-w-xl">
+                Connect with verified tutors, discover tuition opportunities, schedule lessons, and learn with confidence through one trusted platform.
+            </p>
+<div class="flex flex-wrap gap-4 mb-stack-xl">
+<button class="px-8 py-4 rounded-full bg-primary text-on-primary font-semibold flex items-center gap-2 hover:shadow-lg transition-all">
+                    Find a Tutor <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="px-8 py-4 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface font-semibold hover:bg-surface-container transition-all">
+                    Become a Tutor
+                </button>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 pt-stack-lg border-t border-outline-variant/30">
+<div><div class="text-headline-md font-bold text-primary">10K+</div><div class="text-xs uppercase text-on-surface-variant">Students</div></div>
+<div><div class="text-headline-md font-bold text-primary">3K+</div><div class="text-xs uppercase text-on-surface-variant">Tutors</div></div>
+<div><div class="text-headline-md font-bold text-primary">15K+</div><div class="text-xs uppercase text-on-surface-variant">Sessions</div></div>
+<div><div class="text-headline-md font-bold text-primary">95%</div><div class="text-xs uppercase text-on-surface-variant">Satisfaction</div></div>
+</div>
+</div>
+<div class="relative h-[600px] hidden lg:block reveal active">
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-[40px] overflow-hidden border border-outline-variant/30 shadow-2xl">
+<img alt="Platform Preview" class="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoXn9Qxx3DZDevM-kiTzuyctjULAYdOWdFxT6gF74bwsG2-b5qk_8YFHHCJojshfqBQ2Qlsfy2DasAMORrgDAeoyF5HjqcvlAF64KBOxO47ENZ2TzhLN_Wf7BmLRrknF6vkWpX9HSvb9-w1DWxgHDovS68towrPdO14RWQEeADYfMGbf5mPWcLZhnIvkPzK1-PmXloAs6AXYnRtiny3afRZoBGvEv4S-faFGMqhRJTrxGsZYX8oNo"/>
+</div>
+<!-- Floating Cards -->
+<div class="absolute top-10 -left-10 glass-card p-6 rounded-24 shadow-xl border border-white/50 w-64 animate-float">
+<div class="flex items-center gap-4 mb-3">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-primary">verified</span></div>
+<div><div class="font-bold text-sm">Verified Tutor</div><div class="text-[10px] text-on-surface-variant">Identity Confirmed</div></div>
+</div>
+<div class="flex gap-1 text-yellow-500"><span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span></div>
+</div>
+<div class="absolute bottom-20 -right-8 glass-card p-6 rounded-24 shadow-xl border border-white/50 w-72 animate-float-delayed">
+<div class="flex justify-between items-center mb-4"><div class="font-bold">New Booking</div><div class="px-2 py-1 bg-secondary-container text-on-secondary-container text-[10px] rounded-full font-bold">URGENT</div></div>
+<button class="w-full py-2 bg-primary text-white text-sm rounded-xl font-medium">Accept Session</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 1. Student & Tutor Hero Showcase -->
+<section class="py-stack-xl bg-white">
+<div class="max-w-container-max mx-auto px-margin-desktop grid md:grid-cols-2 gap-12">
+<!-- Student Showcase -->
+<div class="relative group reveal">
+<div class="rounded-24 overflow-hidden h-[500px]">
+<img alt="Student" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClEc7KszxQkb_gUEOb6Ds7HhYoZSTn4t-CKbi6f4MeM57AfDfZRz9pJd0K-Xf-DU6D6Voi7rSxx3x97Suaq8V4pOcDta-EPhHtqdZV0Dz_T-ELXrQWviVDx387BrkeIlqgBcs6ys4SvZROSJy62HE6TdkHBxoyDIsubDKHfooi0_o26elYCaxb8kwtyp3e5w05_OPXbmhJQ8uRVgLo88yN8F-XlYFiG9_moUBphn85AdXMSqXqzfw"/>
+</div>
+<div class="absolute top-8 left-8 glass-card p-5 rounded-24 shadow-lg border border-white/40 animate-float">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold">ST</div>
+<div><p class="font-bold text-sm">Active Learner</p><p class="text-[10px] text-on-surface-variant">500+ Classes Attended</p></div>
+</div>
+</div>
+<div class="absolute bottom-8 right-8 glass-card p-5 rounded-24 shadow-lg border border-white/40 animate-float-delayed">
+<p class="text-xs font-bold text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">bolt</span> 95% Response Rate
+                </p>
+</div>
+</div>
+<!-- Tutor Showcase -->
+<div class="relative group reveal">
+<div class="rounded-24 overflow-hidden h-[500px]">
+<img alt="Tutor" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvW8yfpL8K5GO7cx1gPjZe2lAaRU11eMmBt0-YIJQNmC0_euxn7eEW4Q-TKtqEWfoCEA7IsUEjrPt90kX4jR1c9ExAPnL-mr2x3Gzuu0E96BmJBqjB6UUaGplj5ubgx9cXTi8M9e_Jq7it_qdQaObm6qYZq1X75zXPTI2qkTtLl9TXi37EHe9ECTa--rNyul2Ik_Otyolc-ccZgP7VwF6yTVdP4ZtHFQ_OnjYSNP8ky8pt39Kmt_c"/>
+</div>
+<div class="absolute top-8 right-8 glass-card p-5 rounded-24 shadow-lg border border-white/40 animate-float">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">verified_user</span>
+<div><p class="font-bold text-sm">Verified Tutor</p><p class="text-[10px] text-on-surface-variant">4.9 Overall Rating</p></div>
+</div>
+</div>
+<div class="absolute bottom-8 left-8 glass-card p-5 rounded-24 shadow-lg border border-white/40 animate-float-delayed">
+<p class="text-xs font-bold text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">calendar_today</span> Available Today
+                </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. Trusted Universities -->
+<section class="py-stack-lg bg-surface-container-low/50">
+<div class="max-w-container-max mx-auto px-margin-desktop text-center">
+<p class="text-xs uppercase font-bold text-on-surface-variant mb-stack-md tracking-widest">Tutors from top universities</p>
+<div class="flex flex-wrap justify-center items-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-700">
+<span class="font-bold text-xl hover:text-primary transition-colors cursor-default">BUET</span>
+<span class="font-bold text-xl hover:text-primary transition-colors cursor-default">DU</span>
+<span class="font-bold text-xl hover:text-primary transition-colors cursor-default">JU</span>
+<span class="font-bold text-xl hover:text-primary transition-colors cursor-default">NSU</span>
+<span class="font-bold text-xl hover:text-primary transition-colors cursor-default">BRAC</span>
+<span class="font-bold text-xl hover:text-primary transition-colors cursor-default">AIUB</span>
+<span class="font-bold text-xl hover:text-primary transition-colors cursor-default">EWU</span>
+<span class="font-bold text-xl hover:text-primary transition-colors cursor-default">CUET</span>
+<span class="font-bold text-xl hover:text-primary transition-colors cursor-default">RUET</span>
+<span class="font-bold text-xl hover:text-primary transition-colors cursor-default">KUET</span>
+</div>
+</div>
+</section>
+<!-- 3. Popular Subjects Grid -->
+<section class="py-stack-xl">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="text-center mb-stack-xl reveal">
+<h2 class="font-display text-headline-lg mb-4">Popular Subjects</h2>
+<p class="text-on-surface-variant max-w-2xl mx-auto">Master any subject with specialized guidance from our expert tutors.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+<!-- Subjects -->
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift text-center">
+<span class="material-symbols-outlined text-primary text-3xl mb-3">functions</span>
+<h4 class="font-bold text-sm">Mathematics</h4>
+<p class="text-[10px] text-on-surface-variant">450+ Tutors</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift text-center">
+<span class="material-symbols-outlined text-primary text-3xl mb-3">precision_manufacturing</span>
+<h4 class="font-bold text-sm">Physics</h4>
+<p class="text-[10px] text-on-surface-variant">380+ Tutors</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift text-center">
+<span class="material-symbols-outlined text-primary text-3xl mb-3">science</span>
+<h4 class="font-bold text-sm">Chemistry</h4>
+<p class="text-[10px] text-on-surface-variant">320+ Tutors</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift text-center">
+<span class="material-symbols-outlined text-primary text-3xl mb-3">biotech</span>
+<h4 class="font-bold text-sm">Biology</h4>
+<p class="text-[10px] text-on-surface-variant">290+ Tutors</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift text-center">
+<span class="material-symbols-outlined text-primary text-3xl mb-3">computer</span>
+<h4 class="font-bold text-sm">ICT</h4>
+<p class="text-[10px] text-on-surface-variant">210+ Tutors</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift text-center">
+<span class="material-symbols-outlined text-primary text-3xl mb-3">translate</span>
+<h4 class="font-bold text-sm">English</h4>
+<p class="text-[10px] text-on-surface-variant">540+ Tutors</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift text-center">
+<span class="material-symbols-outlined text-primary text-3xl mb-3">history_edu</span>
+<h4 class="font-bold text-sm">Bangla</h4>
+<p class="text-[10px] text-on-surface-variant">150+ Tutors</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift text-center">
+<span class="material-symbols-outlined text-primary text-3xl mb-3">account_balance_wallet</span>
+<h4 class="font-bold text-sm">Accounting</h4>
+<p class="text-[10px] text-on-surface-variant">180+ Tutors</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift text-center">
+<span class="material-symbols-outlined text-primary text-3xl mb-3">payments</span>
+<h4 class="font-bold text-sm">Finance</h4>
+<p class="text-[10px] text-on-surface-variant">140+ Tutors</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift text-center">
+<span class="material-symbols-outlined text-primary text-3xl mb-3">trending_up</span>
+<h4 class="font-bold text-sm">Economics</h4>
+<p class="text-[10px] text-on-surface-variant">165+ Tutors</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift text-center">
+<span class="material-symbols-outlined text-primary text-3xl mb-3">code</span>
+<h4 class="font-bold text-sm">Programming</h4>
+<p class="text-[10px] text-on-surface-variant">280+ Tutors</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift text-center">
+<span class="material-symbols-outlined text-primary text-3xl mb-3">school</span>
+<h4 class="font-bold text-sm">IELTS/GRE</h4>
+<p class="text-[10px] text-on-surface-variant">410+ Tutors</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Education Level -->
+<section class="py-stack-xl bg-surface-container-low/30">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<h2 class="font-display text-headline-lg text-center mb-stack-xl reveal">Learning for Every Stage</h2>
+<div class="flex flex-wrap justify-center gap-4 reveal">
+<span class="px-6 py-3 bg-white rounded-full border border-outline-variant/30 hover:bg-primary hover:text-white transition-all cursor-pointer font-medium shadow-sm">Play / Kinder</span>
+<span class="px-6 py-3 bg-white rounded-full border border-outline-variant/30 hover:bg-primary hover:text-white transition-all cursor-pointer font-medium shadow-sm">Primary</span>
+<span class="px-6 py-3 bg-white rounded-full border border-outline-variant/30 hover:bg-primary hover:text-white transition-all cursor-pointer font-medium shadow-sm">Secondary</span>
+<span class="px-6 py-3 bg-white rounded-full border border-outline-variant/30 hover:bg-primary hover:text-white transition-all cursor-pointer font-medium shadow-sm">SSC / JSC</span>
+<span class="px-6 py-3 bg-white rounded-full border border-outline-variant/30 hover:bg-primary hover:text-white transition-all cursor-pointer font-medium shadow-sm">HSC</span>
+<span class="px-6 py-3 bg-white rounded-full border border-outline-variant/30 hover:bg-primary hover:text-white transition-all cursor-pointer font-medium shadow-sm">O Level / A Level</span>
+<span class="px-6 py-3 bg-white rounded-full border border-outline-variant/30 hover:bg-primary hover:text-white transition-all cursor-pointer font-medium shadow-sm">Uni Admission</span>
+<span class="px-6 py-3 bg-white rounded-full border border-outline-variant/30 hover:bg-primary hover:text-white transition-all cursor-pointer font-medium shadow-sm">Honours / Masters</span>
+<span class="px-6 py-3 bg-white rounded-full border border-outline-variant/30 hover:bg-primary hover:text-white transition-all cursor-pointer font-medium shadow-sm">Professional Skills</span>
+</div>
+</div>
+</section>
+<!-- 5. Browse by District -->
+<section class="py-stack-xl">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<h2 class="font-display text-headline-lg text-center mb-stack-xl reveal">Browse by District</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary"><span class="material-symbols-outlined">location_on</span></div>
+<div><h4 class="font-bold">Dhaka</h4><p class="text-xs text-on-surface-variant">2.4k+ Tutors</p></div>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary"><span class="material-symbols-outlined">location_on</span></div>
+<div><h4 class="font-bold">Chattogram</h4><p class="text-xs text-on-surface-variant">1.1k+ Tutors</p></div>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary"><span class="material-symbols-outlined">location_on</span></div>
+<div><h4 class="font-bold">Sylhet</h4><p class="text-xs text-on-surface-variant">600+ Tutors</p></div>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary"><span class="material-symbols-outlined">location_on</span></div>
+<div><h4 class="font-bold">Khulna</h4><p class="text-xs text-on-surface-variant">450+ Tutors</p></div>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary"><span class="material-symbols-outlined">location_on</span></div>
+<div><h4 class="font-bold">Rajshahi</h4><p class="text-xs text-on-surface-variant">520+ Tutors</p></div>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary"><span class="material-symbols-outlined">location_on</span></div>
+<div><h4 class="font-bold">Barishal</h4><p class="text-xs text-on-surface-variant">280+ Tutors</p></div>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary"><span class="material-symbols-outlined">location_on</span></div>
+<div><h4 class="font-bold">Mymensingh</h4><p class="text-xs text-on-surface-variant">330+ Tutors</p></div>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary"><span class="material-symbols-outlined">location_on</span></div>
+<div><h4 class="font-bold">Rangpur</h4><p class="text-xs text-on-surface-variant">310+ Tutors</p></div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. Enhanced Featured Tutors -->
+<section class="py-stack-xl bg-white">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="flex justify-between items-end mb-stack-xl reveal">
+<div><h2 class="font-display text-headline-lg">Top Rated Tutors</h2><p class="text-on-surface-variant">Selected experts with proven track records.</p></div>
+<button class="text-primary font-bold flex items-center gap-2 hover:underline">View All Tutors <span class="material-symbols-outlined">arrow_forward</span></button>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<!-- Tutor Card -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-24 overflow-hidden group hover-lift">
+<div class="h-56 relative overflow-hidden">
+<img alt="Tutor" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAN0B05coS-hIouePOF55OJi9z-2sPEryTp_eIx47bkphDXDxIkC2r36ckSwMC1oPZ5tUMIPZ83B0hJp_X0MZe-z2IaIlwmXZn8U2Jaa9HvBINofU27lMod5X1c2v5HNoLfwK9xIBrNGAIeg-0rVrOaFvhEqKTv4Om6FjE4LR0OJO0mRdDHAhlkbyd2qp0FYJIXJGuPjrEiJDl2xky7Wd3sh56OhrTzhCji8HmtAACocQ85Hwae-xw"/>
+<div class="absolute top-4 right-4 px-3 py-1 bg-white/90 backdrop-blur rounded-full text-xs font-bold flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-xs text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span> 4.9
+                    </div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-2">
+<h3 class="font-bold text-lg">Asifur Rahman</h3>
+<span class="material-symbols-outlined text-primary text-lg">verified</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-4">Mathematics &amp; Physics • DU (CSE)</p>
+<div class="space-y-2 mb-6">
+<div class="flex justify-between text-xs"><span class="text-on-surface-variant">Experience</span><span class="font-bold">4+ Years</span></div>
+<div class="flex justify-between text-xs"><span class="text-on-surface-variant">Classes Taken</span><span class="font-bold">1,200+</span></div>
+<div class="flex justify-between text-xs"><span class="text-on-surface-variant">Availability</span><span class="text-secondary font-bold">Available Now</span></div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/20">
+<div><p class="text-[10px] uppercase text-on-surface-variant font-bold">Salary/Hr</p><p class="text-primary font-bold text-lg">৳800</p></div>
+<div class="flex gap-2">
+<button class="px-4 py-2 border border-outline-variant rounded-xl text-xs font-bold hover:bg-surface-container transition-all">Profile</button>
+<button class="px-4 py-2 bg-primary text-white rounded-xl text-xs font-bold shadow-md hover:opacity-90">Book Now</button>
+</div>
+</div>
+</div>
+</div>
+<!-- More Cards... -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-24 overflow-hidden group hover-lift">
+<div class="h-56 relative overflow-hidden">
+<img alt="Tutor" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeFO2HHpw8Or7PlV_IQZLgku_-IWNjXdHdTnrvykUI_xyT7uWcHFHm8mY-CUXk5_O3jqxEjeeLAqQqd4R1khpJiBzXwog5zDRPKFAmgehQFazvk9xaqd_H9-0WKB-r-OPiBokVrXKYsZ1C4s3FL6hf-HhE5NqdkjFrnBuTwt5Ma1o7X2qHsZG7F6iyTrKDRiHge0i7YWC1IH6Jfe5bpbO-uldl1Nk2PE_tqAWzR-fq1e_rckN05Tk"/>
+<div class="absolute top-4 right-4 px-3 py-1 bg-white/90 backdrop-blur rounded-full text-xs font-bold flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-xs text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span> 5.0
+                    </div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-2">
+<h3 class="font-bold text-lg">Sumaiya Afroze</h3>
+<span class="material-symbols-outlined text-primary text-lg">verified</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-4">English &amp; IELTS • NSU (English)</p>
+<div class="space-y-2 mb-6">
+<div class="flex justify-between text-xs"><span class="text-on-surface-variant">Experience</span><span class="font-bold">5+ Years</span></div>
+<div class="flex justify-between text-xs"><span class="text-on-surface-variant">Classes Taken</span><span class="font-bold">850+</span></div>
+<div class="flex justify-between text-xs"><span class="text-on-surface-variant">Availability</span><span class="text-secondary font-bold">Weekends</span></div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/20">
+<div><p class="text-[10px] uppercase text-on-surface-variant font-bold">Salary/Hr</p><p class="text-primary font-bold text-lg">৳1200</p></div>
+<div class="flex gap-2">
+<button class="px-4 py-2 border border-outline-variant rounded-xl text-xs font-bold hover:bg-surface-container transition-all">Profile</button>
+<button class="px-4 py-2 bg-primary text-white rounded-xl text-xs font-bold shadow-md hover:opacity-90">Book Now</button>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-24 overflow-hidden group hover-lift">
+<div class="h-56 relative overflow-hidden">
+<img alt="Tutor" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfnhcRQedwbPn-ljfuspNYX_mcbidGf3ZKRl78Yh_00g_ygxA6zA_PwefpxfQT5KTW792F00_H0RmBCtTzpcFQmYBEnrERZA0bGg_ejpZGAFlPhtxll8qp75yaGUdLNi1texUT7WNiBotszIqNko9BCdtcPPhuG1QJsbsa6sPTaz08XDeR5c7JSijQLGXB9NnpmE3G8d3yMEUXYmrHQiupicQV-BWRZETgv8oypInaNDeY1-ewtw0"/>
+<div class="absolute top-4 right-4 px-3 py-1 bg-white/90 backdrop-blur rounded-full text-xs font-bold flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-xs text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span> 4.8
+                    </div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-2">
+<h3 class="font-bold text-lg">Tanvir Ahmed</h3>
+<span class="material-symbols-outlined text-primary text-lg">verified</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-4">Physics &amp; ICT • BUET (ME)</p>
+<div class="space-y-2 mb-6">
+<div class="flex justify-between text-xs"><span class="text-on-surface-variant">Experience</span><span class="font-bold">3+ Years</span></div>
+<div class="flex justify-between text-xs"><span class="text-on-surface-variant">Classes Taken</span><span class="font-bold">1,500+</span></div>
+<div class="flex justify-between text-xs"><span class="text-on-surface-variant">Availability</span><span class="text-secondary font-bold">Daily</span></div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/20">
+<div><p class="text-[10px] uppercase text-on-surface-variant font-bold">Salary/Hr</p><p class="text-primary font-bold text-lg">৳1000</p></div>
+<div class="flex gap-2">
+<button class="px-4 py-2 border border-outline-variant rounded-xl text-xs font-bold hover:bg-surface-container transition-all">Profile</button>
+<button class="px-4 py-2 bg-primary text-white rounded-xl text-xs font-bold shadow-md hover:opacity-90">Book Now</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. Latest Tuition Jobs -->
+<section class="py-stack-xl bg-surface-container-low/20">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<h2 class="font-display text-headline-lg text-center mb-stack-xl reveal">Latest Tuition Jobs</h2>
+<div class="grid gap-6">
+<!-- Job Card -->
+<div class="bg-white p-6 rounded-24 border border-outline-variant/30 flex flex-wrap md:flex-nowrap justify-between items-center gap-6 hover:shadow-lg transition-all reveal">
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-2">
+<h4 class="font-bold text-lg text-primary">Need Mathematics Tutor for Class 10</h4>
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded">NEW</span>
+</div>
+<div class="flex flex-wrap gap-4 text-xs text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">location_on</span> Banani, Dhaka</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">payments</span> ৳12,000/mo</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">calendar_month</span> 3 days/week</span>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<div class="text-right hidden sm:block">
+<p class="text-[10px] text-on-surface-variant uppercase font-bold">Posted</p>
+<p class="text-sm font-bold">2 Hours Ago</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2 border border-outline-variant rounded-xl font-bold text-sm hover:bg-surface-container transition-all">Details</button>
+<button class="px-6 py-2 bg-primary text-white rounded-xl font-bold text-sm shadow-md hover:opacity-90">Apply Now</button>
+</div>
+</div>
+</div>
+<!-- More Jobs -->
+<div class="bg-white p-6 rounded-24 border border-outline-variant/30 flex flex-wrap md:flex-nowrap justify-between items-center gap-6 hover:shadow-lg transition-all reveal">
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-2">
+<h4 class="font-bold text-lg text-primary">Physics &amp; Chemistry for HSC Student</h4>
+</div>
+<div class="flex flex-wrap gap-4 text-xs text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">location_on</span> Uttara, Dhaka</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">payments</span> ৳15,000/mo</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">calendar_month</span> 4 days/week</span>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<div class="text-right hidden sm:block">
+<p class="text-[10px] text-on-surface-variant uppercase font-bold">Posted</p>
+<p class="text-sm font-bold">5 Hours Ago</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2 border border-outline-variant rounded-xl font-bold text-sm hover:bg-surface-container transition-all">Details</button>
+<button class="px-6 py-2 bg-primary text-white rounded-xl font-bold text-sm shadow-md hover:opacity-90">Apply Now</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 8 & 9. Dashboard Previews -->
+<section class="py-stack-xl">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="text-center mb-stack-xl reveal">
+<h2 class="font-display text-headline-lg mb-4">Powerful Role-Based Dashboards</h2>
+<p class="text-on-surface-variant max-w-2xl mx-auto">Complete control over your academic journey, whether you are teaching or learning.</p>
+</div>
+<div class="grid lg:grid-cols-2 gap-12">
+<!-- Student Dashboard -->
+<div class="reveal">
+<p class="font-bold text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined">person</span> Student Dashboard
+                </p>
+<div class="bg-white rounded-24 border border-outline-variant/30 shadow-2xl overflow-hidden p-6">
+<div class="flex items-center justify-between mb-6">
+<div class="h-4 w-32 bg-surface-container rounded-full"></div>
+<div class="flex gap-2"><div class="w-8 h-8 rounded-full bg-surface-container"></div><div class="w-8 h-8 rounded-full bg-primary/20"></div></div>
+</div>
+<div class="grid grid-cols-3 gap-4 mb-6">
+<div class="h-20 bg-surface-container/50 rounded-xl p-3"><div class="h-2 w-12 bg-outline-variant rounded mb-2"></div><div class="h-4 w-16 bg-primary/40 rounded"></div></div>
+<div class="h-20 bg-surface-container/50 rounded-xl p-3"><div class="h-2 w-12 bg-outline-variant rounded mb-2"></div><div class="h-4 w-16 bg-primary/40 rounded"></div></div>
+<div class="h-20 bg-surface-container/50 rounded-xl p-3"><div class="h-2 w-12 bg-outline-variant rounded mb-2"></div><div class="h-4 w-16 bg-primary/40 rounded"></div></div>
+</div>
+<div class="space-y-3">
+<div class="h-12 bg-surface-container/30 rounded-xl border border-outline-variant/10 flex items-center px-4 justify-between"><div class="h-2 w-48 bg-outline-variant/40 rounded"></div><div class="h-4 w-4 bg-primary/40 rounded"></div></div>
+<div class="h-12 bg-surface-container/30 rounded-xl border border-outline-variant/10 flex items-center px-4 justify-between"><div class="h-2 w-48 bg-outline-variant/40 rounded"></div><div class="h-4 w-4 bg-primary/40 rounded"></div></div>
+<div class="h-12 bg-surface-container/30 rounded-xl border border-outline-variant/10 flex items-center px-4 justify-between"><div class="h-2 w-48 bg-outline-variant/40 rounded"></div><div class="h-4 w-4 bg-primary/40 rounded"></div></div>
+</div>
+</div>
+<div class="mt-6 flex flex-wrap gap-4 justify-center md:justify-start">
+<div class="text-xs px-3 py-1 bg-surface-container text-primary font-bold rounded-full">Active Bookings</div>
+<div class="text-xs px-3 py-1 bg-surface-container text-primary font-bold rounded-full">Payment History</div>
+<div class="text-xs px-3 py-1 bg-surface-container text-primary font-bold rounded-full">Analytics</div>
+</div>
+</div>
+<!-- Tutor Dashboard -->
+<div class="reveal">
+<p class="font-bold text-secondary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined">school</span> Tutor Dashboard
+                </p>
+<div class="bg-inverse-surface rounded-24 shadow-2xl overflow-hidden p-6">
+<div class="flex items-center justify-between mb-6">
+<div class="h-4 w-32 bg-white/10 rounded-full"></div>
+<div class="flex gap-2"><div class="w-8 h-8 rounded-full bg-white/5"></div><div class="w-8 h-8 rounded-full bg-secondary/40"></div></div>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="h-32 bg-white/5 rounded-xl p-4 flex flex-col justify-end"><div class="h-2 w-16 bg-white/20 rounded mb-2"></div><div class="h-6 w-24 bg-secondary/80 rounded"></div></div>
+<div class="h-32 bg-white/5 rounded-xl p-4 flex flex-col justify-end"><div class="h-2 w-16 bg-white/20 rounded mb-2"></div><div class="h-6 w-24 bg-secondary/80 rounded"></div></div>
+</div>
+<div class="space-y-4">
+<div class="h-2 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full w-4/5 bg-secondary"></div></div>
+<div class="h-2 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full w-2/3 bg-secondary"></div></div>
+</div>
+</div>
+<div class="mt-6 flex flex-wrap gap-4 justify-center md:justify-start">
+<div class="text-xs px-3 py-1 bg-surface-container text-secondary font-bold rounded-full">Today's Classes</div>
+<div class="text-xs px-3 py-1 bg-surface-container text-secondary font-bold rounded-full">Earnings Tracking</div>
+<div class="text-xs px-3 py-1 bg-surface-container text-secondary font-bold rounded-full">Reviews</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 10. Platform Features (12 cards) -->
+<section class="py-stack-xl bg-surface-container-low/30">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<h2 class="font-display text-headline-lg text-center mb-stack-xl reveal">Platform Built for Trust</h2>
+<div class="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
+<!-- Features 12 cards -->
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift">
+<span class="material-symbols-outlined text-primary mb-3">verified</span>
+<h4 class="font-bold mb-2">Verified Tutors</h4>
+<p class="text-xs text-on-surface-variant">Manual ID and academic document verification.</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift">
+<span class="material-symbols-outlined text-primary mb-3">psychology</span>
+<h4 class="font-bold mb-2">Smart Matching</h4>
+<p class="text-xs text-on-surface-variant">Algorithm to find the best tutor for your needs.</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift">
+<span class="material-symbols-outlined text-primary mb-3">calendar_month</span>
+<h4 class="font-bold mb-2">Scheduling</h4>
+<p class="text-xs text-on-surface-variant">Integrated calendar for seamless session booking.</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift">
+<span class="material-symbols-outlined text-primary mb-3">shield_lock</span>
+<h4 class="font-bold mb-2">Secure Booking</h4>
+<p class="text-xs text-on-surface-variant">Payments held in escrow until session completion.</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift">
+<span class="material-symbols-outlined text-primary mb-3">reviews</span>
+<h4 class="font-bold mb-2">Real Reviews</h4>
+<p class="text-xs text-on-surface-variant">Feedback only from students who completed a class.</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift">
+<span class="material-symbols-outlined text-primary mb-3">notifications_active</span>
+<h4 class="font-bold mb-2">Instant Alerts</h4>
+<p class="text-xs text-on-surface-variant">SMS &amp; Push notifications for new applications.</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift">
+<span class="material-symbols-outlined text-primary mb-3">fingerprint</span>
+<h4 class="font-bold mb-2">Verification</h4>
+<p class="text-xs text-on-surface-variant">Two-factor authentication for data security.</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift">
+<span class="material-symbols-outlined text-primary mb-3">image</span>
+<h4 class="font-bold mb-2">HD Profiles</h4>
+<p class="text-xs text-on-surface-variant">Clear professional imagery for every tutor.</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift">
+<span class="material-symbols-outlined text-primary mb-3">search</span>
+<h4 class="font-bold mb-2">Fast Search</h4>
+<p class="text-xs text-on-surface-variant">Real-time filters for subject, location, and fee.</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift">
+<span class="material-symbols-outlined text-primary mb-3">dashboard</span>
+<h4 class="font-bold mb-2">Role Dashboards</h4>
+<p class="text-xs text-on-surface-variant">Tailored interfaces for students and tutors.</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift">
+<span class="material-symbols-outlined text-primary mb-3">forum</span>
+<h4 class="font-bold mb-2">Real Time Chat</h4>
+<p class="text-xs text-on-surface-variant">Direct communication without sharing phone numbers.</p>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/30 hover-lift">
+<span class="material-symbols-outlined text-primary mb-3">smartphone</span>
+<h4 class="font-bold mb-2">Mobile Friendly</h4>
+<p class="text-xs text-on-surface-variant">Optimized experience for web and mobile browsers.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 11 & 12. Student & Tutor Journeys (Timeline) -->
+<section class="py-stack-xl overflow-hidden">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<h2 class="font-display text-headline-lg text-center mb-stack-xl reveal">Your Success Journey</h2>
+<div class="grid lg:grid-cols-2 gap-16 relative">
+<!-- Central Line -->
+<div class="hidden lg:block absolute left-1/2 top-0 bottom-0 w-[2px] bg-outline-variant/30 transform -translate-x-1/2"></div>
+<!-- Student Journey -->
+<div class="reveal">
+<h3 class="text-xl font-bold text-primary mb-8 text-center lg:text-right">For Students</h3>
+<div class="space-y-8 relative">
+<div class="flex items-center gap-6 lg:flex-row-reverse">
+<div class="w-12 h-12 rounded-full bg-primary text-white flex-shrink-0 flex items-center justify-center font-bold relative z-10">1</div>
+<div class="lg:text-right flex-1"><h4 class="font-bold">Create Account</h4><p class="text-xs text-on-surface-variant">Join Mentorly in seconds.</p></div>
+</div>
+<div class="flex items-center gap-6 lg:flex-row-reverse">
+<div class="w-12 h-12 rounded-full bg-primary text-white flex-shrink-0 flex items-center justify-center font-bold relative z-10">2</div>
+<div class="lg:text-right flex-1"><h4 class="font-bold">Post Tuition</h4><p class="text-xs text-on-surface-variant">Describe your needs and budget.</p></div>
+</div>
+<div class="flex items-center gap-6 lg:flex-row-reverse">
+<div class="w-12 h-12 rounded-full bg-primary text-white flex-shrink-0 flex items-center justify-center font-bold relative z-10">3</div>
+<div class="lg:text-right flex-1"><h4 class="font-bold">Choose Tutor</h4><p class="text-xs text-on-surface-variant">Review verified applicants.</p></div>
+</div>
+<div class="flex items-center gap-6 lg:flex-row-reverse">
+<div class="w-12 h-12 rounded-full bg-primary text-white flex-shrink-0 flex items-center justify-center font-bold relative z-10">4</div>
+<div class="lg:text-right flex-1"><h4 class="font-bold">Start Learning</h4><p class="text-xs text-on-surface-variant">Book classes and grow.</p></div>
+</div>
+</div>
+</div>
+<!-- Tutor Journey -->
+<div class="reveal">
+<h3 class="text-xl font-bold text-secondary mb-8 text-center lg:text-left">For Tutors</h3>
+<div class="space-y-8 relative">
+<div class="flex items-center gap-6">
+<div class="w-12 h-12 rounded-full bg-secondary text-white flex-shrink-0 flex items-center justify-center font-bold relative z-10">1</div>
+<div class="flex-1"><h4 class="font-bold">Register Profile</h4><p class="text-xs text-on-surface-variant">Build your academic resume.</p></div>
+</div>
+<div class="flex items-center gap-6">
+<div class="w-12 h-12 rounded-full bg-secondary text-white flex-shrink-0 flex items-center justify-center font-bold relative z-10">2</div>
+<div class="flex-1"><h4 class="font-bold">Get Verified</h4><p class="text-xs text-on-surface-variant">Unlock the trust badge.</p></div>
+</div>
+<div class="flex items-center gap-6">
+<div class="w-12 h-12 rounded-full bg-secondary text-white flex-shrink-0 flex items-center justify-center font-bold relative z-10">3</div>
+<div class="flex-1"><h4 class="font-bold">Apply to Jobs</h4><p class="text-xs text-on-surface-variant">Connect with students.</p></div>
+</div>
+<div class="flex items-center gap-6">
+<div class="w-12 h-12 rounded-full bg-secondary text-white flex-shrink-0 flex items-center justify-center font-bold relative z-10">4</div>
+<div class="flex-1"><h4 class="font-bold">Teach &amp; Earn</h4><p class="text-xs text-on-surface-variant">Start your teaching career.</p></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 13. Enhanced Why Mentorly (Comparison) -->
+<section class="py-stack-xl bg-white">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<h2 class="font-display text-headline-lg text-center mb-stack-xl reveal">The Better Way to Learn</h2>
+<div class="overflow-x-auto reveal">
+<table class="w-full min-w-[700px] border-collapse bg-white rounded-24 overflow-hidden shadow-xl border border-outline-variant/20">
+<thead>
+<tr class="bg-surface-container">
+<th class="p-6 text-left font-bold text-on-surface">Features</th>
+<th class="p-6 text-left font-bold text-on-surface-variant">Traditional Method</th>
+<th class="p-6 text-left font-bold text-primary">Mentorly Platform</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-outline-variant/10"><td class="p-6 font-medium">Tutor Source</td><td class="p-6 text-on-surface-variant">Facebook / Local Flyers</td><td class="p-6 text-primary font-bold">Verified Central Platform</td></tr>
+<tr class="border-b border-outline-variant/10"><td class="p-6 font-medium">Verification</td><td class="p-6 text-on-surface-variant">Self-proclaimed claims</td><td class="p-6 text-primary font-bold">Academic &amp; ID Documents Verified</td></tr>
+<tr class="border-b border-outline-variant/10"><td class="p-6 font-medium">Selection Process</td><td class="p-6 text-on-surface-variant">Luck-based / Random</td><td class="p-6 text-primary font-bold">Rating &amp; Review Comparison</td></tr>
+<tr class="border-b border-outline-variant/10"><td class="p-6 font-medium">Security</td><td class="p-6 text-on-surface-variant">Cash (High Risk)</td><td class="p-6 text-primary font-bold">Secure Escrow Protection</td></tr>
+<tr><td class="p-6 font-medium">Management</td><td class="p-6 text-on-surface-variant">Personal phone / Pen-paper</td><td class="p-6 text-primary font-bold">Smart Digital Dashboard</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- 14. Success Statistics -->
+<section class="py-stack-xl bg-primary text-white">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="grid grid-cols-2 md:grid-cols-5 gap-8 text-center reveal">
+<div><div class="text-4xl font-bold mb-2">15k+</div><div class="text-sm opacity-80">Students Joined</div></div>
+<div><div class="text-4xl font-bold mb-2">3.5k+</div><div class="text-sm opacity-80">Verified Tutors</div></div>
+<div><div class="text-4xl font-bold mb-2">25k+</div><div class="text-sm opacity-80">Sessions Done</div></div>
+<div><div class="text-4xl font-bold mb-2">4.9</div><div class="text-sm opacity-80">Avg. Rating</div></div>
+<div><div class="text-4xl font-bold mb-2">98%</div><div class="text-sm opacity-80">Success Rate</div></div>
+</div>
+</div>
+</section>
+<!-- 15. Testimonials -->
+<section class="py-stack-xl bg-surface-container-low/20">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<h2 class="font-display text-headline-lg text-center mb-stack-xl reveal">Loved by Everyone</h2>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="glass-card p-8 rounded-24 border border-outline-variant/30 reveal shadow-sm hover-lift">
+<p class="text-sm italic mb-6">"Found a BUET tutor for my HSC physics within 2 hours. The verification process is a lifesaver for parents like me."</p>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-primary/20 rounded-full"></div>
+<div><h4 class="font-bold text-sm">Rafiqul Alam</h4><p class="text-[10px] text-on-surface-variant">Parent, Dhaka</p></div>
+</div>
+</div>
+<div class="glass-card p-8 rounded-24 border border-outline-variant/30 reveal shadow-sm hover-lift" style="transition-delay: 0.1s">
+<p class="text-sm italic mb-6">"As a tutor, Mentorly helped me manage 4 tuitions easily while keeping my studies balanced. Payment security is top-notch."</p>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-secondary/20 rounded-full"></div>
+<div><h4 class="font-bold text-sm">Sayeeda Tabassum</h4><p class="text-[10px] text-on-surface-variant">DU Student / Tutor</p></div>
+</div>
+</div>
+<div class="glass-card p-8 rounded-24 border border-outline-variant/30 reveal shadow-sm hover-lift" style="transition-delay: 0.2s">
+<p class="text-sm italic mb-6">"The app is so smooth. I can track my lesson history and pay my fees with just a few clicks. Highly recommended!"</p>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-primary/20 rounded-full"></div>
+<div><h4 class="font-bold text-sm">Mahir Khan</h4><p class="text-[10px] text-on-surface-variant">HSC Candidate</p></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 16. FAQ -->
+<section class="py-stack-xl">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<h2 class="font-display text-headline-lg text-center mb-stack-xl reveal">Frequently Asked Questions</h2>
+<div class="max-w-3xl mx-auto space-y-4">
+<div class="p-6 bg-white rounded-24 border border-outline-variant/20 hover:border-primary/30 transition-all reveal cursor-pointer group">
+<div class="flex justify-between items-center"><h4 class="font-bold">How are tutors verified?</h4><span class="material-symbols-outlined text-primary">add</span></div>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/20 hover:border-primary/30 transition-all reveal cursor-pointer group">
+<div class="flex justify-between items-center"><h4 class="font-bold">Is there a commission fee?</h4><span class="material-symbols-outlined text-primary">add</span></div>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/20 hover:border-primary/30 transition-all reveal cursor-pointer group">
+<div class="flex justify-between items-center"><h4 class="font-bold">How do I pay my tutor?</h4><span class="material-symbols-outlined text-primary">add</span></div>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/20 hover:border-primary/30 transition-all reveal cursor-pointer group">
+<div class="flex justify-between items-center"><h4 class="font-bold">What if I am not happy with the tutor?</h4><span class="material-symbols-outlined text-primary">add</span></div>
+</div>
+<div class="p-6 bg-white rounded-24 border border-outline-variant/20 hover:border-primary/30 transition-all reveal cursor-pointer group">
+<div class="flex justify-between items-center"><h4 class="font-bold">Can I teach multiple subjects?</h4><span class="material-symbols-outlined text-primary">add</span></div>
+</div>
+</div>
+</div>
+</section>
+<!-- 17. Blog -->
+<section class="py-stack-xl bg-surface-container-low/10">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="flex justify-between items-end mb-stack-xl reveal">
+<div><h2 class="font-display text-headline-lg">Education Insights</h2><p class="text-on-surface-variant">Tips and trends for modern learners.</p></div>
+<button class="text-primary font-bold">Read All <span class="material-symbols-outlined text-sm align-middle">chevron_right</span></button>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="group cursor-pointer reveal">
+<div class="rounded-24 overflow-hidden h-48 mb-4 shadow-md"><img alt="Blog" class="w-full h-full object-cover transition-transform group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkR20NhOsG_NnQBksPtrjHSxRZE7TAHY2Bgzgfi0vmQNBNvYXO8tp7TMfE3JUS_J7N2GhFOH3_4O7HVgDQmtZESh-isvwOL_0YJwx5ZNRXIiNF1ybAK2UojypDbNZ4xyUJ9zjnhYbWos-_xMsg_7RRZo3in25rllxylAcHz3aNlieAp4VP1LduvjATc01m5FLC0d8Q4GHKZJ_N3AODuxqUwY5zjh5-OcbOBydfSjA2uClzmc4ZqdA"/></div>
+<h4 class="font-bold group-hover:text-primary transition-colors mb-2">How to Score A+ in Higher Math</h4>
+<p class="text-xs text-on-surface-variant">5 proven strategies from our top BUET tutors...</p>
+</div>
+<div class="group cursor-pointer reveal" style="transition-delay: 0.1s">
+<div class="rounded-24 overflow-hidden h-48 mb-4 shadow-md"><img alt="Blog" class="w-full h-full object-cover transition-transform group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsBklrfgP5YQAhRJ9djOe9UQ0Y6F6zYkDy2wFkS280Y-uRp6XX2nkR-ixinYPw9SK5TDkLu04rdHMcfj1k9PB8iYOtyihLl6m1LKhCTBS6P0wEsf3z_PqT6qyfS5Cz2mze4-bQs4-kh9kIrI0WiRovacVA4_UiJ-SUMfBPd0-A4CpYc4ooeCSmbpT5MbJUi3Xsg5mlrD5C9zBktgMv0YCYaQhJX95fR-QquYzP0cyyhsL12hQrIbg"/></div>
+<h4 class="font-bold group-hover:text-primary transition-colors mb-2">IELTS Speaking: Do's and Don'ts</h4>
+<p class="text-xs text-on-surface-variant">Everything you need to know for a band 8.0 score...</p>
+</div>
+<div class="group cursor-pointer reveal" style="transition-delay: 0.2s">
+<div class="rounded-24 overflow-hidden h-48 mb-4 shadow-md"><img alt="Blog" class="w-full h-full object-cover transition-transform group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAttDnO-PTib8v7VUN5lJr9Jy5j97LkvW36q-df33WXZVntFTNr1p0PST7rYZKZe7Rv2VS81Jg4mgIHbbW9zgdbMnKTpijynLHCAjt3tX1SmDOcmbcABjncmqAg1kaLhcnBi6pryo_Vr6I5FAn8rEjcEniRbpVquqc76HHaYr8MCojHiXYehTNN6M4ki68GZgJy_WVe21tq5vRwxgTKYdGcVdLVsS224MVzYtYMiIdmb6ByFfvNsqo"/></div>
+<h4 class="font-bold group-hover:text-primary transition-colors mb-2">Career after BUET: Exploring Options</h4>
+<p class="text-xs text-on-surface-variant">A comprehensive guide for fresh graduates...</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 18. Download App (Coming Soon) -->
+<section class="py-stack-xl">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="bg-inverse-surface text-white rounded-24 p-12 flex flex-col md:flex-row items-center gap-12 reveal">
+<div class="flex-1">
+<h2 class="text-headline-lg font-bold mb-4">Mentorly Mobile App</h2>
+<p class="opacity-70 mb-8 max-w-md">Access tuitions and manage your schedule on the go. Coming soon to all mobile platforms.</p>
+<div class="flex flex-wrap gap-4 opacity-50 grayscale">
+<button class="px-8 py-3 bg-white/10 border border-white/20 rounded-xl flex items-center gap-2 cursor-not-allowed"><span class="material-symbols-outlined">play_store</span> Play Store</button>
+<button class="px-8 py-3 bg-white/10 border border-white/20 rounded-xl flex items-center gap-2 cursor-not-allowed"><span class="material-symbols-outlined">apple</span> App Store</button>
+</div>
+</div>
+<div class="w-48 h-48 bg-white p-4 rounded-24 flex flex-col items-center justify-center text-on-surface gap-3">
+<div class="w-32 h-32 bg-surface-container rounded-lg border-2 border-dashed border-outline-variant flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined text-4xl">qr_code_2</span></div>
+<p class="text-[10px] font-bold text-center">Scan to Join Waitlist</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 19. Newsletter -->
+<section class="py-stack-xl bg-surface-container-low/30">
+<div class="max-w-container-max mx-auto px-margin-desktop text-center reveal">
+<h2 class="font-display text-headline-lg mb-4">Stay Updated</h2>
+<p class="text-on-surface-variant mb-8 max-w-xl mx-auto">Get the latest educational news and tuition updates directly in your inbox.</p>
+<form class="max-w-md mx-auto flex gap-4">
+<input class="flex-1 rounded-full border border-outline-variant px-6 py-3 focus:ring-2 focus:ring-primary focus:outline-none" placeholder="Enter your email" type="email"/>
+<button class="px-8 py-3 bg-primary text-white font-bold rounded-full shadow-lg hover:opacity-90">Subscribe</button>
+</form>
+</div>
+</section>
+<!-- 20. Final CTA -->
+<section class="max-w-container-max mx-auto px-margin-desktop py-stack-xl">
+<div class="bg-primary rounded-[40px] p-12 md:p-24 text-center relative overflow-hidden shadow-2xl reveal">
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+<div class="relative z-10">
+<h2 class="font-display text-display text-white mb-stack-md">Start Your Learning Journey Today</h2>
+<p class="text-white/80 text-lg max-w-2xl mx-auto mb-stack-lg">Join the fastest growing education network in Bangladesh.</p>
+<div class="flex flex-wrap justify-center gap-4">
+<button class="px-10 py-5 rounded-full bg-white text-primary font-bold hover:shadow-2xl transition-all scale-100 hover:scale-105 active:scale-95">Find Tutors Now</button>
+<button class="px-10 py-5 rounded-full border border-white/30 text-white font-bold hover:bg-white/10 transition-all">Become a Tutor</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-white border-t border-outline-variant/30 py-stack-xl">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="grid md:grid-cols-4 gap-12 mb-16">
+<div class="col-span-2">
+<a class="text-headline-md font-display font-bold text-primary" href="#">Mentorly</a>
+<p class="text-on-surface-variant text-sm mt-4 max-w-xs">Connecting brilliance with ambition across Bangladesh. The most trusted platform for private education.</p>
+</div>
+<div>
+<h4 class="font-bold mb-6">Platform</h4>
+<ul class="space-y-3 text-sm text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">Find Tutors</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Find Tuition</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Become a Tutor</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-6">Company</h4>
+<ul class="space-y-3 text-sm text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Safety First</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Support Center</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-8 border-t border-outline-variant/20 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-on-surface-variant font-medium">
+<p>© 2024 Mentorly Inc. All rights reserved.</p>
+<div class="flex gap-8">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+<a href="#">Cookie Settings</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+    const reveal = () => {
+        const reveals = document.querySelectorAll('.reveal');
+        reveals.forEach(el => {
+            const windowHeight = window.innerHeight;
+            const revealTop = el.getBoundingClientRect().top;
+            const revealPoint = 100;
+            if (revealTop < windowHeight - revealPoint) {
+                el.classList.add('active');
+            }
+        });
+    }
+    window.addEventListener('scroll', reveal);
+    window.addEventListener('load', reveal);
+</script>
+</body></html>
