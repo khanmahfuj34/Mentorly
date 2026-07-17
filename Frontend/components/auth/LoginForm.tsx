@@ -38,9 +38,8 @@ export default function LoginForm() {
         {/* Email */}
         <div className="space-y-1.5">
           <label
-            className={`block font-label-md text-sm transition-colors duration-200 ${
-              emailFocused ? "text-primary" : "text-on-surface-variant"
-            }`}
+            className={`block font-label-md text-sm transition-colors duration-200 ${emailFocused ? "text-primary" : "text-on-surface-variant"
+              }`}
             htmlFor="email"
           >
             Email Address
@@ -62,9 +61,8 @@ export default function LoginForm() {
         <div className="space-y-1.5">
           <div className="flex justify-between items-center">
             <label
-              className={`block font-label-md text-sm transition-colors duration-200 ${
-                passwordFocused ? "text-primary" : "text-on-surface-variant"
-              }`}
+              className={`block font-label-md text-sm transition-colors duration-200 ${passwordFocused ? "text-primary" : "text-on-surface-variant"
+                }`}
               htmlFor="password"
             >
               Password
@@ -166,7 +164,7 @@ export default function LoginForm() {
       {/* Footer */}
       <div className="mt-12 text-center">
         <p className="font-body-md text-sm text-on-surface-variant">
-          Don't have an account?{" "}
+          {"Don't have an account? "}
           <Link href="/register" className="text-primary font-bold hover:underline transition-all">
             Create Account
           </Link>
