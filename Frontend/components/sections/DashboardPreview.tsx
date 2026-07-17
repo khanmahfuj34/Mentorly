@@ -10,7 +10,7 @@ export default function DashboardPreview() {
   return (
     <section className="py-stack-xl bg-surface">
       <div className="max-w-container-max mx-auto px-margin-desktop">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

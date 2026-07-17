@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Register - Mentorly</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#586076",
+                        "inverse-primary": "#c3c0ff",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-container-low": "#eff4ff",
+                        "tertiary-fixed-dim": "#bec6e0",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#0f0069",
+                        "background": "#f8f9ff",
+                        "on-tertiary-fixed-variant": "#3f465c",
+                        "tertiary-fixed": "#dae2fd",
+                        "on-background": "#0b1c30",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-secondary-container": "#00714d",
+                        "on-error": "#ffffff",
+                        "on-surface-variant": "#464555",
+                        "surface-dim": "#cbdbf5",
+                        "on-tertiary-container": "#d4dbf5",
+                        "primary-fixed": "#e2dfff",
+                        "primary-container": "#4f46e5",
+                        "secondary-fixed-dim": "#4edea3",
+                        "surface-container-high": "#dce9ff",
+                        "on-secondary-fixed": "#002113",
+                        "secondary-container": "#6cf8bb",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-tertiary-fixed": "#131b2e",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#4d44e3",
+                        "surface": "#f8f9ff",
+                        "surface-bright": "#f8f9ff",
+                        "surface-container": "#e5eeff",
+                        "secondary": "#006c49",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#41485e",
+                        "on-secondary-fixed-variant": "#005236",
+                        "error": "#ba1a1a",
+                        "on-primary-container": "#dad7ff",
+                        "primary": "#3525cd",
+                        "outline": "#777587",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#0b1c30",
+                        "surface-variant": "#d3e4fe",
+                        "outline-variant": "#c7c4d8",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#213145"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-xl": "64px",
+                        "container-max": "1280px",
+                        "stack-md": "16px",
+                        "stack-lg": "32px",
+                        "stack-sm": "8px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.03em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "-0.01em", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .role-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .role-card.active {
+            border-color: #4F46E5;
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.15);
+            background-color: #f8f9ff;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased overflow-x-hidden">
+<!-- Split Screen Container -->
+<main class="min-h-screen flex flex-col md:flex-row">
+<!-- Left Side (55%) -->
+<section class="hidden md:flex md:w-[55%] relative overflow-hidden bg-on-background">
+<!-- Background Image with Overlay -->
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-t from-on-background via-on-background/60 to-transparent z-10"></div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-[20000ms] hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDWJtulOxunUVm1Ft7iytc33gkZ9u6KcndnQiUVV-U6tOgYTH36Yfl_WLbfRQYiCM3bpArZOLLvNUNUSsS73CfY46TBwJKN7xgBdAYNTOP6WlIpnk1ikNeg8mvyXe-Gzjmy3DuoR28M-k4X2H9yreMCbzkqNtpznEl3xAaP9Bf5B5AYnZw1Sc5tJyRuXqe56ATxRJxfpo398CAMoy7ZFQeqRVET4EZu2uw2EjMLvWB_TFYOFf66D9o')"></div>
+</div>
+<!-- Content Overlays -->
+<div class="relative z-20 w-full flex flex-col justify-between p-12 lg:p-20">
+<!-- Brand Anchor -->
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-fixed text-4xl" style="font-variation-settings: 'FILL' 1;">school</span>
+<span class="font-display text-headline-md font-bold text-surface-bright tracking-tight">Mentorly</span>
+</div>
+<!-- Floating Glass Cards Container -->
+<div class="grid grid-cols-2 gap-4 max-w-lg">
+<div class="glass-card rounded-xl p-4 flex items-center gap-3 transform hover:-translate-y-1 transition-transform">
+<div class="bg-secondary/20 p-2 rounded-full">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<span class="text-surface-bright font-label-md">Verified Tutors</span>
+</div>
+<div class="glass-card rounded-xl p-4 flex items-center gap-3 transform hover:-translate-y-1 transition-transform delay-75">
+<div class="bg-primary-fixed/20 p-2 rounded-full">
+<span class="material-symbols-outlined text-primary-fixed text-sm" style="font-variation-settings: 'FILL' 1;">group</span>
+</div>
+<span class="text-surface-bright font-label-md">3000+ Tutors</span>
+</div>
+<div class="glass-card rounded-xl p-4 flex items-center gap-3 transform hover:-translate-y-1 transition-transform delay-150">
+<div class="bg-primary-fixed/20 p-2 rounded-full">
+<span class="material-symbols-outlined text-primary-fixed text-sm" style="font-variation-settings: 'FILL' 1;">history_edu</span>
+</div>
+<span class="text-surface-bright font-label-md">15000+ Sessions</span>
+</div>
+<div class="glass-card rounded-xl p-4 flex items-center gap-3 transform hover:-translate-y-1 transition-transform delay-225">
+<div class="bg-secondary/20 p-2 rounded-full">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="text-surface-bright font-label-md">Trusted Platform</span>
+</div>
+</div>
+<!-- Headline & Subheading -->
+<div class="max-w-xl">
+<h1 class="font-display text-display text-white mb-6">Start Your Journey Today</h1>
+<p class="font-body-lg text-white/80 leading-relaxed">Join thousands of students and tutors already using Mentorly to unlock their potential and achieve academic excellence.</p>
+</div>
+</div>
+</section>
+<!-- Right Side (45%) -->
+<section class="flex-1 flex items-center justify-center bg-surface p-6 md:p-12 lg:p-20 overflow-y-auto">
+<div class="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+<!-- Mobile Branding -->
+<div class="md:hidden flex flex-col items-center gap-4 mb-8">
+<span class="material-symbols-outlined text-primary text-5xl" style="font-variation-settings: 'FILL' 1;">school</span>
+<h2 class="font-display text-headline-lg text-on-surface">Mentorly</h2>
+</div>
+<!-- Registration Card Header -->
+<div class="text-center md:text-left space-y-2">
+<h2 class="font-display font-headline-lg text-on-surface">Create Your Account</h2>
+<p class="font-body-md text-on-surface-variant">Join the Mentorly community.</p>
+</div>
+<!-- Role Selection -->
+<div class="grid grid-cols-2 gap-4">
+<button class="role-card active text-left p-4 rounded-xl border border-outline-variant hover:border-primary-container/50 transition-all flex flex-col gap-3 group" id="student-role" onclick="selectRole('student')" type="button">
+<div class="w-10 h-10 rounded-lg bg-primary-fixed/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary-container">person</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface">Student</p>
+<p class="text-[11px] text-on-surface-variant leading-tight">I want to learn and grow.</p>
+</div>
+</button>
+<button class="role-card text-left p-4 rounded-xl border border-outline-variant hover:border-primary-container/50 transition-all flex flex-col gap-3 group" id="tutor-role" onclick="selectRole('tutor')" type="button">
+<div class="w-10 h-10 rounded-lg bg-secondary-container/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-on-secondary-container">school</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface">Tutor</p>
+<p class="text-[11px] text-on-surface-variant leading-tight">I want to share my knowledge.</p>
+</div>
+</button>
+</div>
+<!-- Form -->
+<form action="#" class="space-y-5" method="POST">
+<div class="space-y-1.5">
+<label class="font-label-sm text-on-surface-variant px-1" for="name">Full Name</label>
+<input class="w-full px-4 py-3.5 rounded-xl bg-surface-container-low border-transparent focus:border-primary-container focus:ring-4 focus:ring-primary-container/10 transition-all placeholder:text-outline" id="name" name="name" placeholder="John Doe" required="" type="text"/>
+</div>
+<div class="space-y-1.5">
+<label class="font-label-sm text-on-surface-variant px-1" for="email">Email Address</label>
+<input class="w-full px-4 py-3.5 rounded-xl bg-surface-container-low border-transparent focus:border-primary-container focus:ring-4 focus:ring-primary-container/10 transition-all placeholder:text-outline" id="email" name="email" placeholder="name@company.com" required="" type="email"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="space-y-1.5">
+<label class="font-label-sm text-on-surface-variant px-1" for="password">Password</label>
+<input class="w-full px-4 py-3.5 rounded-xl bg-surface-container-low border-transparent focus:border-primary-container focus:ring-4 focus:ring-primary-container/10 transition-all placeholder:text-outline" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+</div>
+<div class="space-y-1.5">
+<label class="font-label-sm text-on-surface-variant px-1" for="confirm-password">Confirm Password</label>
+<input class="w-full px-4 py-3.5 rounded-xl bg-surface-container-low border-transparent focus:border-primary-container focus:ring-4 focus:ring-primary-container/10 transition-all placeholder:text-outline" id="confirm-password" name="confirm-password" placeholder="••••••••" required="" type="password"/>
+</div>
+</div>
+<div class="flex items-start gap-3 py-2">
+<input class="mt-1 w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary-container/20" id="terms" name="terms" type="checkbox"/>
+<label class="text-label-md text-on-surface-variant leading-snug" for="terms">
+                            I agree to the <a class="text-primary hover:underline" href="#">Terms of Service</a> and <a class="text-primary hover:underline" href="#">Privacy Policy</a>.
+                        </label>
+</div>
+<div class="space-y-4 pt-2">
+<button class="w-full bg-primary-container text-white font-label-md py-4 rounded-xl shadow-lg hover:bg-primary transition-all active:scale-[0.98] flex items-center justify-center gap-2" type="submit">
+                            Create Account
+                        </button>
+<div class="relative flex items-center py-2">
+<div class="flex-grow border-t border-outline-variant"></div>
+<span class="flex-shrink mx-4 text-label-sm text-outline">OR</span>
+<div class="flex-grow border-t border-outline-variant"></div>
+</div>
+<button class="w-full bg-white border border-outline-variant text-on-surface font-label-md py-4 rounded-xl hover:bg-surface-container-low transition-all active:scale-[0.98] flex items-center justify-center gap-3" type="button">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+                            Continue with Google
+                        </button>
+</div>
+</form>
+<p class="text-center font-body-md text-on-surface-variant">
+                    Already have an account? 
+                    <a class="text-primary font-bold hover:underline" href="#">Sign In</a>
+</p>
+</div>
+</section>
+</main>
+<script>
+        function selectRole(role) {
+            const studentBtn = document.getElementById('student-role');
+            const tutorBtn = document.getElementById('tutor-role');
+            
+            if (role === 'student') {
+                studentBtn.classList.add('active');
+                tutorBtn.classList.remove('active');
+            } else {
+                tutorBtn.classList.add('active');
+                studentBtn.classList.remove('active');
+            }
+        }
+
+        // Add a simple subtle parallax effect to the left background
+        document.addEventListener('mousemove', (e) => {
+            const leftSection = document.querySelector('section:first-child .bg-cover');
+            if (leftSection && window.innerWidth > 768) {
+                const moveX = (e.clientX - window.innerWidth / 2) / 100;
+                const moveY = (e.clientY - window.innerHeight / 2) / 100;
+                leftSection.style.transform = `scale(1.1) translate(${moveX}px, ${moveY}px)`;
+            }
+        });
+    </script>
+</body></html>

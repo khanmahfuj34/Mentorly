@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import { motion } from "framer-motion"
 
 export default function CTA() {
@@ -25,12 +26,18 @@ export default function CTA() {
             Join the fastest growing education network in Bangladesh.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <button className="px-10 py-5 rounded-full bg-white text-primary font-bold hover:shadow-2xl transition-all scale-100 hover:scale-105 active:scale-95 cursor-pointer select-none">
+            <Link
+              href="/register"
+              className="px-10 py-5 rounded-full bg-white text-primary font-bold hover:shadow-2xl transition-all scale-100 hover:scale-105 active:scale-95 cursor-pointer select-none text-center"
+            >
               Find Tutors Now
-            </button>
-            <button className="px-10 py-5 rounded-full border border-white/30 text-white font-bold hover:bg-white/10 transition-all active:scale-95 cursor-pointer select-none">
+            </Link>
+            <Link
+              href="/register"
+              className="px-10 py-5 rounded-full border border-white/30 text-white font-bold hover:bg-white/10 transition-all active:scale-95 cursor-pointer select-none text-center"
+            >
               Become a Tutor
-            </button>
+            </Link>
           </div>
         </div>
       </motion.div>

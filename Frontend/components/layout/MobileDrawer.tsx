@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import { NAV_LINKS } from "@/constants/navigation"
 
 interface MobileDrawerProps {
@@ -46,12 +47,20 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
           ))}
         </div>
         <div className="mt-auto flex flex-col gap-3 pt-6 border-t border-outline-variant/30">
-          <button className="w-full py-3 rounded-full border border-outline text-label-md font-semibold hover:bg-surface-container transition-all cursor-pointer">
+          <Link
+            href="/login"
+            onClick={onClose}
+            className="w-full py-3 rounded-full border border-outline text-label-md font-semibold hover:bg-surface-container transition-all cursor-pointer text-center text-on-surface"
+          >
             Login
-          </button>
-          <button className="w-full py-3 rounded-full bg-primary text-on-primary text-label-md font-semibold hover:opacity-90 active:scale-95 transition-all shadow-md cursor-pointer">
+          </Link>
+          <Link
+            href="/register"
+            onClick={onClose}
+            className="w-full py-3 rounded-full bg-primary text-on-primary text-label-md font-semibold hover:opacity-90 active:scale-95 transition-all shadow-md cursor-pointer text-center"
+          >
             Get Started
-          </button>
+          </Link>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
+import Link from "next/link"
 import { NAV_LINKS } from "@/constants/navigation"
 import MobileDrawer from "./MobileDrawer"
 
@@ -12,9 +13,9 @@ export default function Navbar() {
       <nav className="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl border-b border-outline-variant/30">
         <div className="max-w-container-max mx-auto px-margin-desktop flex justify-between items-center h-20">
           <div className="flex items-center gap-12">
-            <a className="text-headline-md font-display font-bold text-primary" href="#">
+            <Link className="text-headline-md font-display font-bold text-primary" href="/">
               Mentorly
-            </a>
+            </Link>
             <div className="hidden md:flex items-center gap-6">
               {NAV_LINKS.map((link, idx) => (
                 <a
@@ -32,12 +33,18 @@ export default function Navbar() {
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <button className="hidden sm:inline-block px-6 py-2 rounded-full border border-outline text-label-md font-semibold hover:bg-surface-container transition-all cursor-pointer">
+            <Link
+              href="/login"
+              className="hidden sm:inline-block px-6 py-2 rounded-full border border-outline text-label-md font-semibold hover:bg-surface-container transition-all cursor-pointer text-center text-on-surface"
+            >
               Login
-            </button>
-            <button className="hidden sm:inline-block px-6 py-2 rounded-full bg-primary text-on-primary text-label-md font-semibold hover:opacity-90 active:scale-95 transition-all shadow-md cursor-pointer">
+            </Link>
+            <Link
+              href="/register"
+              className="hidden sm:inline-block px-6 py-2 rounded-full bg-primary text-on-primary text-label-md font-semibold hover:opacity-90 active:scale-95 transition-all shadow-md cursor-pointer text-center"
+            >
               Get Started
-            </button>
+            </Link>
             <button
               onClick={() => setIsOpen(true)}
               className="md:hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container select-none cursor-pointer"

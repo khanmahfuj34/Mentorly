@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import { motion } from "framer-motion"
 import { HERO_STATS } from "@/data/stats"
 import SearchSection from "@/components/sections/SearchSection"
@@ -30,15 +31,21 @@ export default function Hero() {
               learn with confidence through one trusted platform.
             </p>
             <div className="flex flex-wrap gap-4 mb-stack-xl">
-              <button className="px-8 py-4 rounded-full bg-primary text-on-primary font-semibold flex items-center gap-2 hover:shadow-lg hover:opacity-95 transition-all active:scale-95 cursor-pointer">
+              <Link
+                href="/register"
+                className="px-8 py-4 rounded-full bg-primary text-on-primary font-semibold flex items-center gap-2 hover:shadow-lg hover:opacity-95 transition-all active:scale-95 cursor-pointer text-center text-on-primary"
+              >
                 Find a Tutor
                 <span className="material-symbols-outlined text-sm select-none leading-none">
                   arrow_forward
                 </span>
-              </button>
-              <button className="px-8 py-4 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface font-semibold hover:bg-surface-container transition-all active:scale-95 cursor-pointer">
+              </Link>
+              <Link
+                href="/register"
+                className="px-8 py-4 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface font-semibold hover:bg-surface-container transition-all active:scale-95 cursor-pointer text-center text-on-surface"
+              >
                 Become a Tutor
-              </button>
+              </Link>
             </div>
 
             {/* Stats strip */}
