@@ -15,6 +15,7 @@ export default function ProfilePage() {
   const [preferredSubjects, setPreferredSubjects] = useState<string[]>([])
   const [district, setDistrict] = useState("")
   const [area, setArea] = useState("")
+  const [address, setAddress] = useState("")
   const [guardianName, setGuardianName] = useState("")
   const [guardianPhone, setGuardianPhone] = useState("")
 
@@ -26,17 +27,6 @@ export default function ProfilePage() {
   const allAcademicLevels = getAcademicLevels()
   const availableSubjects = classLevel ? getSubjectsByLevel(classLevel) : []
 
-  // Simulate reading from local storage or prefilled defaults for demo/UI-only state
-  useEffect(() => {
-    // Attempt to load mock defaults to show form interactions
-    setClassLevel("")
-    setSchoolCollege("")
-    setPreferredSubjects([])
-    setDistrict("")
-    setArea("")
-    setGuardianName("")
-    setGuardianPhone("")
-  }, [])
 
   const handleDistrictChange = (selectedDistrict: string) => {
     setDistrict(selectedDistrict)
@@ -63,6 +53,7 @@ export default function ProfilePage() {
     { label: "Preferred Subjects", completed: preferredSubjects.length > 0 },
     { label: "District", completed: !!district },
     { label: "Area", completed: !!area },
+    { label: "Full Address", completed: !!address },
     { label: "Guardian Name", completed: !!guardianName },
     { label: "Guardian Phone", completed: !!guardianPhone },
   ]
@@ -249,6 +240,18 @@ export default function ProfilePage() {
                   ))}
                 </select>
               </div>
+            </div>
+
+            {/* Full Address */}
+            <div className="space-y-1.5 mt-6">
+              <label className="block font-label-md text-sm text-on-surface">Full Address *</label>
+              <textarea
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Enter your full address (e.g. House 12, Road 5, Mirpur DOHS, Dhaka)"
+                rows={3}
+                className="w-full px-4 py-3 bg-surface-container-lowest border border-outline-variant/50 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all duration-200 font-body-md placeholder:text-outline text-on-surface resize-none"
+              />
             </div>
           </div>
 
