@@ -1,0 +1,307 @@
+[
+    {
+        "level": "Class 1",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Mathematics",
+            "Religion",
+            "Arts and Crafts",
+            "Physical Education"
+        ]
+    },
+    {
+        "level": "Class 2",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Mathematics",
+            "Religion",
+            "Arts and Crafts",
+            "Physical Education"
+        ]
+    },
+    {
+        "level": "Class 3",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Mathematics",
+            "Bangladesh and Global Studies",
+            "Science",
+            "Religion",
+            "Arts and Crafts",
+            "Physical Education"
+        ]
+    },
+    {
+        "level": "Class 4",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Mathematics",
+            "Bangladesh and Global Studies",
+            "Science",
+            "Religion",
+            "Arts and Crafts",
+            "Physical Education"
+        ]
+    },
+    {
+        "level": "Class 5",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Mathematics",
+            "Bangladesh and Global Studies",
+            "Science",
+            "Religion",
+            "Arts and Crafts",
+            "Physical Education"
+        ]
+    },
+    {
+        "level": "Class 6",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Mathematics",
+            "Science",
+            "Bangladesh and Global Studies",
+            "ICT",
+            "Religion",
+            "Agriculture Studies",
+            "Arts and Crafts",
+            "Physical Education"
+        ]
+    },
+    {
+        "level": "Class 7",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Mathematics",
+            "Science",
+            "Bangladesh and Global Studies",
+            "ICT",
+            "Religion",
+            "Agriculture Studies",
+            "Arts and Crafts",
+            "Physical Education"
+        ]
+    },
+    {
+        "level": "Class 8",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Mathematics",
+            "Science",
+            "Bangladesh and Global Studies",
+            "ICT",
+            "Religion",
+            "Agriculture Studies",
+            "Arts and Crafts",
+            "Physical Education"
+        ]
+    },
+    {
+        "level": "Class 9-10 Science",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Mathematics",
+            "Higher Mathematics",
+            "Physics",
+            "Chemistry",
+            "Biology",
+            "ICT",
+            "Religion"
+        ]
+    },
+    {
+        "level": "Class 9-10 Business Studies",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Mathematics",
+            "Accounting",
+            "Business Entrepreneurship",
+            "Finance and Banking",
+            "ICT",
+            "Religion"
+        ]
+    },
+    {
+        "level": "Class 9-10 Humanities",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Mathematics",
+            "History of Bangladesh and World Civilization",
+            "Geography and Environment",
+            "Civics and Citizenship",
+            "Economics",
+            "ICT",
+            "Religion"
+        ]
+    },
+    {
+        "level": "SSC Candidate Science",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Mathematics",
+            "Higher Mathematics",
+            "Physics",
+            "Chemistry",
+            "Biology",
+            "ICT",
+            "Religion"
+        ]
+    },
+    {
+        "level": "SSC Candidate Business Studies",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Mathematics",
+            "Accounting",
+            "Business Entrepreneurship",
+            "Finance and Banking",
+            "ICT",
+            "Religion"
+        ]
+    },
+    {
+        "level": "SSC Candidate Humanities",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Mathematics",
+            "History of Bangladesh and World Civilization",
+            "Geography and Environment",
+            "Civics and Citizenship",
+            "Economics",
+            "ICT",
+            "Religion"
+        ]
+    },
+    {
+        "level": "HSC 1st Year Science",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Physics",
+            "Chemistry",
+            "Biology",
+            "Higher Mathematics",
+            "ICT"
+        ]
+    },
+    {
+        "level": "HSC 1st Year Business Studies",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Accounting",
+            "Business Organization and Management",
+            "Finance, Banking and Insurance",
+            "Production Management and Marketing",
+            "ICT"
+        ]
+    },
+    {
+        "level": "HSC 1st Year Humanities",
+        "subjects": [
+            "Bangla",
+            "English",
+            "ICT",
+            "History",
+            "Islamic History and Culture",
+            "Civics and Good Governance",
+            "Economics",
+            "Sociology",
+            "Logic",
+            "Social Work"
+        ]
+    },
+    {
+        "level": "HSC 2nd Year Science",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Physics",
+            "Chemistry",
+            "Biology",
+            "Higher Mathematics",
+            "ICT"
+        ]
+    },
+    {
+        "level": "HSC 2nd Year Business Studies",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Accounting",
+            "Business Organization and Management",
+            "Finance, Banking and Insurance",
+            "Production Management and Marketing",
+            "ICT"
+        ]
+    },
+    {
+        "level": "HSC 2nd Year Humanities",
+        "subjects": [
+            "Bangla",
+            "English",
+            "ICT",
+            "History",
+            "Islamic History and Culture",
+            "Civics and Good Governance",
+            "Economics",
+            "Sociology",
+            "Logic",
+            "Social Work"
+        ]
+    },
+    {
+        "level": "HSC Candidate Science",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Physics",
+            "Chemistry",
+            "Biology",
+            "Higher Mathematics",
+            "ICT"
+        ]
+    },
+    {
+        "level": "HSC Candidate Business Studies",
+        "subjects": [
+            "Bangla",
+            "English",
+            "Accounting",
+            "Business Organization and Management",
+            "Finance, Banking and Insurance",
+            "Production Management and Marketing",
+            "ICT"
+        ]
+    },
+    {
+        "level": "HSC Candidate Humanities",
+        "subjects": [
+            "Bangla",
+            "English",
+            "ICT",
+            "History",
+            "Islamic History and Culture",
+            "Civics and Good Governance",
+            "Economics",
+            "Sociology",
+            "Logic",
+            "Social Work"
+        ]
+    }
+]

@@ -4,17 +4,7 @@ import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { useAuth } from "@/src/hooks/useAuth"
 import { getLocationOptions, getUpazilasByDistrict } from "@/src/lib/location-utils"
-
-const SUBJECT_LIST = [
-  "Mathematics",
-  "Higher Math",
-  "Physics",
-  "Chemistry",
-  "Biology",
-  "ICT",
-  "English",
-  "Bangla",
-]
+import { getAcademicLevels, getSubjectsByLevel } from "@/src/lib/academic-utils"
 
 export default function ProfilePage() {
   const { user } = useAuth()
@@ -32,6 +22,10 @@ export default function ProfilePage() {
   const { districts: allDistricts } = getLocationOptions()
   const availableAreas = district ? getUpazilasByDistrict(district) : []
 
+  // Academic lists
+  const allAcademicLevels = getAcademicLevels()
+  const availableSubjects = classLevel ? getSubjectsByLevel(classLevel) : []
+
   // Simulate reading from local storage or prefilled defaults for demo/UI-only state
   useEffect(() => {
     // Attempt to load mock defaults to show form interactions
@@ -47,6 +41,11 @@ export default function ProfilePage() {
   const handleDistrictChange = (selectedDistrict: string) => {
     setDistrict(selectedDistrict)
     setArea("")
+  }
+
+  const handleClassLevelChange = (selectedLevel: string) => {
+    setClassLevel(selectedLevel)
+    setPreferredSubjects([])
   }
 
   const handleSubjectToggle = (subject: string) => {
@@ -143,13 +142,18 @@ export default function ProfilePage() {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-1.5">
                 <label className="block font-label-md text-sm text-on-surface">Class Level *</label>
-                <input
-                  type="text"
+                <select
                   value={classLevel}
-                  onChange={(e) => setClassLevel(e.target.value)}
-                  placeholder="e.g. HSC 2027"
-                  className="w-full h-12 px-4 bg-surface-container-lowest border border-outline-variant/50 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all duration-200 font-body-md placeholder:text-outline text-on-surface"
-                />
+                  onChange={(e) => handleClassLevelChange(e.target.value)}
+                  className="w-full h-12 px-4 bg-surface-container-lowest border border-outline-variant/50 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all duration-200 font-body-md text-on-surface cursor-pointer"
+                >
+                  <option value="">Select Class Level</option>
+                  {allAcademicLevels.map((lvl) => (
+                    <option key={lvl} value={lvl}>
+                      {lvl}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="space-y-1.5">
@@ -176,26 +180,32 @@ export default function ProfilePage() {
             </p>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {SUBJECT_LIST.map((subject) => {
-                const isChecked = preferredSubjects.includes(subject)
-                return (
-                  <label
-                    key={subject}
-                    className={`flex items-center gap-3 rounded-2xl border p-4 cursor-pointer transition-all duration-200 select-none ${isChecked
-                        ? "border-primary bg-primary/10 text-primary font-semibold shadow-sm"
-                        : "border-outline-variant/30 hover:border-outline-variant hover:bg-surface-container-low"
-                      }`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={isChecked}
-                      onChange={() => handleSubjectToggle(subject)}
-                      className="w-4 h-4 text-primary bg-surface-container-low border-outline-variant rounded focus:ring-primary cursor-pointer accent-primary"
-                    />
-                    <span className="text-sm">{subject}</span>
-                  </label>
-                )
-              })}
+              {availableSubjects.length > 0 ? (
+                availableSubjects.map((subject) => {
+                  const isChecked = preferredSubjects.includes(subject)
+                  return (
+                    <label
+                      key={subject}
+                      className={`flex items-center gap-3 rounded-2xl border p-4 cursor-pointer transition-all duration-200 select-none ${isChecked
+                          ? "border-primary bg-primary/10 text-primary font-semibold shadow-sm"
+                          : "border-outline-variant/30 hover:border-outline-variant hover:bg-surface-container-low"
+                        }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={() => handleSubjectToggle(subject)}
+                        className="w-4 h-4 text-primary bg-surface-container-low border-outline-variant rounded focus:ring-primary cursor-pointer accent-primary"
+                      />
+                      <span className="text-sm">{subject}</span>
+                    </label>
+                  )
+                })
+              ) : (
+                <div className="col-span-full py-8 text-center text-on-surface-variant/60 font-body-md text-sm border border-dashed border-outline-variant/30 rounded-2xl bg-surface-container-low/30">
+                  Please select a Class Level first to see available subjects.
+                </div>
+              )}
             </div>
           </div>
 
