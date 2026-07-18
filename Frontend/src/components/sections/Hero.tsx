@@ -9,7 +9,11 @@ import SearchSection from "@/src/components/sections/SearchSection"
 const HERO_IMG = "/assets/images/image copy 2.png"
 const STUDENT_IMG = "/assets/images/student.jpg"
 
-export default function Hero() {
+interface HeroProps {
+  isStudent?: boolean
+}
+
+export default function Hero({ isStudent = false }: HeroProps) {
   return (
     <div className="relative overflow-hidden bg-surface">
       {/* Hero */}
@@ -22,29 +26,40 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             <h1 className="font-display text-display mb-stack-md text-on-surface leading-[1.1] tracking-[-0.04em]">
-              Find the Right Tutor.
-              <br />
-              <span className="text-primary">Build a Better Future.</span>
+              {isStudent ? (
+                <>
+                  Excel in Your Studies.
+                  <br />
+                  <span className="text-primary">Find Your Ideal Tutor.</span>
+                </>
+              ) : (
+                <>
+                  Find the Right Tutor.
+                  <br />
+                  <span className="text-primary">Build a Better Future.</span>
+                </>
+              )}
             </h1>
             <p className="text-lg text-on-surface-variant mb-stack-lg max-w-xl leading-relaxed">
-              Connect with verified tutors, discover tuition opportunities, schedule lessons, and
-              learn with confidence through one trusted platform.
+              {isStudent
+                ? "Connect with verified tutors, post custom tuition requirements, schedule online or offline lessons, and track your academic progress all from your student dashboard."
+                : "Connect with verified tutors, discover tuition opportunities, schedule lessons, and learn with confidence through one trusted platform."}
             </p>
             <div className="flex flex-wrap gap-4 mb-stack-xl">
               <Link
-                href="/register"
+                href={isStudent ? "/dashboard/student/find-tutors" : "/register"}
                 className="px-8 py-4 rounded-full bg-primary text-on-primary font-semibold flex items-center gap-2 hover:shadow-lg hover:opacity-95 transition-all active:scale-95 cursor-pointer text-center text-on-primary"
               >
-                Find a Tutor
+                {isStudent ? "Find Tutors" : "Find a Tutor"}
                 <span className="material-symbols-outlined text-sm select-none leading-none">
                   arrow_forward
                 </span>
               </Link>
               <Link
-                href="/register"
+                href={isStudent ? "/dashboard/student/my-tuition-posts" : "/register"}
                 className="px-8 py-4 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface font-semibold hover:bg-surface-container transition-all active:scale-95 cursor-pointer text-center text-on-surface"
               >
-                Become a Tutor
+                {isStudent ? "Post Tuition" : "Become a Tutor"}
               </Link>
             </div>
 

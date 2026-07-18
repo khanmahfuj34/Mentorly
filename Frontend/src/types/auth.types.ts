@@ -5,6 +5,7 @@ export interface IUser {
   role: "STUDENT" | "TUTOR" | "ADMIN";
   isVerified: boolean;
   isBlocked: boolean;
+  avatar?: string;
 }
 
 export interface ILoginResponse {
