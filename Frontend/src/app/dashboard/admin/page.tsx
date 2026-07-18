@@ -1,3 +1,9 @@
+import ProtectedRoute from "@/src/components/auth/ProtectedRoute"
+
 export default function AdminDashboard() {
-  return <h1>Admin Dashboard</h1>
+  return (
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <h1>Admin Dashboard</h1>
+    </ProtectedRoute>
+  )
 }

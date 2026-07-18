@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import "./globals.css"
 
+import AuthProvider from "@/src/providers/AuthProvider"
+
 export const metadata: Metadata = {
   title: "Mentorly | Find the Right Tutor. Build a Better Future.",
   description:
@@ -27,7 +29,9 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased bg-surface font-display text-on-surface">
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   )
