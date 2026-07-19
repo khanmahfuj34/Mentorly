@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import "./globals.css"
 
 import AuthProvider from "@/src/providers/AuthProvider"
+import { Toaster } from "sonner"
 
 export const metadata: Metadata = {
   title: "Mentorly | Find the Right Tutor. Build a Better Future.",
@@ -32,6 +33,7 @@ export default function RootLayout({
         <AuthProvider>
           {children}
         </AuthProvider>
+        <Toaster position="top-right" richColors />
       </body>
     </html>
   )

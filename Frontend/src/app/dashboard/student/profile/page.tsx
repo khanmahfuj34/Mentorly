@@ -2,9 +2,16 @@
 
 import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
+import { toast } from "sonner"
 import { useAuth } from "@/src/hooks/useAuth"
 import { getLocationOptions, getUpazilasByDistrict } from "@/src/lib/location-utils"
 import { getAcademicLevels, getSubjectsByLevel } from "@/src/lib/academic-utils"
+import {
+  getMyStudentProfile,
+  createStudentProfile,
+  updateStudentProfile,
+} from "@/src/services/student/student.service"
+import { IStudentProfileInput } from "@/src/types/student.types"
 
 export default function ProfilePage() {
   const { user } = useAuth()
@@ -19,6 +26,11 @@ export default function ProfilePage() {
   const [guardianName, setGuardianName] = useState("")
   const [guardianPhone, setGuardianPhone] = useState("")
 
+  // API loading and profile status states
+  const [isLoadingProfile, setIsLoadingProfile] = useState(true)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [hasProfile, setHasProfile] = useState(false)
+
   // Location lists
   const { districts: allDistricts } = getLocationOptions()
   const availableAreas = district ? getUpazilasByDistrict(district) : []
@@ -27,6 +39,33 @@ export default function ProfilePage() {
   const allAcademicLevels = getAcademicLevels()
   const availableSubjects = classLevel ? getSubjectsByLevel(classLevel) : []
 
+  // Fetch profile on page load
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        setIsLoadingProfile(true)
+        const res = await getMyStudentProfile()
+        if (res?.data) {
+          const profileData = res.data
+          setClassLevel(profileData.classLevel || "")
+          setSchoolCollege(profileData.schoolCollege || "")
+          setPreferredSubjects(profileData.preferredSubjects || [])
+          setDistrict(profileData.district || "")
+          setArea(profileData.area || "")
+          setGuardianName(profileData.guardianName || "")
+          setGuardianPhone(profileData.guardianPhone || "")
+          setHasProfile(true)
+        }
+      } catch (err: any) {
+        // Profile does not exist yet for this user
+        setHasProfile(false)
+      } finally {
+        setIsLoadingProfile(false)
+      }
+    }
+
+    fetchProfile()
+  }, [])
 
   const handleDistrictChange = (selectedDistrict: string) => {
     setDistrict(selectedDistrict)
@@ -43,6 +82,38 @@ export default function ProfilePage() {
       setPreferredSubjects(preferredSubjects.filter((s) => s !== subject))
     } else {
       setPreferredSubjects([...preferredSubjects, subject])
+    }
+  }
+
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault()
+
+    try {
+      setIsSubmitting(true)
+      const payload: IStudentProfileInput = {
+        classLevel,
+        schoolCollege,
+        preferredSubjects,
+        district,
+        area,
+        guardianName,
+        guardianPhone,
+      }
+
+      if (hasProfile) {
+        const res = await updateStudentProfile(payload)
+        toast.success(res?.message || "Profile updated successfully!")
+      } else {
+        const res = await createStudentProfile(payload)
+        setHasProfile(true)
+        toast.success(res?.message || "Profile created successfully!")
+      }
+    } catch (error: any) {
+      const errorMessage =
+        error?.response?.data?.message || error?.message || "Failed to save profile."
+      toast.error(errorMessage)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -77,6 +148,17 @@ export default function ProfilePage() {
     profileStrength = "Moderate Profile"
   }
 
+  if (isLoadingProfile) {
+    return (
+      <div className="max-w-7xl mx-auto px-6 py-10 md:px-10 flex flex-col items-center justify-center min-h-[400px]">
+        <span className="material-symbols-outlined text-primary text-[48px] animate-spin mb-4 select-none">
+          progress_activity
+        </span>
+        <p className="text-on-surface-variant font-body-md">Loading student profile...</p>
+      </div>
+    )
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-6 py-10 md:px-10">
       {/* Header Summary */}
@@ -89,7 +171,7 @@ export default function ProfilePage() {
 
       <div className="grid lg:grid-cols-12 gap-8 items-start">
         {/* Form Area */}
-        <form onSubmit={(e) => e.preventDefault()} className="lg:col-span-8 space-y-8">
+        <form onSubmit={handleSubmit} className="lg:col-span-8 space-y-8">
           {/* Section 1: Basic Information */}
           <div className="rounded-[28px] border border-outline-variant/30 bg-white p-6 md:p-8 shadow-sm">
             <div className="flex items-center gap-3 mb-6">
@@ -292,11 +374,27 @@ export default function ProfilePage() {
             <motion.button
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.98 }}
-              className="h-14 px-10 bg-primary text-on-primary font-label-md rounded-xl hover:opacity-95 transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2 cursor-pointer"
-              type="button"
+              disabled={isSubmitting}
+              onClick={handleSubmit}
+              className="h-14 px-10 bg-primary text-on-primary font-label-md rounded-xl hover:opacity-95 transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              type="submit"
             >
-              <span className="font-semibold text-sm">Update Profile</span>
-              <span className="material-symbols-outlined text-[20px] select-none">check_circle</span>
+              <span className="font-semibold text-sm">
+                {isSubmitting
+                  ? "Saving..."
+                  : hasProfile
+                  ? "Update Profile"
+                  : "Create Profile"}
+              </span>
+              {isSubmitting ? (
+                <span className="material-symbols-outlined text-[20px] animate-spin select-none">
+                  progress_activity
+                </span>
+              ) : (
+                <span className="material-symbols-outlined text-[20px] select-none">
+                  check_circle
+                </span>
+              )}
             </motion.button>
           </div>
         </form>
