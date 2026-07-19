@@ -2,10 +2,13 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
+import { toast } from "sonner"
 import ProtectedRoute from "@/src/components/auth/ProtectedRoute"
 import { useAuth } from "@/src/hooks/useAuth"
+import { getMyStudentProfile } from "@/src/services/student/student.service"
+import { checkStudentProfileCompletion } from "@/src/lib/profile-completion"
 
 interface SidebarItem {
   label: string
@@ -27,6 +30,7 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
 export default function StudentDashboardLayout({ children }: { children: React.ReactNode }) {
   const { user, logout } = useAuth()
   const pathname = usePathname()
+  const router = useRouter()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   // Get active item label for header title
@@ -42,6 +46,25 @@ export default function StudentDashboardLayout({ children }: { children: React.R
         .slice(0, 2)
         .toUpperCase()
     : "ST"
+
+  const handleNavClick = async (e: React.MouseEvent, href: string) => {
+    setIsMobileMenuOpen(false)
+    if (href === "/dashboard/student/my-tuition-posts") {
+      try {
+        const res = await getMyStudentProfile()
+        const comp = checkStudentProfileCompletion(res?.data)
+        if (!comp.isComplete) {
+          e.preventDefault()
+          toast.warning("Please complete your profile before creating a tuition post.")
+          router.push("/dashboard/student/profile")
+        }
+      } catch (err) {
+        e.preventDefault()
+        toast.warning("Please complete your profile before creating a tuition post.")
+        router.push("/dashboard/student/profile")
+      }
+    }
+  }
 
   const renderSidebarContent = () => (
     <div className="flex flex-col h-full bg-white text-on-surface">
@@ -61,7 +84,7 @@ export default function StudentDashboardLayout({ children }: { children: React.R
             <Link
               key={item.href}
               href={item.href}
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={(e) => handleNavClick(e, item.href)}
               className={`flex items-center gap-4 px-4 py-3 rounded-xl font-label-md transition-all group ${
                 isActive
                   ? "bg-primary text-on-primary shadow-md shadow-primary/20"

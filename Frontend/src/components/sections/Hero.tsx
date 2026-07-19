@@ -2,9 +2,13 @@
 
 import React from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
+import { toast } from "sonner"
 import { HERO_STATS } from "@/data/stats"
 import SearchSection from "@/src/components/sections/SearchSection"
+import { getMyStudentProfile } from "@/src/services/student/student.service"
+import { checkStudentProfileCompletion } from "@/src/lib/profile-completion"
 
 const HERO_IMG = "/assets/images/image copy 2.png"
 const STUDENT_IMG = "/assets/images/student.jpg"
@@ -14,6 +18,24 @@ interface HeroProps {
 }
 
 export default function Hero({ isStudent = false }: HeroProps) {
+  const router = useRouter()
+
+  const handlePostTuitionClick = async (e: React.MouseEvent) => {
+    if (!isStudent) return
+    try {
+      const res = await getMyStudentProfile()
+      const comp = checkStudentProfileCompletion(res?.data)
+      if (!comp.isComplete) {
+        e.preventDefault()
+        toast.warning("Please complete your profile before creating a tuition post.")
+        router.push("/dashboard/student/profile")
+      }
+    } catch (err) {
+      e.preventDefault()
+      toast.warning("Please complete your profile before creating a tuition post.")
+      router.push("/dashboard/student/profile")
+    }
+  }
   return (
     <div className="relative overflow-hidden bg-surface">
       {/* Hero */}
@@ -57,6 +79,7 @@ export default function Hero({ isStudent = false }: HeroProps) {
               </Link>
               <Link
                 href={isStudent ? "/dashboard/student/my-tuition-posts" : "/register"}
+                onClick={handlePostTuitionClick}
                 className="px-8 py-4 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface font-semibold hover:bg-surface-container transition-all active:scale-95 cursor-pointer text-center text-on-surface"
               >
                 {isStudent ? "Post Tuition" : "Become a Tutor"}
