@@ -35,3 +35,17 @@ export interface ITuitionRequestFilterRequest {
     minSalary?: string;
     maxSalary?: string;
 }
+
+export interface ITuitionRequestQueryFilters {
+    searchTerm?: string;
+    subject?: string;
+    classLevel?: string;
+    district?: string;
+    genderPreference?: string;
+    minimumSalary?: string;
+    maximumSalary?: string;
+    page?: string;
+    limit?: string;
+    sortBy?: string;
+    sortOrder?: string;
+}

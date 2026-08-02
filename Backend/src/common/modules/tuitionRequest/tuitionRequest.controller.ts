@@ -40,10 +40,17 @@ const deleteTuitionRequest = catchAsync(async (req: Request, res: Response) => {
     sendResponse(res, 200, true, "Tuition request deleted successfully", result);
 });
 
+const getAllTuitionRequests = catchAsync(async (req: Request, res: Response) => {
+    const result = await TuitionRequestService.getAllTuitionRequests(req.query);
+
+    sendResponse(res, 200, true, "Available tuition requests retrieved successfully", result);
+});
+
 export const TuitionRequestController = {
     createTuitionRequest,
     getMyTuitionRequests,
     getSingleTuitionRequest,
     updateTuitionRequest,
     deleteTuitionRequest,
+    getAllTuitionRequests,
 };

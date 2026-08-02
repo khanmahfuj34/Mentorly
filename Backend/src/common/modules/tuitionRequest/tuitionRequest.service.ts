@@ -1,5 +1,5 @@
 import { prisma } from "../../../config/prisma";
-import { ITuitionRequestCreateInput, ITuitionRequestUpdateInput } from "./tuitionRequest.interface";
+import { ITuitionRequestCreateInput, ITuitionRequestUpdateInput, ITuitionRequestQueryFilters } from "./tuitionRequest.interface";
 
 const createTuitionRequest = async (
     studentId: string,
@@ -118,10 +118,122 @@ const deleteTuitionRequest = async (id: string, userId: string) => {
     return result;
 };
 
+const getAllTuitionRequests = async (filters: ITuitionRequestQueryFilters) => {
+    const {
+        searchTerm,
+        subject,
+        classLevel,
+        district,
+        genderPreference,
+        minimumSalary,
+        maximumSalary,
+        page = "1",
+        limit = "10",
+        sortBy = "createdAt",
+        sortOrder = "desc",
+    } = filters;
+
+    const parsedPage = Number(page) || 1;
+    const parsedLimit = Number(limit) || 10;
+    const skip = (parsedPage - 1) * parsedLimit;
+
+    // Build conditions object
+    const where: any = {
+        status: "OPEN", // Return only OPEN requests
+    };
+
+    if (subject) {
+        where.subject = { contains: subject, mode: "insensitive" };
+    }
+
+    if (classLevel) {
+        where.classLevel = classLevel;
+    }
+
+    if (district) {
+        where.district = district;
+    }
+
+    if (genderPreference) {
+        where.genderPreference = genderPreference;
+    }
+
+    // Salary range
+    if (minimumSalary || maximumSalary) {
+        where.salary = {};
+        if (minimumSalary) {
+            where.salary.gte = Number(minimumSalary);
+        }
+        if (maximumSalary) {
+            where.salary.lte = Number(maximumSalary);
+        }
+    }
+
+    // Keyword search
+    if (searchTerm) {
+        where.OR = [
+            { subject: { contains: searchTerm, mode: "insensitive" } },
+            { description: { contains: searchTerm, mode: "insensitive" } },
+        ];
+    }
+
+    // Order By newest first
+    const orderCondition: any = {};
+    if (sortBy === "salary") {
+        orderCondition.salary = sortOrder;
+    } else {
+        orderCondition.createdAt = sortOrder;
+    }
+
+    const [tuitionRequests, total] = await Promise.all([
+        prisma.tuitionRequest.findMany({
+            where,
+            select: {
+                id: true,
+                subject: true,
+                classLevel: true,
+                medium: true,
+                genderPreference: true,
+                district: true,
+                area: true,
+                salary: true,
+                daysPerWeek: true,
+                description: true,
+                status: true,
+                createdAt: true,
+                updatedAt: true,
+                student: {
+                    select: {
+                        id: true,
+                        name: true,
+                    },
+                },
+            },
+            orderBy: orderCondition,
+            skip,
+            take: parsedLimit,
+        }),
+        prisma.tuitionRequest.count({ where }),
+    ]);
+
+    const totalPage = Math.ceil(total / parsedLimit);
+
+    return {
+        meta: {
+            page: parsedPage,
+            limit: parsedLimit,
+            total,
+            totalPage,
+        },
+        data: tuitionRequests,
+    };
+};
+
 export const TuitionRequestService = {
     createTuitionRequest,
     getMyTuitionRequests,
     getSingleTuitionRequest,
     updateTuitionRequest,
     deleteTuitionRequest,
+    getAllTuitionRequests,
 };

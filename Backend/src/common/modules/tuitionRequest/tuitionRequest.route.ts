@@ -103,6 +103,13 @@ router.get(
     TuitionRequestController.getMyTuitionRequests
 );
 
+router.get(
+    "/",
+    auth,
+    roleGuard("TUTOR", "ADMIN"),
+    TuitionRequestController.getAllTuitionRequests
+);
+
 /**
  * @swagger
  * /tuition-requests/{id}:

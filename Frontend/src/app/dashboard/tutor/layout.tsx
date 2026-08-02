@@ -16,7 +16,7 @@ interface SidebarItem {
 const SIDEBAR_ITEMS: SidebarItem[] = [
   { label: "Home", href: "/dashboard/tutor/overview", icon: "home" },
   { label: "Find Tuition", href: "/dashboard/tutor/find-tuition", icon: "search" },
-  { label: "Applications", href: "/dashboard/tutor/applications", icon: "assignment" },
+  { label: "Applications", href: "/dashboard/tutor/my-applications", icon: "assignment" },
   { label: "Bookings", href: "/dashboard/tutor/bookings", icon: "event" },
   { label: "Availability", href: "/dashboard/tutor/availability", icon: "schedule" },
   { label: "Notifications", href: "/dashboard/tutor/notifications", icon: "notifications" },
