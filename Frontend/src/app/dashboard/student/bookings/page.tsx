@@ -44,6 +44,7 @@ export default function StudentBookingsPage() {
   const [error, setError] = useState<string | null>(null)
 
   const fetchBookings = useCallback(async () => {
+    await Promise.resolve() // Defer state updates to avoid synchronous setState inside useEffect
     try {
       setIsLoading(true)
       setError(null)
@@ -54,10 +55,11 @@ export default function StudentBookingsPage() {
       } else {
         setError("Failed to load bookings. Please try again.")
       }
-    } catch (err: any) {
+    } catch (err) {
+      const errorResponse = err as { response?: { data?: { message?: string } }; message?: string }
       setError(
-        err?.response?.data?.message ||
-          err?.message ||
+        errorResponse?.response?.data?.message ||
+          errorResponse?.message ||
           "Failed to load bookings. Please try again."
       )
     } finally {

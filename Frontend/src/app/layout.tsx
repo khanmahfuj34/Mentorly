@@ -29,7 +29,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="antialiased bg-surface font-display text-on-surface">
+      <body className="antialiased bg-surface font-display text-on-surface" suppressHydrationWarning>
         <AuthProvider>
           {children}
         </AuthProvider>

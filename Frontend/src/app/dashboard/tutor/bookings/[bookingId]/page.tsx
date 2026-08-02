@@ -88,24 +88,35 @@ export default function TutorBookingDetailPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const load = useCallback(async () => {
-    try {
-      setIsLoading(true)
-      setError(null)
-      const res = await getSingleBooking(bookingId)
-      if (res.success) {
-        setBooking(res.data)
-      } else {
-        setError("Failed to load booking details.")
+  useEffect(() => {
+    let active = true
+
+    const fetchBooking = async () => {
+      try {
+        const res = await getSingleBooking(bookingId)
+        if (!active) return
+        if (res.success) {
+          setBooking(res.data)
+        } else {
+          setError("Failed to load booking details.")
+        }
+      } catch (err) {
+        if (!active) return
+        const errorResponse = err as { response?: { data?: { message?: string } }; message?: string }
+        setError(errorResponse?.response?.data?.message || errorResponse?.message || "Failed to load booking details.")
+      } finally {
+        if (active) {
+          setIsLoading(false)
+        }
       }
-    } catch (err: any) {
-      setError(err?.response?.data?.message || err?.message || "Failed to load booking details.")
-    } finally {
-      setIsLoading(false)
+    }
+
+    fetchBooking()
+
+    return () => {
+      active = false
     }
   }, [bookingId])
-
-  useEffect(() => { load() }, [load])
 
   if (isLoading) return <BookingDetailSkeleton />
 

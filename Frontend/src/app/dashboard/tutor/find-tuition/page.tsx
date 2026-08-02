@@ -38,7 +38,7 @@ export default function FindTuitionPage() {
     maximumSalary: "",
   })
   const [sortComposite, setSortComposite] = useState("createdAt_desc")
-  
+
   // Pagination states
   const [page, setPage] = useState(1)
   const [limit] = useState(6) // 6 cards per page fits both 2 and 3 column grids nicely
@@ -47,7 +47,9 @@ export default function FindTuitionPage() {
 
   // Reset pagination on filter changes
   useEffect(() => {
-    setPage(1)
+    Promise.resolve().then(() => {
+      setPage((prev) => (prev === 1 ? prev : 1))
+    })
   }, [searchTerm, filters, sortComposite])
 
   // Fetch tuition posts from the real API
@@ -56,7 +58,7 @@ export default function FindTuitionPage() {
       try {
         setIsLoading(true)
         const [sortBy, sortOrder] = sortComposite.split("_")
-        
+
         const queryParams: ITuitionQueryFilters = {
           page,
           limit,
@@ -133,7 +135,7 @@ export default function FindTuitionPage() {
       <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
         <div className="flex-1 w-full flex items-center gap-3">
           <TuitionSearch value={searchTerm} onChange={setSearchTerm} />
-          
+
           {/* Mobile Filter Toggle Trigger */}
           <button
             onClick={() => setIsDrawerOpen(true)}
@@ -186,7 +188,7 @@ export default function FindTuitionPage() {
               <div className="text-xs font-semibold text-on-surface-variant/80 select-none">
                 Showing <strong>{tuitions.length}</strong> of <strong>{totalCount}</strong> available tuitions
               </div>
-              
+
               <TuitionGrid tuitions={tuitions} />
 
               {/* Pagination Controls */}
