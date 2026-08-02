@@ -1,7 +1,7 @@
-import React, { useState } from "react"
+import React from "react"
+import Link from "next/link"
 import { ITutorApplication } from "../../../types/application.types"
 import { formatAppliedDate } from "../../../lib/application-utils"
-import { motion, AnimatePresence } from "framer-motion"
 
 interface TutorApplicantCardProps {
   application: ITutorApplication
@@ -15,7 +15,6 @@ export default function TutorApplicantCard({
   onReject,
 }: TutorApplicantCardProps) {
   const { id: appId, status, coverLetter, createdAt, tutor } = application
-  const [isProfileOpen, setIsProfileOpen] = useState(false)
 
   if (!tutor) return null
 
@@ -112,13 +111,13 @@ export default function TutorApplicantCard({
 
       {/* Actions */}
       <div className="flex gap-2 pt-2 border-t border-outline-variant/15 justify-end">
-        <button
-          onClick={() => setIsProfileOpen(true)}
+        <Link
+          href={`/dashboard/student/applications/tutor/${tutor.id}`}
           className="h-9 px-4 border border-outline-variant/30 text-on-surface hover:bg-surface-container-low font-semibold text-xs rounded-xl flex items-center justify-center gap-1 cursor-pointer select-none"
         >
           <span className="material-symbols-outlined text-[16px]">visibility</span>
-          <span>Profile</span>
-        </button>
+          <span>View Profile</span>
+        </Link>
 
         {status === "PENDING" && (
           <>
@@ -153,120 +152,6 @@ export default function TutorApplicantCard({
           </span>
         )}
       </div>
-
-      {/* Profile Details Modal Dialog */}
-      <AnimatePresence>
-        {isProfileOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsProfileOpen(false)}
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm"
-            />
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="relative w-full max-w-lg bg-white rounded-[24px] border border-outline-variant/30 shadow-2xl p-6 md:p-8 z-10 flex flex-col space-y-6 animate-scale-up"
-            >
-              {/* Header */}
-              <div className="flex items-center justify-between border-b border-outline-variant/15 pb-4">
-                <h3 className="text-headline-sm font-bold text-on-surface">Tutor Profile Details</h3>
-                <button
-                  onClick={() => setIsProfileOpen(false)}
-                  className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container text-outline hover:text-on-surface cursor-pointer select-none"
-                >
-                  <span className="material-symbols-outlined text-[20px]">close</span>
-                </button>
-              </div>
-
-              {/* Profile Details */}
-              <div className="space-y-4 max-h-[350px] overflow-y-auto pr-1">
-                <div className="flex gap-4 items-center pb-4 border-b border-outline-variant/10">
-                  {profile?.profilePhoto ? (
-                    <img
-                      src={profile.profilePhoto}
-                      alt={tutor.name}
-                      className="w-16 h-16 rounded-full object-cover border border-outline-variant"
-                    />
-                  ) : (
-                    <div className="w-16 h-16 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center text-xl border border-primary/20">
-                      {initials}
-                    </div>
-                  )}
-                  <div>
-                    <h4 className="font-display font-bold text-title-lg text-on-surface">
-                      {tutor.name}
-                    </h4>
-                    <p className="text-sm text-on-surface-variant font-medium">
-                      {profile?.university || "NCTB Tutor"}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 text-xs font-medium">
-                  <div>
-                    <span className="text-outline uppercase text-[10px] font-bold block mb-1">Department</span>
-                    <p className="text-on-surface font-semibold">{profile?.department || "General"}</p>
-                  </div>
-                  <div>
-                    <span className="text-outline uppercase text-[10px] font-bold block mb-1">Experience</span>
-                    <p className="text-on-surface font-semibold">{profile?.experienceYears || 0} Years</p>
-                  </div>
-                  <div>
-                    <span className="text-outline uppercase text-[10px] font-bold block mb-1">Hourly Rate</span>
-                    <p className="text-primary font-bold text-sm">৳{profile?.hourlyRate || "N/A"}/hr</p>
-                  </div>
-                  <div>
-                    <span className="text-outline uppercase text-[10px] font-bold block mb-1">Average Rating</span>
-                    <p className="text-amber-500 font-bold text-sm flex items-center gap-0.5">
-                      <span className="material-symbols-outlined text-[16px] fill-amber-500">star</span>
-                      {profile?.rating?.toFixed(1) || "5.0"}
-                    </p>
-                  </div>
-                </div>
-
-                {profile?.bio && (
-                  <div className="space-y-1">
-                    <span className="text-outline uppercase text-[10px] font-bold block">About Tutor</span>
-                    <p className="text-xs text-on-surface-variant leading-relaxed whitespace-pre-line bg-surface-container-low p-3 rounded-xl border border-outline-variant/15">
-                      {profile.bio}
-                    </p>
-                  </div>
-                )}
-
-                {profile?.teachingSubjects && profile.teachingSubjects.length > 0 && (
-                  <div className="space-y-1.5">
-                    <span className="text-outline uppercase text-[10px] font-bold block">Teaching Subjects</span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {profile.teachingSubjects.map((sub) => (
-                        <span
-                          key={sub}
-                          className="px-2.5 py-1 rounded-md text-xs font-semibold bg-surface-container text-on-surface-variant border border-outline-variant/15"
-                        >
-                          {sub}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Footer */}
-              <div className="flex justify-end pt-4 border-t border-outline-variant/15">
-                <button
-                  onClick={() => setIsProfileOpen(false)}
-                  className="h-10 px-6 bg-primary text-on-primary font-semibold text-sm rounded-xl hover:opacity-95 transition-all select-none cursor-pointer"
-                >
-                  Close
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </div>
   )
 }

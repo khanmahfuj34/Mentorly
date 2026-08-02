@@ -15,3 +15,8 @@ export const updateTutorProfile = async (payload: ITutorProfileInput): Promise<{
   const response = await axiosInstance.patch("/tutors/update-profile", payload);
   return response.data;
 };
+
+export const getTutorProfileById = async (id: string): Promise<{ success: boolean; message?: string; data: ITutorProfile }> => {
+  const response = await axiosInstance.get(`/tutors/${id}`);
+  return response.data;
+};

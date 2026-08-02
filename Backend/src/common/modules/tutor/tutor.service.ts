@@ -69,8 +69,35 @@ const updateProfile = async (userId: string, payload: ITutorProfileUpdateInput) 
     return updatedProfile;
 };
 
+const getTutorProfileById = async (tutorId: string) => {
+    const profile = await prisma.tutorProfile.findUnique({
+        where: {
+            userId: tutorId,
+        },
+        include: {
+            user: {
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    role: true,
+                    isVerified: true,
+                    isBlocked: true,
+                },
+            },
+        },
+    });
+
+    if (!profile) {
+        throw new Error("Tutor profile not found");
+    }
+
+    return profile;
+};
+
 export const TutorService = {
     createProfile,
     getMyProfile,
     updateProfile,
+    getTutorProfileById,
 };

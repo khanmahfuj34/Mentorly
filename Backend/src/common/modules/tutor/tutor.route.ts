@@ -170,4 +170,11 @@ router.patch(
     TutorController.updateProfile
 );
 
+router.get(
+    "/:id",
+    auth,
+    roleGuard("STUDENT", "TUTOR", "ADMIN"),
+    TutorController.getTutorProfileById
+);
+
 export const TutorRoutes = router;
