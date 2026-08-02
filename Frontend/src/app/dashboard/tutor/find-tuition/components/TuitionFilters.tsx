@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useMemo } from "react"
 import { getLocationOptions, getUpazilasByDistrict } from "@/src/lib/location-utils"
 import { getAcademicLevels, getSubjectsByLevel } from "@/src/lib/academic-utils"
 
@@ -22,14 +22,14 @@ export default function TuitionFilters({ filters, onFilterChange, onReset }: Tui
   const { districts: allDistricts } = getLocationOptions()
   const allLevels = getAcademicLevels()
 
-  // Dynamically resolve unique subjects list
-  const [allSubjects, setAllSubjects] = useState<string[]>([])
-  useEffect(() => {
+  // Dynamically resolve unique subjects list once during component initialization
+  const allSubjects = useMemo(() => {
     const uniqueSet = new Set<string>()
-    allLevels.forEach((level) => {
+    const levels = getAcademicLevels()
+    levels.forEach((level) => {
       getSubjectsByLevel(level).forEach((sub) => uniqueSet.add(sub))
     })
-    setAllSubjects(Array.from(uniqueSet).sort())
+    return Array.from(uniqueSet).sort()
   }, [])
 
   const availableAreas = filters.district ? getUpazilasByDistrict(filters.district) : []

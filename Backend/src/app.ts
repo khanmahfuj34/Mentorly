@@ -4,6 +4,8 @@ import cookieParser from 'cookie-parser';
 import swaggerUi from "swagger-ui-express";
 import router from './common/routers';
 import { swaggerSpec } from './common/docs/swagger';
+import { notFound } from './common/middlewares/notFound';
+import { globalErrorHandler } from './common/middlewares/globalErrorHandler';
 
 const app = express();
 
@@ -22,4 +24,11 @@ app.get("/", (req, res) => {
   res.send("Mentorly Server Running");
 });
 
+// Not Found Middleware
+app.use(notFound);
+
+// Global Error Handler
+app.use(globalErrorHandler);
+
 export default app;
+

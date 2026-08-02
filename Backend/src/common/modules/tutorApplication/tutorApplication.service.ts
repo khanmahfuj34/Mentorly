@@ -7,6 +7,10 @@ const applyToTuitionRequest = async (
   payload: ITutorApplicationCreateInput
 ) => {
   // 0. Verify tutor is approved
+  // TODO:
+  // Re-enable tutor approval validation when the Admin Dashboard
+  // and Tutor Approval workflow are implemented.
+  /*
   const tutorProfile = await prisma.tutorProfile.findUnique({
     where: {
       userId: tutorId,
@@ -16,6 +20,7 @@ const applyToTuitionRequest = async (
   if (!tutorProfile || !tutorProfile.isApproved) {
     throw new Error("Only approved tutors can apply to tuition requests");
   }
+  */
 
   // 1. Verify tuition request exists
   const tuitionRequest = await prisma.tuitionRequest.findUnique({

@@ -7,6 +7,8 @@ import { motion } from "framer-motion"
 import { useRouter } from "next/navigation"
 import { loginUser } from "@/src/services/auth/auth.service"
 import { setAuthData } from "@/src/lib/auth-storage"
+import { toast } from "sonner"
+import { isAxiosError } from "axios"
 
 export default function LoginForm() {
   const router = useRouter()
@@ -32,6 +34,7 @@ export default function LoginForm() {
         result.data.user
       )
 
+      toast.success("Login successful!")
       const role = result.data.user.role
 
       if (role === "STUDENT") {
@@ -47,9 +50,15 @@ export default function LoginForm() {
       }
     } catch (error) {
       console.error(error)
-      alert("Login failed")
+      let message = "Login failed"
+      if (isAxiosError(error)) {
+        message = error.response?.data?.message || message
+      }
+      toast.error(message)
     }
   }
+
+
 
   return (
     <div className="w-full max-w-[440px] px-4 md:px-0">

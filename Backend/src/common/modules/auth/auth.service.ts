@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { prisma } from "../../../config/prisma";
 import { generateToken, verifyToken } from "../../utilis/jwt";
+import { AppError } from "../../errors/AppError";
 
 const registerUser = async (payload: {
     name: string;
@@ -15,7 +16,7 @@ const registerUser = async (payload: {
     });
 
     if (existingUser) {
-        throw new Error("User already exists");
+        throw new AppError(409, "User already exists");
     }
 
     const hashedPassword = await bcrypt.hash(payload.password, 10);
@@ -45,7 +46,7 @@ const loginUser = async (payload: {
     });
 
     if (!user) {
-        throw new Error("User not found");
+        throw new AppError(404, "User not found");
     }
 
     const isPasswordMatched = await bcrypt.compare(
@@ -54,7 +55,7 @@ const loginUser = async (payload: {
     );
 
     if (!isPasswordMatched) {
-        throw new Error("Invalid credentials");
+        throw new AppError(401, "Invalid credentials");
     }
     const accessToken = generateToken(
         {
@@ -93,7 +94,7 @@ const refreshToken = async (token: string) => {
             process.env.JWT_REFRESH_SECRET as string
         ) as any;
     } catch (err) {
-        throw new Error("Invalid Refresh Token");
+        throw new AppError(401, "Invalid Refresh Token");
     }
 
     const { email } = decodedData;
@@ -105,11 +106,11 @@ const refreshToken = async (token: string) => {
     });
 
     if (!user) {
-        throw new Error("User does not exist");
+        throw new AppError(404, "User does not exist");
     }
 
     if (user.isBlocked) {
-        throw new Error("User is blocked");
+        throw new AppError(403, "User is blocked");
     }
 
     const accessToken = generateToken(

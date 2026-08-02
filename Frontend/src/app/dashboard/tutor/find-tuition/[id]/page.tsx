@@ -67,8 +67,9 @@ export default function TuitionDetailsPage() {
         setIsModalOpen(false)
         setCoverLetter("")
       }
-    } catch (error: any) {
-      const errMsg = error?.response?.data?.message || error?.message || "Failed to submit application."
+    } catch (error) {
+      const err = error as { response?: { data?: { message?: string } }; message?: string }
+      const errMsg = err?.response?.data?.message || err?.message || "Failed to submit application."
       toast.error(errMsg)
     } finally {
       setIsSubmitting(false)

@@ -3,9 +3,14 @@
 import React, { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { useRouter } from "next/navigation"
 import RoleSelector from "./RoleSelector"
+import { registerUser } from "@/src/services/auth/auth.service"
+import { toast } from "sonner"
+import { isAxiosError } from "axios"
 
 export default function RegisterForm() {
+  const router = useRouter()
   const [role, setRole] = useState<"student" | "tutor">("student")
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
@@ -18,11 +23,34 @@ export default function RegisterForm() {
   const [passwordFocused, setPasswordFocused] = useState(false)
   const [confirmPasswordFocused, setConfirmPasswordFocused] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Frontend UI only - no authentication logic as per objective
-    console.log("Registration submitted:", { role, name, email, password, confirmPassword, terms })
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match")
+      return
+    }
+
+    try {
+      await registerUser({
+        name,
+        email,
+        password,
+        role: role.toUpperCase() as "STUDENT" | "TUTOR",
+      })
+
+      toast.success("Registration successful! Please login.")
+      router.push("/login")
+    } catch (error) {
+      console.error(error)
+      let message = "Registration failed"
+      if (isAxiosError(error)) {
+        message = error.response?.data?.message || message
+      }
+      toast.error(message)
+    }
   }
+
 
   return (
     <div className="w-full max-w-md px-4 md:px-0">

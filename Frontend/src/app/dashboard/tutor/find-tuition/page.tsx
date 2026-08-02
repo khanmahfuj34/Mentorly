@@ -41,7 +41,7 @@ export default function FindTuitionPage() {
   
   // Pagination states
   const [page, setPage] = useState(1)
-  const [limit] = useState(6) // 6 cards per page fits a 3-column layout nicely
+  const [limit] = useState(6) // 6 cards per page fits both 2 and 3 column grids nicely
   const [totalPages, setTotalPages] = useState(1)
   const [totalCount, setTotalCount] = useState(0)
 
@@ -153,9 +153,9 @@ export default function FindTuitionPage() {
       </div>
 
       {/* Main Results Grid + Desktop Filter Layout */}
-      <div className="grid lg:grid-cols-12 gap-8 items-start">
+      <div className="flex flex-col lg:flex-row gap-8 items-start">
         {/* Desktop Sidebar Filters */}
-        <aside className="hidden lg:block lg:col-span-3 sticky top-24">
+        <aside className="hidden lg:block w-[260px] xl:w-[280px] 2xl:w-[300px] shrink-0 sticky top-24 max-h-[calc(100vh-120px)] overflow-y-auto pr-1">
           <TuitionFilters
             filters={filters}
             onFilterChange={handleFilterChange}
@@ -173,9 +173,9 @@ export default function FindTuitionPage() {
         />
 
         {/* Tuition Results Area */}
-        <div className="lg:col-span-9 space-y-8">
+        <div className="flex-1 min-w-0 space-y-6">
           {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {Array.from({ length: limit }).map((_, i) => (
                 <TuitionSkeleton key={i} />
               ))}
@@ -190,25 +190,25 @@ export default function FindTuitionPage() {
               <TuitionGrid tuitions={tuitions} />
 
               {/* Pagination Controls */}
-              <div className="flex justify-between items-center border-t border-outline-variant/20 pt-6 mt-8">
+              <div className="flex flex-col sm:flex-row justify-between items-center border-t border-outline-variant/20 pt-6 mt-8 gap-4">
                 <button
                   disabled={page === 1}
                   onClick={() => setPage(page - 1)}
-                  className="h-10 px-4 border border-outline-variant/30 text-on-surface rounded-xl hover:bg-surface-container-low transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 cursor-pointer select-none font-semibold text-xs"
+                  className="w-full sm:w-auto h-11 px-6 border border-outline-variant/30 text-on-surface rounded-xl hover:bg-surface-container-low transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer select-none font-semibold text-sm"
                 >
-                  <span className="material-symbols-outlined text-[18px]">chevron_left</span>
+                  <span className="material-symbols-outlined text-[20px]">chevron_left</span>
                   <span>Previous</span>
                 </button>
-                <span className="text-sm font-medium text-on-surface-variant select-none">
+                <span className="text-sm font-semibold text-on-surface-variant select-none">
                   Page <strong>{page}</strong> of <strong>{totalPages || 1}</strong>
                 </span>
                 <button
                   disabled={page === totalPages || totalPages === 0}
                   onClick={() => setPage(page + 1)}
-                  className="h-10 px-4 border border-outline-variant/30 text-on-surface rounded-xl hover:bg-surface-container-low transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 cursor-pointer select-none font-semibold text-xs"
+                  className="w-full sm:w-auto h-11 px-6 border border-outline-variant/30 text-on-surface rounded-xl hover:bg-surface-container-low transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer select-none font-semibold text-sm"
                 >
                   <span>Next</span>
-                  <span className="material-symbols-outlined text-[18px]">chevron_right</span>
+                  <span className="material-symbols-outlined text-[20px]">chevron_right</span>
                 </button>
               </div>
             </>

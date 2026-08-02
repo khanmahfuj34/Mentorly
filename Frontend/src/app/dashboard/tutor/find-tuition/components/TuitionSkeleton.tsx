@@ -2,38 +2,41 @@ import React from "react"
 
 export default function TuitionSkeleton() {
   return (
-    <div className="rounded-[28px] border border-outline-variant/30 bg-white p-6 shadow-sm flex flex-col justify-between h-[340px] animate-pulse">
-      <div className="space-y-4">
-        {/* Top Header Row (Status & Salary) */}
-        <div className="flex justify-between items-start gap-4">
-          <div className="h-6 w-20 bg-outline-variant/30 rounded-full" />
-          <div className="h-7 w-28 bg-outline-variant/30 rounded-xl" />
+    <div className="rounded-[24px] border border-outline-variant/30 bg-white p-6 shadow-sm flex flex-col justify-between h-[380px] animate-pulse">
+      {/* Content skeleton */}
+      <div className="flex-1 flex flex-col justify-start overflow-hidden space-y-3.5">
+        {/* Header */}
+        <div className="flex justify-between items-center gap-4 shrink-0">
+          <div className="h-6 w-16 bg-outline-variant/25 rounded-full" />
+          <div className="h-6 w-24 bg-outline-variant/25 rounded-xl" />
         </div>
 
-        {/* Subject & Class */}
-        <div className="space-y-2">
-          <div className="h-7 w-2/3 bg-outline-variant/30 rounded-lg" />
-          <div className="h-5 w-1/2 bg-outline-variant/30 rounded-lg" />
+        {/* Title */}
+        <div className="space-y-2 shrink-0">
+          <div className="h-5 w-5/6 bg-outline-variant/25 rounded-lg" />
+          <div className="h-4 w-1/2 bg-outline-variant/20 rounded-lg" />
         </div>
 
-        {/* Detail Chips */}
-        <div className="flex flex-wrap gap-2 pt-2">
-          <div className="h-6 w-16 bg-outline-variant/20 rounded-lg" />
-          <div className="h-6 w-24 bg-outline-variant/20 rounded-lg" />
-          <div className="h-6 w-20 bg-outline-variant/20 rounded-lg" />
+        {/* Chips */}
+        <div className="flex flex-wrap gap-2 shrink-0">
+          <div className="h-7 w-20 bg-outline-variant/15 rounded-full" />
+          <div className="h-7 w-24 bg-outline-variant/15 rounded-full" />
+          <div className="h-7 w-16 bg-outline-variant/15 rounded-full" />
         </div>
 
-        {/* Short Description */}
-        <div className="space-y-1.5 pt-2">
-          <div className="h-4 w-full bg-outline-variant/15 rounded" />
-          <div className="h-4 w-5/6 bg-outline-variant/15 rounded" />
+        {/* Description */}
+        <div className="space-y-1.5 flex-1 pt-1">
+          <div className="h-3.5 w-full bg-outline-variant/10 rounded" />
+          <div className="h-3.5 w-4/5 bg-outline-variant/10 rounded" />
         </div>
+
+        {/* Address */}
+        <div className="h-3.5 w-1/3 bg-outline-variant/15 rounded shrink-0" />
       </div>
 
-      {/* Card Action Row */}
-      <div className="flex justify-between items-center border-t border-outline-variant/20 pt-4 mt-4">
-        <div className="h-4 w-24 bg-outline-variant/20 rounded" />
-        <div className="h-10 w-28 bg-outline-variant/30 rounded-xl" />
+      {/* Button */}
+      <div className="pt-4 border-t border-outline-variant/15 mt-4 shrink-0">
+        <div className="h-11 w-full bg-outline-variant/25 rounded-xl" />
       </div>
     </div>
   )

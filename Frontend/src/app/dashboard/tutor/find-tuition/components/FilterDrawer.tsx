@@ -14,7 +14,7 @@ interface FilterDrawerProps {
     minimumSalary: string
     maximumSalary: string
   }
-  onFilterChange: (key: any, val: string) => void
+  onFilterChange: (key: keyof FilterDrawerProps["filters"], val: string) => void
   onReset: () => void
 }
 
