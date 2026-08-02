@@ -166,16 +166,13 @@ const acceptApplication = async (userId: string, applicationId: string) => {
     throw new Error("A booking already exists for this tuition request");
   }
 
-  // 3c. Verify tutor is still approved before assigning booking
-  const tutorProfile = await prisma.tutorProfile.findUnique({
-    where: {
-      userId: application.tutorId,
-    },
-  });
-
-  if (!tutorProfile || !tutorProfile.isApproved) {
-    throw new Error("Only approved tutors can receive bookings");
-  }
+  // TODO:
+  // Re-enable tutor approval validation when the Admin Dashboard
+  // and Tutor Approval workflow are implemented.
+  // const tutorProfile = await prisma.tutorProfile.findUnique({ where: { userId: application.tutorId } });
+  // if (!tutorProfile || !tutorProfile.isApproved) {
+  //   throw new Error("Only approved tutors can receive bookings");
+  // }
 
   // 4. Run database transaction to update statuses and create booking
   const updatedApplication = await prisma.$transaction(async (tx) => {

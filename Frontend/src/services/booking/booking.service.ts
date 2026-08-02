@@ -30,11 +30,27 @@ export interface IBooking {
   }
 }
 
+export interface IBookingListResponse {
+  success: boolean
+  message?: string
+  meta?: {
+    page: number
+    limit: number
+    total: number
+  }
+  data: IBooking[]
+}
+
+/**
+ * GET /api/v1/bookings/my-bookings
+ * Works for both STUDENT and TUTOR — the backend filters by role automatically.
+ * Response shape: { success, message, meta: {page,limit,total}, data: [...bookings] }
+ */
 export const getMyBookings = async (params?: {
   status?: string
   page?: number
   limit?: number
-}): Promise<{ success: boolean; data: IBooking[] }> => {
+}): Promise<IBookingListResponse> => {
   const response = await axiosInstance.get("/bookings/my-bookings", { params })
   return response.data
 }

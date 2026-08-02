@@ -8,12 +8,15 @@ const getMyBookings = catchAsync(async (req: Request, res: Response) => {
   const role = req.user.role;
   const result = await BookingService.getMyBookings(userId, role, req.query);
 
+  // Pass meta and data separately so the response shape is:
+  // { success, message, meta: {page,limit,total}, data: [...bookings] }
   sendResponse(
     res,
     200,
     true,
     "My bookings retrieved successfully",
-    result
+    result.data,
+    result.meta
   );
 });
 
