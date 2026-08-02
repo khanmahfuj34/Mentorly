@@ -1,9 +1,14 @@
-import ProtectedRoute from "@/src/components/auth/ProtectedRoute"
+"use client"
 
-export default function TutorDashboard() {
-  return (
-    <ProtectedRoute allowedRoles={["TUTOR"]}>
-      <h1>Tutor Dashboard</h1>
-    </ProtectedRoute>
-  )
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+
+export default function TutorDashboardPage() {
+  const router = useRouter()
+
+  useEffect(() => {
+    router.replace("/dashboard/tutor/overview")
+  }, [router])
+
+  return null
 }
