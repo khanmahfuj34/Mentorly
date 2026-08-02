@@ -130,6 +130,7 @@ export default function TutorBookingsPage() {
                     <th className="px-6 py-4">Location</th>
                     <th className="px-6 py-4">Salary</th>
                     <th className="px-6 py-4">Status</th>
+                    <th className="px-6 py-4"></th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-outline-variant/15">
@@ -158,6 +159,7 @@ export default function TutorBookingsPage() {
                     <th className="px-6 py-4">Location</th>
                     <th className="px-6 py-4">Salary</th>
                     <th className="px-6 py-4">Status</th>
+                    <th className="px-6 py-4"></th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-outline-variant/15 font-medium">
@@ -190,6 +192,15 @@ export default function TutorBookingsPage() {
                           <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border uppercase ${statusStyle}`}>
                             {booking.status.charAt(0) + booking.status.slice(1).toLowerCase()}
                           </span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <Link
+                            href={`/dashboard/tutor/bookings/${booking.id}`}
+                            className="inline-flex items-center gap-1 h-7 px-3 border border-primary/30 text-primary hover:bg-primary/8 font-semibold text-[10px] rounded-lg transition-colors select-none whitespace-nowrap"
+                          >
+                            <span className="material-symbols-outlined text-[12px]">open_in_new</span>
+                            View Details
+                          </Link>
                         </td>
                       </tr>
                     )
