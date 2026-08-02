@@ -4,33 +4,55 @@ import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { getMyStudentProfile } from "@/src/services/student/student.service"
+import { getMyTuitionRequests } from "@/src/services/student/tuition.service"
+import { ITuitionRequest } from "@/src/types/tuition"
 import {
   checkStudentProfileCompletion,
   ProfileCompletionResult,
 } from "@/src/lib/profile-completion"
+import TuitionCard from "./components/TuitionCard"
+import TuitionFilters from "./components/TuitionFilters"
 
 export default function MyTuitionPostsPage() {
   const [completion, setCompletion] = useState<ProfileCompletionResult | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoadingProfile, setIsLoadingProfile] = useState(true)
+  const [tuitions, setTuitions] = useState<ITuitionRequest[]>([])
+  const [isLoadingTuitions, setIsLoadingTuitions] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [statusFilter, setStatusFilter] = useState("ALL")
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchProfileAndTuitions = async () => {
       try {
-        setIsLoading(true)
-        const res = await getMyStudentProfile()
-        const comp = checkStudentProfileCompletion(res?.data)
+        setIsLoadingProfile(true)
+        const profileRes = await getMyStudentProfile()
+        const comp = checkStudentProfileCompletion(profileRes?.data)
         setCompletion(comp)
+
+        if (comp.isComplete) {
+          setIsLoadingTuitions(true)
+          const tuitionRes = await getMyTuitionRequests()
+          setTuitions(tuitionRes?.data || [])
+        }
       } catch (err) {
         setCompletion(checkStudentProfileCompletion(null))
       } finally {
-        setIsLoading(false)
+        setIsLoadingProfile(false)
+        setIsLoadingTuitions(false)
       }
     }
 
-    fetchProfile()
+    fetchProfileAndTuitions()
   }, [])
 
-  if (isLoading) {
+  // Filter tuition requests based on search and status
+  const filteredTuitions = tuitions.filter((t) => {
+    const matchesSearch = t.subject.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesStatus = statusFilter === "ALL" || t.status === statusFilter
+    return matchesSearch && matchesStatus
+  })
+
+  if (isLoadingProfile) {
     return (
       <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col items-center justify-center min-h-[400px]">
         <span className="material-symbols-outlined text-primary text-[48px] animate-spin mb-4 select-none">
@@ -163,27 +185,68 @@ export default function MyTuitionPostsPage() {
           </p>
         </div>
         <div>
-          <button className="px-6 py-3.5 bg-primary text-on-primary font-semibold text-sm rounded-xl hover:opacity-95 transition-all shadow-md shadow-primary/20 flex items-center gap-2 cursor-pointer active:scale-95">
+          <Link
+            href="/dashboard/student/my-tuition-posts/new"
+            className="px-6 py-3.5 bg-primary text-on-primary font-semibold text-sm rounded-xl hover:opacity-95 transition-all shadow-md shadow-primary/20 flex items-center gap-2 cursor-pointer active:scale-95"
+          >
             <span className="material-symbols-outlined text-[20px] select-none">add</span>
             <span>Post New Tuition</span>
-          </button>
+          </Link>
         </div>
       </div>
 
+      {/* Filter controls */}
+      {tuitions.length > 0 && (
+        <TuitionFilters
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          statusFilter={statusFilter}
+          setStatusFilter={setStatusFilter}
+        />
+      )}
+
       {/* Tuition Posts Content / List */}
-      <div className="rounded-[28px] border border-outline-variant/30 bg-white p-8 shadow-sm text-center py-16">
-        <div className="w-16 h-16 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4">
-          <span className="material-symbols-outlined text-3xl select-none">post_add</span>
+      {isLoadingTuitions ? (
+        <div className="flex flex-col items-center justify-center py-12">
+          <span className="material-symbols-outlined text-primary text-[36px] animate-spin mb-3 select-none">
+            progress_activity
+          </span>
+          <p className="text-on-surface-variant text-sm">Loading tuition posts...</p>
         </div>
-        <h3 className="text-headline-sm font-bold text-on-surface mb-2">No Active Tuition Posts</h3>
-        <p className="text-on-surface-variant font-body-md max-w-md mx-auto mb-6">
-          You haven't posted any tuition requirements yet. Click below to create your first post!
-        </p>
-        <button className="px-6 py-3 bg-primary text-on-primary font-semibold text-sm rounded-xl hover:opacity-95 transition-all shadow-md shadow-primary/20 inline-flex items-center gap-2 cursor-pointer">
-          <span className="material-symbols-outlined text-[18px] select-none">add</span>
-          <span>Create First Post</span>
-        </button>
-      </div>
+      ) : tuitions.length === 0 ? (
+        <div className="rounded-[28px] border border-outline-variant/30 bg-white p-8 shadow-sm text-center py-16">
+          <div className="w-16 h-16 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="material-symbols-outlined text-3xl select-none">post_add</span>
+          </div>
+          <h3 className="text-headline-sm font-bold text-on-surface mb-2">No Active Tuition Posts</h3>
+          <p className="text-on-surface-variant font-body-md max-w-md mx-auto mb-6">
+            You haven't posted any tuition requirements yet. Click below to create your first post!
+          </p>
+          <Link
+            href="/dashboard/student/my-tuition-posts/new"
+            className="px-6 py-3 bg-primary text-on-primary font-semibold text-sm rounded-xl hover:opacity-95 transition-all shadow-md shadow-primary/20 inline-flex items-center gap-2 cursor-pointer"
+          >
+            <span className="material-symbols-outlined text-[18px] select-none">add</span>
+            <span>Create First Post</span>
+          </Link>
+        </div>
+      ) : filteredTuitions.length === 0 ? (
+        <div className="rounded-[28px] border border-outline-variant/30 bg-white p-8 shadow-sm text-center py-12">
+          <div className="w-12 h-12 bg-surface-container-low text-on-surface-variant/70 rounded-full flex items-center justify-center mx-auto mb-3">
+            <span className="material-symbols-outlined text-2xl select-none">search_off</span>
+          </div>
+          <h4 className="text-lg font-bold text-on-surface mb-1">No Matches Found</h4>
+          <p className="text-on-surface-variant text-sm max-w-xs mx-auto">
+            Try adjusting your search query or filter settings to find what you're looking for.
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-6">
+          {filteredTuitions.map((tuition) => (
+            <TuitionCard key={tuition.id} tuition={tuition} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
