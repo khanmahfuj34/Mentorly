@@ -190,4 +190,8 @@ router.get(
     }
 );
 
-export const AuthRoutes = router;
+router.patch("/update-account", auth, AuthController.updateAccount);
+router.patch("/change-password", auth, AuthController.changePassword);
+router.delete("/delete-account", auth, AuthController.deleteAccount);
+
+export const AuthRoutes = router;

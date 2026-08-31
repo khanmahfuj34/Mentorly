@@ -128,8 +128,126 @@ const refreshToken = async (token: string) => {
     };
 };
 
+const updateAccount = async (
+    userId: string,
+    payload: { name?: string; email?: string }
+) => {
+    const user = await prisma.user.findUnique({
+        where: { id: userId },
+    });
+
+    if (!user) {
+        throw new AppError(404, "User not found");
+    }
+
+    if (payload.email && payload.email !== user.email) {
+        const existingEmailUser = await prisma.user.findUnique({
+            where: { email: payload.email },
+        });
+
+        if (existingEmailUser && existingEmailUser.id !== userId) {
+            throw new AppError(409, "Email is already taken by another account");
+        }
+    }
+
+    const updatedUser = await prisma.user.update({
+        where: { id: userId },
+        data: {
+            ...(payload.name ? { name: payload.name } : {}),
+            ...(payload.email ? { email: payload.email } : {}),
+        },
+    });
+
+    const { password, ...userWithoutPassword } = updatedUser;
+    return userWithoutPassword;
+};
+
+const changePassword = async (
+    userId: string,
+    payload: { currentPassword?: string; newPassword?: string }
+) => {
+    const { currentPassword, newPassword } = payload;
+    if (!currentPassword || !newPassword) {
+        throw new AppError(400, "Both current password and new password are required");
+    }
+
+    if (newPassword.length < 6) {
+        throw new AppError(400, "New password must be at least 6 characters long");
+    }
+
+    const user = await prisma.user.findUnique({
+        where: { id: userId },
+    });
+
+    if (!user) {
+        throw new AppError(404, "User not found");
+    }
+
+    const isMatched = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatched) {
+        throw new AppError(400, "Current password is incorrect");
+    }
+
+    const newHashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await prisma.user.update({
+        where: { id: userId },
+        data: {
+            password: newHashedPassword,
+        },
+    });
+
+    return { message: "Password updated successfully" };
+};
+
+const deleteAccount = async (userId: string) => {
+    const user = await prisma.user.findUnique({
+        where: { id: userId },
+    });
+
+    if (!user) {
+        throw new AppError(404, "User not found");
+    }
+
+    await prisma.$transaction(async (tx) => {
+        await tx.review.deleteMany({
+            where: {
+                OR: [{ studentId: userId }, { tutorId: userId }],
+            },
+        });
+
+        await tx.booking.deleteMany({
+            where: {
+                OR: [{ studentId: userId }, { tutorId: userId }],
+            },
+        });
+
+        await tx.tutorApplication.deleteMany({
+            where: {
+                OR: [
+                    { tutorId: userId },
+                    { tuitionRequest: { studentId: userId } },
+                ],
+            },
+        });
+
+        await tx.tuitionRequest.deleteMany({
+            where: { studentId: userId },
+        });
+
+        await tx.user.delete({
+            where: { id: userId },
+        });
+    });
+
+    return { message: "Account deleted successfully" };
+};
+
 export const AuthService = {
     registerUser,
     loginUser,
     refreshToken,
+    updateAccount,
+    changePassword,
+    deleteAccount,
 };

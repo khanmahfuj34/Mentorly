@@ -31,9 +31,17 @@ const getTutorProfileById = catchAsync(async (req: Request, res: Response) => {
     sendResponse(res, 200, true, "Tutor profile retrieved successfully", result);
 });
 
+const getAllTutors = catchAsync(async (req: Request, res: Response) => {
+    const result = await TutorService.getAllTutors(req.query);
+
+    sendResponse(res, 200, true, "Tutors retrieved successfully", result.data, result.meta);
+});
+
 export const TutorController = {
     createProfile,
     getMyProfile,
     updateProfile,
     getTutorProfileById,
+    getAllTutors,
 };
+

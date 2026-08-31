@@ -48,3 +48,35 @@ export interface ITutorProfileInput {
   district?: string;
   area?: string;
 }
+
+export interface ITutorFilters {
+  searchTerm?: string;
+  district?: string;
+  area?: string;
+  subject?: string;
+  classLevel?: string;
+  medium?: string;
+  gender?: string;
+  minSalary?: number | string;
+  maxSalary?: number | string;
+  experienceYears?: number | string;
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  sortOrder?: "asc" | "desc";
+}
+
+export interface ITutorListMeta {
+  page: number;
+  limit: number;
+  total: number;
+  totalPage: number;
+}
+
+export interface ITutorListResponse {
+  success: boolean;
+  message?: string;
+  meta?: ITutorListMeta;
+  data: ITutorProfile[];
+}
+

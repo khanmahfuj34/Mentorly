@@ -57,10 +57,52 @@ const logout = catchAsync(async (req, res) => {
     );
 });
 
+const updateAccount = catchAsync(async (req: Request, res: Response) => {
+    const userId = req.user.userId;
+    const result = await AuthService.updateAccount(userId, req.body);
+
+    sendResponse(
+        res,
+        200,
+        true,
+        "Account details updated successfully",
+        result
+    );
+});
+
+const changePassword = catchAsync(async (req: Request, res: Response) => {
+    const userId = req.user.userId;
+    const result = await AuthService.changePassword(userId, req.body);
+
+    sendResponse(
+        res,
+        200,
+        true,
+        "Password changed successfully",
+        result
+    );
+});
+
+const deleteAccount = catchAsync(async (req: Request, res: Response) => {
+    const userId = req.user.userId;
+    const result = await AuthService.deleteAccount(userId);
+
+    sendResponse(
+        res,
+        200,
+        true,
+        "Account deleted successfully",
+        result
+    );
+});
+
 export const AuthController = {
     register,
     login,
     getMe,
     refreshToken,
     logout,
-};
+    updateAccount,
+    changePassword,
+    deleteAccount,
+};

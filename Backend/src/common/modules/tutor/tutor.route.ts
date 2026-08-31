@@ -171,6 +171,13 @@ router.patch(
 );
 
 router.get(
+    "/",
+    auth,
+    roleGuard("STUDENT", "TUTOR", "ADMIN"),
+    TutorController.getAllTutors
+);
+
+router.get(
     "/:id",
     auth,
     roleGuard("STUDENT", "TUTOR", "ADMIN"),

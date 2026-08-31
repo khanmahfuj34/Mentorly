@@ -25,3 +25,10 @@ export const clearAuthData = () => {
   localStorage.removeItem(REFRESH_TOKEN);
   localStorage.removeItem(USER);
 };
+
+export const updateStoredUser = (updatedFields: Record<string, unknown>) => {
+  const currentUser = getUser() || {};
+  const newUser = { ...currentUser, ...updatedFields };
+  localStorage.setItem(USER, JSON.stringify(newUser));
+  return newUser;
+};
