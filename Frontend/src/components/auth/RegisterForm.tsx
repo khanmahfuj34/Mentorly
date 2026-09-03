@@ -79,9 +79,8 @@ export default function RegisterForm() {
         {/* Full Name */}
         <div className="space-y-1.5">
           <label
-            className={`block font-label-sm text-xs transition-colors duration-200 px-1 ${
-              nameFocused ? "text-primary font-semibold" : "text-on-surface-variant"
-            }`}
+            className={`block font-label-sm text-xs transition-colors duration-200 px-1 ${nameFocused ? "text-primary font-semibold" : "text-on-surface-variant"
+              }`}
             htmlFor="name"
           >
             Full Name
@@ -102,9 +101,8 @@ export default function RegisterForm() {
         {/* Email */}
         <div className="space-y-1.5">
           <label
-            className={`block font-label-sm text-xs transition-colors duration-200 px-1 ${
-              emailFocused ? "text-primary font-semibold" : "text-on-surface-variant"
-            }`}
+            className={`block font-label-sm text-xs transition-colors duration-200 px-1 ${emailFocused ? "text-primary font-semibold" : "text-on-surface-variant"
+              }`}
             htmlFor="email"
           >
             Email Address
@@ -126,9 +124,8 @@ export default function RegisterForm() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-1.5">
             <label
-              className={`block font-label-sm text-xs transition-colors duration-200 px-1 ${
-                passwordFocused ? "text-primary font-semibold" : "text-on-surface-variant"
-              }`}
+              className={`block font-label-sm text-xs transition-colors duration-200 px-1 ${passwordFocused ? "text-primary font-semibold" : "text-on-surface-variant"
+                }`}
               htmlFor="password"
             >
               Password
@@ -147,9 +144,8 @@ export default function RegisterForm() {
           </div>
           <div className="space-y-1.5">
             <label
-              className={`block font-label-sm text-xs transition-colors duration-200 px-1 ${
-                confirmPasswordFocused ? "text-primary font-semibold" : "text-on-surface-variant"
-              }`}
+              className={`block font-label-sm text-xs transition-colors duration-200 px-1 ${confirmPasswordFocused ? "text-primary font-semibold" : "text-on-surface-variant"
+                }`}
               htmlFor="confirm-password"
             >
               Confirm Password

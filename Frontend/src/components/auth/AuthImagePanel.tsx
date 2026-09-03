@@ -9,6 +9,12 @@ interface GlassCard {
   iconColorClass?: string
   bgClass?: string
   fillIcon?: boolean
+  /** Tailwind border color class e.g. "border-emerald-400/40" */
+  accentBorderClass?: string
+  /** Tailwind box-shadow glow via ring e.g. "hover:ring-emerald-400/30" */
+  accentRingClass?: string
+  /** Card tint background overlay e.g. "bg-emerald-400/5" */
+  cardTintClass?: string
 }
 
 interface AuthImagePanelProps {
@@ -105,20 +111,53 @@ export default function AuthImagePanel({
             {glassCards.map((card, idx) => (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 + idx * 0.1, ease: "easeOut" }}
-                className="glass-card backdrop-blur-md bg-white/10 border border-white/20 p-4 rounded-xl flex items-center gap-3 hover:-translate-y-1 hover:bg-white/15 transition-all duration-300"
+                transition={{ duration: 0.55, delay: 0.3 + idx * 0.1, ease: "easeOut" }}
+                whileHover={{ y: -3, transition: { duration: 0.22 } }}
+                className={[
+                  "group relative overflow-hidden",
+                  "backdrop-blur-[10px]",
+                  "bg-white/[0.08]",
+                  card.cardTintClass || "",
+                  "border",
+                  card.accentBorderClass || "border-white/20",
+                  "p-4 rounded-[18px]",
+                  "flex items-center gap-3.5",
+                  "shadow-lg shadow-black/20",
+                  "hover:shadow-xl hover:shadow-black/30",
+                  "hover:bg-white/[0.13]",
+                  card.accentRingClass || "",
+                  "hover:ring-2",
+                  "transition-all duration-250",
+                  "cursor-default",
+                ].join(" ")}
               >
-                <div className={`${card.bgClass || "bg-primary/20"} p-2 rounded-full flex items-center justify-center`}>
+                {/* Subtle inner glow strip at top */}
+                <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+
+                {/* Icon container */}
+                <div
+                  className={[
+                    "shrink-0 w-10 h-10 rounded-full flex items-center justify-center",
+                    card.bgClass || "bg-primary/25",
+                    "border border-white/20",
+                    "group-hover:scale-110 transition-transform duration-250",
+                    "shadow-sm",
+                  ].join(" ")}
+                >
                   <span
-                    className={`material-symbols-outlined text-sm ${card.iconColorClass || "text-primary-fixed"}`}
-                    style={{ fontVariationSettings: card.fillIcon ? "'FILL' 1" : "'FILL' 0" }}
+                    className={`material-symbols-outlined text-[18px] leading-none ${card.iconColorClass || "text-white"}`}
+                    style={{ fontVariationSettings: card.fillIcon !== false ? "'FILL' 1" : "'FILL' 0" }}
                   >
                     {card.icon}
                   </span>
                 </div>
-                <span className="text-surface-bright font-label-md">{card.text}</span>
+
+                {/* Label */}
+                <span className="text-white font-semibold text-sm tracking-wide drop-shadow-sm">
+                  {card.text}
+                </span>
               </motion.div>
             ))}
           </div>
