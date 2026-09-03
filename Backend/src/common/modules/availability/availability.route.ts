@@ -97,6 +97,22 @@ router.get(
   AvailabilityController.getMySchedule
 );
 
+router.get(
+  "/my-availability",
+  auth,
+  roleGuard("TUTOR"),
+  AvailabilityController.getMyAvailability
+);
+
+router.patch(
+  "/my-availability",
+  auth,
+  roleGuard("TUTOR"),
+  validateRequest(AvailabilityValidation.updateMyAvailabilityValidationSchema),
+  AvailabilityController.updateMyAvailability
+);
+
+
 /**
  * @swagger
  * /availability/tutor/{tutorId}:

@@ -3,6 +3,7 @@ import {
   IAvailabilityCreateInput,
   IAvailabilityFilterRequest,
   IAvailabilityUpdateInput,
+  IBatchAvailabilityInput,
 } from "./availability.interface";
 
 // Helper function to convert time string (AM/PM or 24h) to minutes since midnight
@@ -232,6 +233,67 @@ const getSingleAvailability = async (id: string) => {
   return result;
 };
 
+const getMyAvailability = async (userId: string) => {
+  const result = await prisma.availability.findMany({
+    where: { tutorId: userId },
+  });
+  return result;
+};
+
+const updateMyAvailability = async (
+  userId: string,
+  payload: IBatchAvailabilityInput
+) => {
+  const { availability } = payload;
+
+  for (const item of availability) {
+    if (item.isAvailable && item.startTime && item.endTime) {
+      const startMin = timeToMinutes(item.startTime);
+      const endMin = timeToMinutes(item.endTime);
+      if (startMin >= endMin) {
+        throw new Error(`End time must be after start time for ${item.day}`);
+      }
+    }
+
+    const existing = await prisma.availability.findFirst({
+      where: {
+        tutorId: userId,
+        day: item.day as any,
+      },
+    });
+
+    const startTimeVal = item.startTime ?? existing?.startTime ?? "09:00";
+    const endTimeVal = item.endTime ?? existing?.endTime ?? "17:00";
+
+    if (existing) {
+      await prisma.availability.update({
+        where: { id: existing.id },
+        data: {
+          isAvailable: item.isAvailable,
+          startTime: startTimeVal,
+          endTime: endTimeVal,
+        },
+      });
+    } else {
+      await prisma.availability.create({
+        data: {
+          tutorId: userId,
+          day: item.day as any,
+          isAvailable: item.isAvailable,
+          startTime: startTimeVal,
+          endTime: endTimeVal,
+        },
+      });
+    }
+  }
+
+  const updatedResult = await prisma.availability.findMany({
+    where: { tutorId: userId },
+  });
+
+  return updatedResult;
+};
+
 export const AvailabilityService = {
   createAvailability,
   updateAvailability,
@@ -239,4 +301,7 @@ export const AvailabilityService = {
   getTutorSchedule,
   getMySchedule,
   getSingleAvailability,
+  getMyAvailability,
+  updateMyAvailability,
 };
+

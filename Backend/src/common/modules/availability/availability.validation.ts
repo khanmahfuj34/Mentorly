@@ -38,8 +38,23 @@ const getAvailabilityQueryValidationSchema = z.object({
   }),
 });
 
+const updateMyAvailabilityValidationSchema = z.object({
+  body: z.object({
+    availability: z.array(
+      z.object({
+        day: z.enum(["SATURDAY", "SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"]),
+        isAvailable: z.boolean(),
+        startTime: z.string().nullable().optional(),
+        endTime: z.string().nullable().optional(),
+      })
+    ),
+  }),
+});
+
 export const AvailabilityValidation = {
   createAvailabilityValidationSchema,
   updateAvailabilityValidationSchema,
   getAvailabilityQueryValidationSchema,
+  updateMyAvailabilityValidationSchema,
 };
+

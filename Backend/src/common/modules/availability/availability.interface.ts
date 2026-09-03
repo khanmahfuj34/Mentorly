@@ -21,3 +21,16 @@ export interface IAvailabilityFilterRequest {
   sortBy?: string;
   sortOrder?: "asc" | "desc";
 }
+
+export interface IAvailabilityItemInput {
+  day: "SATURDAY" | "SUNDAY" | "MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY";
+  isAvailable: boolean;
+  startTime?: string | null;
+  endTime?: string | null;
+}
+
+export interface IBatchAvailabilityInput {
+  availability: IAvailabilityItemInput[];
+}
+
+

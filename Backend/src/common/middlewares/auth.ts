@@ -6,13 +6,17 @@ export const auth = (
     res: Response,
     next: NextFunction
 ) => {
-    const token = req.headers.authorization;
+    let token = req.headers.authorization;
 
     if (!token) {
         return res.status(401).json({
             success: false,
             message: "Unauthorized Access",
         });
+    }
+
+    if (token.startsWith("Bearer ")) {
+        token = token.slice(7).trim();
     }
 
     try {

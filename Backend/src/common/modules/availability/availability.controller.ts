@@ -85,6 +85,32 @@ const getSingleAvailability = catchAsync(async (req: Request, res: Response) => 
   );
 });
 
+const getMyAvailability = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.user.userId;
+  const result = await AvailabilityService.getMyAvailability(userId);
+
+  sendResponse(
+    res,
+    200,
+    true,
+    "My availability retrieved successfully",
+    result
+  );
+});
+
+const updateMyAvailability = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.user.userId;
+  const result = await AvailabilityService.updateMyAvailability(userId, req.body);
+
+  sendResponse(
+    res,
+    200,
+    true,
+    "Availability updated successfully",
+    result
+  );
+});
+
 export const AvailabilityController = {
   createAvailability,
   updateAvailability,
@@ -92,4 +118,7 @@ export const AvailabilityController = {
   getMySchedule,
   getTutorSchedule,
   getSingleAvailability,
+  getMyAvailability,
+  updateMyAvailability,
 };
+
