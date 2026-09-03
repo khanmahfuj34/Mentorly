@@ -12,10 +12,7 @@ export default function TutorAvailabilityPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchAvailability = useCallback(async () => {
-    setIsLoading(true)
-    setError(null)
-
+  const fetchAvailabilityData = useCallback(async () => {
     try {
       const res = await getMyAvailability()
       if (res.success && Array.isArray(res.data)) {
@@ -32,8 +29,38 @@ export default function TutorAvailabilityPage() {
   }, [])
 
   useEffect(() => {
-    fetchAvailability()
-  }, [fetchAvailability])
+    let isMounted = true
+
+    getMyAvailability()
+      .then((res) => {
+        if (!isMounted) return
+        if (res.success && Array.isArray(res.data)) {
+          setAvailability(res.data)
+        } else {
+          setAvailability([])
+        }
+      })
+      .catch((err) => {
+        if (!isMounted) return
+        console.error("Failed to load availability:", err)
+        setError("Unable to load your availability.")
+      })
+      .finally(() => {
+        if (isMounted) {
+          setIsLoading(false)
+        }
+      })
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  const handleRetry = () => {
+    setIsLoading(true)
+    setError(null)
+    fetchAvailabilityData()
+  }
 
   if (isLoading) {
     return <AvailabilitySkeleton />
@@ -70,7 +97,7 @@ export default function TutorAvailabilityPage() {
             </p>
           </div>
           <button
-            onClick={fetchAvailability}
+            onClick={handleRetry}
             className="px-6 py-2.5 rounded-xl font-label-md font-semibold text-sm bg-primary text-on-primary hover:bg-primary/90 transition-all shadow-md shadow-primary/20 cursor-pointer inline-flex items-center gap-2"
           >
             <span className="material-symbols-outlined text-lg">refresh</span>
