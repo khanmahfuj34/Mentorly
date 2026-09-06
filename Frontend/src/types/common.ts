@@ -10,6 +10,8 @@ export interface Tutor {
   classesTaken: string
   availability: string
   salary: number
+  location?: string
+  medium?: string
 }
 
 export interface Tuition {
@@ -20,6 +22,10 @@ export interface Tuition {
   salary: string
   schedule: string
   postedTime: string
+  subject?: string
+  classLevel?: string
+  medium?: string
+  status?: string
 }
 
 export interface Subject {

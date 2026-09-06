@@ -1,7 +1,7 @@
 export const NAV_LINKS = [
-  { label: "Home", href: "#", active: true },
-  { label: "Find Tutors", href: "#" },
-  { label: "Find Tuition", href: "#" },
-  { label: "Become a Tutor", href: "#" },
-  { label: "About", href: "#" },
+  { label: "Home", href: "/" },
+  { label: "Find Tutors", href: "/find-tutors" },
+  { label: "Find Tuition", href: "/find-tuition" },
+  { label: "Become a Tutor", href: "/become-tutor" },
+  { label: "About", href: "/about" },
 ]

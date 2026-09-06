@@ -69,7 +69,7 @@ export default function Hero({ isStudent = false }: HeroProps) {
             </p>
             <div className="flex flex-wrap gap-4 mb-stack-xl">
               <Link
-                href={isStudent ? "/dashboard/student/find-tutors" : "/register"}
+                href={isStudent ? "/dashboard/student/find-tutors" : "/find-tutors"}
                 className="px-8 py-4 rounded-full bg-primary text-on-primary font-semibold flex items-center gap-2 hover:shadow-lg hover:opacity-95 transition-all active:scale-95 cursor-pointer text-center text-on-primary"
               >
                 {isStudent ? "Find Tutors" : "Find a Tutor"}
@@ -78,7 +78,7 @@ export default function Hero({ isStudent = false }: HeroProps) {
                 </span>
               </Link>
               <Link
-                href={isStudent ? "/dashboard/student/my-tuition-posts" : "/register"}
+                href={isStudent ? "/dashboard/student/my-tuition-posts" : "/become-tutor"}
                 onClick={handlePostTuitionClick}
                 className="px-8 py-4 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface font-semibold hover:bg-surface-container transition-all active:scale-95 cursor-pointer text-center text-on-surface"
               >
@@ -114,41 +114,54 @@ export default function Hero({ isStudent = false }: HeroProps) {
               />
             </div>
 
-            {/* Floating card – Verified Tutor */}
-            <div className="absolute top-10 -left-10 glass-card p-6 rounded-24 shadow-xl border border-white/50 w-64 animate-float">
-              <div className="flex items-center gap-4 mb-3">
-                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                  <span className="material-symbols-outlined text-primary select-none">verified</span>
+            {/* Floating card 1 – Verified Tutor */}
+            <div className="absolute top-6 -left-8 glass-card p-4 px-5 rounded-24 shadow-xl border border-white/60 w-60 animate-float z-20">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                  <span className="material-symbols-outlined text-primary text-lg select-none">verified</span>
                 </div>
                 <div>
-                  <div className="font-bold text-sm text-on-surface">Verified Tutor</div>
-                  <div className="text-[10px] text-on-surface-variant font-medium">Identity Confirmed</div>
+                  <div className="font-bold text-xs text-on-surface">Verified Tutor</div>
+                  <div className="text-[10px] text-on-surface-variant font-medium">ID & Degree Confirmed</div>
                 </div>
-              </div>
-              <div className="flex gap-1 text-yellow-500 select-none">
-                {[...Array(5)].map((_, i) => (
-                  <span
-                    key={i}
-                    className="material-symbols-outlined text-xs"
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                  >
-                    star
-                  </span>
-                ))}
               </div>
             </div>
 
-            {/* Floating card – New Booking */}
-            <div className="absolute bottom-20 -right-8 glass-card p-6 rounded-24 shadow-xl border border-white/50 w-72 animate-float-delayed">
-              <div className="flex justify-between items-center mb-4">
-                <div className="font-bold text-on-surface">New Booking</div>
-                <div className="px-2 py-1 bg-secondary-container text-on-secondary-container text-[10px] rounded-full font-bold">
-                  URGENT
+            {/* Floating card 2 – 4.9 Rating */}
+            <div className="absolute top-28 -right-6 glass-card p-4 px-5 rounded-24 shadow-xl border border-white/60 w-52 animate-float-delayed z-20">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                  <span className="material-symbols-outlined text-amber-600 text-lg select-none" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                </div>
+                <div>
+                  <div className="font-bold text-xs text-on-surface">4.9 Rating</div>
+                  <div className="text-[10px] text-on-surface-variant font-medium">From 2,500+ Reviews</div>
                 </div>
               </div>
-              <button className="w-full py-2 bg-primary text-on-primary text-sm rounded-xl font-medium hover:opacity-90 active:scale-95 transition-all cursor-pointer">
-                Accept Session
-              </button>
+            </div>
+
+            {/* Floating card 3 – 10K+ Students */}
+            <div className="absolute bottom-36 -left-6 glass-card p-4 px-5 rounded-24 shadow-xl border border-white/60 w-56 animate-float z-20">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                  <span className="material-symbols-outlined text-emerald-600 text-lg select-none">groups</span>
+                </div>
+                <div>
+                  <div className="font-bold text-xs text-on-surface">10K+ Students</div>
+                  <div className="text-[10px] text-on-surface-variant font-medium">Active Learners</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Floating card 4 – New Booking */}
+            <div className="absolute bottom-10 -right-4 glass-card p-5 rounded-24 shadow-xl border border-white/60 w-64 animate-float-delayed z-20">
+              <div className="flex justify-between items-center mb-3">
+                <div className="font-bold text-xs text-on-surface">New Session Booking</div>
+                <div className="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[9px] rounded-full font-bold">
+                  CONFIRMED
+                </div>
+              </div>
+              <div className="text-[11px] text-on-surface-variant font-medium">HSC Physics • Banani</div>
             </div>
           </motion.div>
         </div>

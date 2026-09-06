@@ -2,24 +2,31 @@
 
 import React from "react"
 import { motion } from "framer-motion"
-import { SUCCESS_STATS } from "@/data/stats"
+import { HERO_STATS } from "@/data/stats"
 
 export default function Stats() {
   return (
-    <section className="py-stack-xl bg-primary text-on-primary">
+    <section className="py-14 bg-gradient-to-r from-primary via-indigo-600 to-primary text-on-primary shadow-inner">
       <div className="max-w-container-max mx-auto px-margin-desktop">
         <motion.div 
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-2 md:grid-cols-5 gap-8 text-center"
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center"
         >
-          {SUCCESS_STATS.map((stat, idx) => (
-            <div key={idx} className="select-none">
-              <div className="text-4xl font-bold mb-2">{stat.value}</div>
-              <div className="text-sm opacity-85 font-medium">{stat.label}</div>
-            </div>
+          {HERO_STATS.map((stat, idx) => (
+            <motion.div 
+              key={idx} 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/15 hover:bg-white/15 transition-all"
+            >
+              <div className="text-3xl md:text-4xl font-extrabold mb-1 tracking-tight text-white">{stat.value}</div>
+              <div className="text-xs md:text-sm font-semibold uppercase tracking-wider text-white/80">{stat.label}</div>
+            </motion.div>
           ))}
         </motion.div>
       </div>
