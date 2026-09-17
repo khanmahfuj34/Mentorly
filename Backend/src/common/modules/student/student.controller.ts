@@ -24,8 +24,16 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, 200, true, "Student profile updated successfully", result);
 });
 
+const getDashboard = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.user.userId;
+  const result = await StudentService.getStudentDashboard(userId);
+
+  sendResponse(res, 200, true, "Student dashboard data retrieved successfully", result);
+});
+
 export const StudentController = {
   createProfile,
   getMyProfile,
   updateProfile,
+  getDashboard,
 };

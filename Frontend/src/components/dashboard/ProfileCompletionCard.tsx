@@ -31,35 +31,35 @@ export default function ProfileCompletionCard({
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="rounded-[24px] border border-outline-variant/30 bg-white p-6 md:p-8 shadow-sm space-y-6"
+      className="rounded-3xl border border-slate-200/80 bg-white p-6 md:p-8 shadow-sm space-y-6"
     >
       {/* Header */}
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-            <span className="material-symbols-outlined text-[24px] select-none">
+          <div className="w-10 h-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center font-bold">
+            <span className="material-symbols-outlined text-2xl select-none">
               {isComplete ? "verified" : "assignment_late"}
             </span>
           </div>
           <div>
-            <h3 className="font-display font-bold text-headline-sm text-on-surface">
+            <h3 className="font-display font-bold text-lg text-slate-900">
               Profile Completion
             </h3>
-            <p className="text-xs text-on-surface-variant">
+            <p className="text-xs text-slate-600">
               {isComplete
-                ? "Your profile is fully complete! You can now post tuitions."
-                : "Complete your profile details to unlock tuition posting."}
+                ? "Your profile is fully complete! You can now post tuition requirements."
+                : "Complete your profile details to unlock all Mentorly features."}
             </p>
           </div>
         </div>
         <div className="text-right">
-          <span className="text-headline-md font-bold text-primary">{percentage}%</span>
+          <span className="text-2xl font-extrabold text-primary font-display">{percentage}%</span>
         </div>
       </div>
 
       {/* Progress Bar */}
       <div className="space-y-2">
-        <div className="h-3 w-full bg-surface-container-low rounded-full overflow-hidden p-0.5 border border-outline-variant/20">
+        <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${percentage}%` }}
@@ -73,11 +73,11 @@ export default function ProfileCompletionCard({
 
       {/* Missing Fields list */}
       {!isComplete && missingFields.length > 0 && (
-        <div className="bg-amber-500/5 border border-amber-500/20 rounded-2xl p-4 space-y-2">
-          <p className="text-xs font-bold text-amber-700 dark:text-amber-600 uppercase tracking-wider">
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 space-y-2">
+          <p className="text-xs font-bold text-amber-800 uppercase tracking-wider">
             Missing Information:
           </p>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-on-surface-variant">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-medium text-slate-700">
             {missingFields.map((field) => (
               <li key={field} className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0" />
@@ -93,20 +93,22 @@ export default function ProfileCompletionCard({
         <div className="pt-2">
           <Link
             href="/dashboard/student/profile"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-on-primary font-semibold text-sm rounded-xl hover:opacity-95 transition-all shadow-md shadow-primary/20 active:scale-95"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-white font-bold text-xs sm:text-sm rounded-xl hover:bg-primary/95 transition-all shadow-md shadow-primary/20 active:scale-95 cursor-pointer"
           >
             <span>Complete Profile</span>
-            <span className="material-symbols-outlined text-[18px] select-none">
+            <span className="material-symbols-outlined text-lg select-none">
               arrow_forward
             </span>
           </Link>
         </div>
       ) : (
-        <div className="flex items-center gap-2 text-emerald-600 font-semibold text-sm pt-2">
-          <span className="material-symbols-outlined text-[20px]">check_circle</span>
-          <span>Your profile meets all requirements.</span>
+        <div className="flex items-center gap-2 text-emerald-600 font-semibold text-xs pt-2">
+          <span className="material-symbols-outlined text-lg">check_circle</span>
+          <span>Your profile meets all requirement specifications.</span>
         </div>
       )}
     </motion.div>
   )
 }
+
+

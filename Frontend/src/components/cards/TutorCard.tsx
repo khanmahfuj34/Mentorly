@@ -3,6 +3,7 @@
 import React from "react"
 import Link from "next/link"
 import { Tutor } from "@/types/common"
+import { getTutorProfileImage } from "@/src/utils/tutorAvatar"
 
 interface TutorCardProps {
   tutor: Tutor
@@ -17,7 +18,10 @@ export default function TutorCard({ tutor, onProtectedAction }: TutorCardProps) 
           <img
             alt={tutor.name}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            src={tutor.avatar || "/assets/images/student.jpg"}
+            src={getTutorProfileImage(tutor)}
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = "/assets/images/tutors/asifur-rahman.png";
+            }}
           />
           <div className="absolute top-3 right-3 px-3 py-1 bg-white/90 backdrop-blur rounded-full text-xs font-bold flex items-center gap-1 shadow-sm select-none">
             <span className="material-symbols-outlined text-xs text-amber-500" style={{ fontVariationSettings: "'FILL' 1" }}>

@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { getTutorProfileById } from "@/src/services/tutor/tutor.service";
 import { ITutorProfile } from "@/src/types/tutor";
 import { TutorProfileSkeleton } from "@/src/components/tutor/TutorSkeleton";
+import { getTutorProfileImage } from "@/src/utils/tutorAvatar";
 
 export default function TutorProfileDetailsPage() {
   const params = useParams();
@@ -75,6 +76,7 @@ export default function TutorProfileDetailsPage() {
   }
 
   const name = tutor.user?.name || "Tutor";
+  const profileImage = getTutorProfileImage(tutor);
   const initials = name
     .split(" ")
     .map((n) => n[0])
@@ -107,25 +109,21 @@ export default function TutorProfileDetailsPage() {
         <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
           {/* Avatar / Photo */}
           <div className="relative shrink-0">
-            {tutor.profilePhoto ? (
-              <img
-                src={tutor.profilePhoto}
-                alt={name}
-                className="w-28 h-28 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-primary/20 shadow-lg"
-                onError={(e) => {
-                  (e.target as HTMLElement).style.display = "none";
-                  const parent = (e.target as HTMLElement).parentElement;
-                  if (parent) {
-                    const fallback = parent.querySelector(".profile-avatar-fallback");
-                    if (fallback) fallback.classList.remove("hidden");
-                  }
-                }}
-              />
-            ) : null}
+            <img
+              src={profileImage}
+              alt={name}
+              className="w-28 h-28 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-primary/20 shadow-lg"
+              onError={(e) => {
+                (e.target as HTMLElement).style.display = "none";
+                const parent = (e.target as HTMLElement).parentElement;
+                if (parent) {
+                  const fallback = parent.querySelector(".profile-avatar-fallback");
+                  if (fallback) fallback.classList.remove("hidden");
+                }
+              }}
+            />
             <div
-              className={`w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-primary/10 to-primary/30 text-primary font-bold text-3xl flex items-center justify-center border-4 border-primary/20 shadow-inner profile-avatar-fallback ${
-                tutor.profilePhoto ? "hidden" : ""
-              }`}
+              className="w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-primary/10 to-primary/30 text-primary font-bold text-3xl flex items-center justify-center border-4 border-primary/20 shadow-inner profile-avatar-fallback hidden"
             >
               {initials}
             </div>

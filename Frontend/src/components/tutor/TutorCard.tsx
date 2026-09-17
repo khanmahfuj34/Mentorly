@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ITutorProfile } from "@/src/types/tutor";
+import { getTutorProfileImage } from "@/src/utils/tutorAvatar";
 
 interface TutorCardProps {
   tutor: ITutorProfile;
@@ -12,6 +13,7 @@ interface TutorCardProps {
 export const TutorCard: React.FC<TutorCardProps> = ({ tutor }) => {
   const tutorId = tutor.userId || tutor.id || "";
   const name = tutor.user?.name || "Tutor";
+  const profileImage = getTutorProfileImage(tutor);
   
   // Format initials
   const initials = name
@@ -46,27 +48,23 @@ export const TutorCard: React.FC<TutorCardProps> = ({ tutor }) => {
         {/* Top Header Row: Photo + Name + Rating */}
         <div className="flex items-start gap-4 mb-4">
           <div className="relative shrink-0">
-            {tutor.profilePhoto ? (
-              <img
-                src={tutor.profilePhoto}
-                alt={name}
-                className="w-16 h-16 rounded-full object-cover border-2 border-primary/20 shadow-inner group-hover:scale-105 transition-transform"
-                onError={(e) => {
-                  // Fallback to initials if image fails to load
-                  (e.target as HTMLElement).style.display = "none";
-                  const parent = (e.target as HTMLElement).parentElement;
-                  if (parent) {
-                    const fallback = parent.querySelector(".avatar-fallback");
-                    if (fallback) fallback.classList.remove("hidden");
-                  }
-                }}
-              />
-            ) : null}
+            <img
+              src={profileImage}
+              alt={name}
+              className="w-16 h-16 rounded-full object-cover border-2 border-primary/20 shadow-inner group-hover:scale-105 transition-transform"
+              onError={(e) => {
+                // Fallback to initials if image fails to load
+                (e.target as HTMLElement).style.display = "none";
+                const parent = (e.target as HTMLElement).parentElement;
+                if (parent) {
+                  const fallback = parent.querySelector(".avatar-fallback");
+                  if (fallback) fallback.classList.remove("hidden");
+                }
+              }}
+            />
             
             <div
-              className={`w-16 h-16 rounded-full bg-gradient-to-br from-primary/10 to-primary/20 text-primary font-bold text-lg flex items-center justify-center border-2 border-primary/20 shadow-sm avatar-fallback ${
-                tutor.profilePhoto ? "hidden" : ""
-              }`}
+              className="w-16 h-16 rounded-full bg-gradient-to-br from-primary/10 to-primary/20 text-primary font-bold text-lg flex items-center justify-center border-2 border-primary/20 shadow-sm avatar-fallback hidden"
             >
               {initials}
             </div>

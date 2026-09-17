@@ -148,4 +148,27 @@ router.patch(
     StudentController.updateProfile
 );
 
+/**
+ * @swagger
+ * /students/dashboard:
+ *   get:
+ *     summary: Get aggregated dashboard data for logged-in student
+ *     tags: [Students]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Student dashboard data retrieved successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden (only accessible by students)
+ */
+router.get(
+    "/dashboard",
+    auth,
+    roleGuard("STUDENT"),
+    StudentController.getDashboard
+);
+
 export const StudentRoutes = router;

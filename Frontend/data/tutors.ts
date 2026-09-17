@@ -4,7 +4,7 @@ export const TUTORS: Tutor[] = [
   {
     id: "1",
     name: "Asifur Rahman",
-    avatar: "/assets/images/student.jpg",
+    avatar: "/assets/images/tutors/asifur-rahman.png",
     verified: true,
     subjects: "Mathematics & Physics",
     institution: "DU (CSE)",
@@ -19,7 +19,7 @@ export const TUTORS: Tutor[] = [
   {
     id: "2",
     name: "Sumaiya Afroze",
-    avatar: "/assets/images/student.jpg",
+    avatar: "/assets/images/tutors/sumaiya-afroze.png",
     verified: true,
     subjects: "English & IELTS",
     institution: "NSU (English)",
@@ -34,7 +34,7 @@ export const TUTORS: Tutor[] = [
   {
     id: "3",
     name: "Tanvir Ahmed",
-    avatar: "/assets/images/student.jpg",
+    avatar: "/assets/images/tutors/tanvir-ahmed.png",
     verified: true,
     subjects: "Physics & Higher Math",
     institution: "BUET (ME)",
@@ -49,7 +49,7 @@ export const TUTORS: Tutor[] = [
   {
     id: "4",
     name: "Nusrat Jahan",
-    avatar: "/assets/images/student.jpg",
+    avatar: "/assets/images/tutors/nusrat-jahan.png",
     verified: true,
     subjects: "Chemistry & Biology",
     institution: "DMC (MBBS)",
